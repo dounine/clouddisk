@@ -1,4 +1,4 @@
-<h2>CloudDisk 360云盘存储SDK</h2>
+CloudDisk 360云盘存储SDK
 <hr>
 #快速向导
 <hr>

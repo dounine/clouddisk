@@ -1,9 +1,9 @@
 CloudDisk 360云盘存储SDK
-<hr>
-#快速向导
-<hr>
-**(1)如何得到 `CloudDisk`**
-  * 使用`maven`下载
+====
+快速向导
+----
+**1. 如何得到 `CloudDisk`**
+  *  从 `maven` 仓库下载
 ```maven 
 <dependency>
 	<groupId>com.dounine</groupId>
@@ -16,3 +16,4 @@ CloudDisk 360云盘存储SDK
 git clone https://github.com/dounine/clouddisk.git
 mvn clean package
 ```
+**2. 如何使用 `CloudDisk`**

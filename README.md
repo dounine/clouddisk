@@ -14,4 +14,5 @@
   * 从`github`中下载并编译
 ```
 git clone https://github.com/dounine/clouddisk.git
+mvn clean package
 ```

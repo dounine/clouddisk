@@ -1,6 +1,7 @@
 CloudDisk 360云盘存储SDK
 ====
-![](https://github.com/dounine/clouddisk/raw/master/logo.png)
+[![yunpan]](http://yunpan.360.cn)
+[yunpan]:https://github.com/dounine/clouddisk/raw/master/logo.png "360云盘"
 快速向导
 ----
 **1. 如何得到 `CloudDisk`**

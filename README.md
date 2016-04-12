@@ -19,3 +19,4 @@ git clone https://github.com/dounine/clouddisk.git
 mvn clean package
 ```
 **2. 如何使用 `CloudDisk`**
+**3. `CloudDisk` 支持的功能**

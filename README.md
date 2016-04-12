@@ -19,4 +19,12 @@ git clone https://github.com/dounine/clouddisk.git
 mvn clean package
 ```
 **2. 如何使用 `CloudDisk`**
-**3. `CloudDisk` 支持的功能**
+ *  获取文件列表
+```java
+LoginUserToken loginUserToken = new LoginUserToken("account","passport",false);
+
+FileListParser fileListParser = new FileListParser(loginUserToken);
+FileListParameter fileListParameter = new FileListParameter();
+fileListParameter.setPath("/");
+FileList fileList = fileListParser.parse(fileListParameter);
+```

@@ -48,7 +48,8 @@ public class CookieStoreImpl implements CookieStore{
     public boolean clearExpired(Date date) {
         Iterator<Cookie> ci = cookies.iterator();
         while(ci.hasNext()){
-            if(ci.next().getExpiryDate().equals(date)){
+            Cookie cookie = ci.next();
+            if(date.equals(cookie.getExpiryDate())){
                 ci.remove();
                 return true;
             }

@@ -37,10 +37,6 @@ public class DifferPressResponseHandle extends BaseResponseHandle<DifferPress, D
 				differPress.setRedirectUrl(new URIBuilder(localtion));
 				parse.getDependencys().put(DifferPress.class,differPress);
 			}
-//			parse.getHttpClientContext().setAttribute(DifferPressConst.REQUEST_HOST_NAME, // 把host分压域名放到context上下文中,方便下一个请求获取
-//					new URIBuilder(differPress.getRedirectUrl()).getHost());
-//			parse.getHttpClientContext().setAttribute(DifferPressConst.REQUEST_SCHEME_HOST_NAME,
-//					differPress.getRedirectUrl());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

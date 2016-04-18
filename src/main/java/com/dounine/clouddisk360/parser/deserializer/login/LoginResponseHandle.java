@@ -1,23 +1,21 @@
 package com.dounine.clouddisk360.parser.deserializer.login;
 
+import com.dounine.clouddisk360.parser.LoginParser;
+import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
+import com.dounine.clouddisk360.util.URLUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.ResponseHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dounine.clouddisk360.parser.LoginParser;
-import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
-import com.dounine.clouddisk360.util.URLUtil;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LoginResponseHandle extends BaseResponseHandle<Login, LoginParser> implements ResponseHandler<Login> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginResponseHandle.class);
 
-	private static final String[] LOGIN_ERROR_MSGS = {
-			"无效的登录",
-			"验证码错误请重新输入",
-			"登录密码错误，请重新输入",
-			"密码不合法",
-			"请输入验证码",
-			"密码错误次数超限，请24小时后再试"};
+	public static final Pattern VAL_PAT = Pattern.compile("[{].*[}]");
+	public static final Pattern ERR_VAL_PAT = Pattern.compile("errno=\\d{2,}&errmsg=[\\u0391-\\uFFE5]{2,}");//查找错误信息
 
 	public LoginResponseHandle(LoginParser parse) {
 		super(parse);
@@ -37,26 +35,18 @@ public class LoginResponseHandle extends BaseResponseHandle<Login, LoginParser> 
 
 	@Override
 	public String disassemblyResult(String result) {
-		int userInfoIndex = result.indexOf(LoginConst.SPLIT_STR);
-		if (userInfoIndex > -1) {
-			String userInfo = result.substring(userInfoIndex + LoginConst.SPLIT_STR.length(),
-					result.lastIndexOf(";</script>") - 2);
-			return URLUtil.decode(userInfo);
-		} else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("{'errno':401,'errmsg':");
-			String decodeResult = URLUtil.decode(result);
-			for(String errCode : LOGIN_ERROR_MSGS){
-				if (decodeResult.contains(errCode)) {
-					sb.append(String.format("'%s'",errCode));
-				}
-			}
-			if(sb.length()==1){
-				sb.append("'登录不合法'");
-			}
-			sb.append("}");
-			return sb.toString();
+		result = URLUtil.decode(result);
+		Matcher matcher = VAL_PAT.matcher(result);
+		Matcher errMatcher = ERR_VAL_PAT.matcher(result);
+		if(errMatcher.find()){
+			String msg = errMatcher.group();
+			String[] vs = msg.split("&");
+			return String.format("{'errno':%d,'errmsg':'%s'}",Integer.parseInt(vs[0].split("=")[1]),vs[1].split("=")[1]);
+		}else if(matcher.find()){
+			return matcher.group();
 		}
+		LOGGER.error("登录错误信息不识别");
+		return StringUtils.EMPTY;
 	}
 
 	@Override

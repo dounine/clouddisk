@@ -105,6 +105,8 @@ public class CaptThread implements Runnable{
 				CaptchaThreadValidator.updateValidMsgAndTime(account,login.getErrmsg(),false);//更新验证时间
 				new Thread(new CaptThread(differPressParser)).start();//启动线程进行侦听登录操作
 				LOGGER.info(login.getErrmsg()+",云盘线程重新监听");
+			}else{
+				LOGGER.info("登录线程线束");
 			}
 		}
 	}

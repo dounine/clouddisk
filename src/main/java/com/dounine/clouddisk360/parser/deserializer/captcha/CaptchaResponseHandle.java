@@ -10,16 +10,4 @@ public class CaptchaResponseHandle extends BaseResponseHandle<Captcha, CaptchaPa
 	public CaptchaResponseHandle(CaptchaParser parse) {
 		super(parse);
 	}
-
-	@Override
-	public Captcha desializer(String result) {
-		Captcha captcha = super.desializer(result);
-		if(captcha.getCaptchaFlag()){//有验证码
-			parse.getHttpClientContext().setAttribute(CaptchaConst.NEED_CAPTCHA, "true");
-		}else{
-			parse.getHttpClientContext().removeAttribute(CaptchaConst.NEED_CAPTCHA);
-		}
-		return captcha;
-	}
-
 }

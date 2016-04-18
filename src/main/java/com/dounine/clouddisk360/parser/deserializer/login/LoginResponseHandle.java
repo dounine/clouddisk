@@ -15,7 +15,7 @@ public class LoginResponseHandle extends BaseResponseHandle<Login, LoginParser> 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginResponseHandle.class);
 
 	public static final Pattern VAL_PAT = Pattern.compile("[{].*[}]");
-	public static final Pattern ERR_VAL_PAT = Pattern.compile("errno=\\d{2,}&errmsg=[\\u0391-\\uFFE5]{2,}");//查找错误信息
+	public static final Pattern ERR_VAL_PAT = Pattern.compile("errno=\\d{2,}&errmsg=.{2,}[&]");//查找错误信息
 
 	public LoginResponseHandle(LoginParser parse) {
 		super(parse);

@@ -137,7 +137,7 @@ public class CaptchaThreadValidator implements Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
+		for(;;){
 			try {
 				Thread.sleep(1000);
 				synchronized (captchaValidators) {

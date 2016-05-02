@@ -59,7 +59,7 @@ public class CaptThread implements Runnable{
 			int seconds = 3;
 			int runTimeSeconds = 0;
 			int sleepTimeSeconds = 1000*seconds;
-			while (returnExist) {
+			do{
 				Thread.sleep(sleepTimeSeconds);
 				runTimeSeconds += seconds;
 				cValidator = CaptchaThreadValidator.getCaptchaValidator(account);
@@ -76,7 +76,7 @@ public class CaptThread implements Runnable{
 				if(null!=_passportParser){
 					passportParser = _passportParser;
 				}
-			}
+			}while (returnExist);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

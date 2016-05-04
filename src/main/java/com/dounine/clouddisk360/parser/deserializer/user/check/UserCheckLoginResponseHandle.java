@@ -18,26 +18,24 @@ public class UserCheckLoginResponseHandle extends BaseResponseHandle<UserCheckLo
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserCheckLoginResponseHandle.class);
 
-    public UserCheckLoginResponseHandle(UserCheckLoginParser parse) {
+    public UserCheckLoginResponseHandle(final UserCheckLoginParser parse) {
         super(parse);
     }
 
     @Override
-    public UserCheckLogin handleResponse(HttpResponse response) throws ClientProtocolException, ClientProtocolException {
-        UserCheckLogin userCheckLogin = new UserCheckLogin();
+    public UserCheckLogin handleResponse(final HttpResponse response) throws ClientProtocolException, ClientProtocolException {
+        final UserCheckLogin userCheckLogin = new UserCheckLogin();
         if (response.getStatusLine().getStatusCode() == 302) {
-            String location = response.getLastHeader("Location").getValue();
-            if (StringUtils.isNotBlank(location)) {
-                if (location.endsWith(".yunpan.360.cn/my/index/")) {
-                    return userCheckLogin;
-                }
+            final String location = response.getLastHeader("Location").getValue();
+            if (StringUtils.isNotBlank(location)&&location.endsWith(".yunpan.360.cn/my/index/")) {
+                return userCheckLogin;
             }
         }
         userCheckLogin.setCddmsg("登录失效");
         userCheckLogin.setErrno(401);
         if(null!=parse.getParameter()){
             if (parse.getParameter().isClearCacheStore()) {//如果要清除本地缓存则删掉文件
-                File file = new File(BasePathCommon.BASE_PATH + parse.getLoginUserToken().getAccount() + "/cookieStore/cookies.txt");
+                final File file = new File(BasePathCommon.BASE_PATH + parse.getLoginUserToken().getAccount() + "/cookieStore/cookies.txt");
                 if (file.exists()) {
                     file.delete();
                     LOGGER.info("清除本地[ cookieStore ]缓存文件");

@@ -23,21 +23,21 @@ public class FileHistoryParser extends
 		super();
 	}
 
-	public FileHistoryParser(LoginUserToken loginUser) {
+	public FileHistoryParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileHistoryParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(6);
-		datas.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
-		datas.add(new BasicNameValuePair(CONST.HIS_NID_NAME, parameter.getHis_nid()));
-		datas.add(new BasicNameValuePair(CONST.START_NAME, parameter.getStart()));
-		datas.add(new BasicNameValuePair(CONST.NUM_NAME, parameter.getNum()));
-		datas.add(new BasicNameValuePair(CONST.SOURCE_NAME, StringUtils.EMPTY));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileHistoryParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(6);
+		data.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
+		data.add(new BasicNameValuePair(CONST.HIS_NID_NAME, parameter.getHis_nid()));
+		data.add(new BasicNameValuePair(CONST.START_NAME, parameter.getStart()));
+		data.add(new BasicNameValuePair(CONST.NUM_NAME, parameter.getNum()));
+		data.add(new BasicNameValuePair(CONST.SOURCE_NAME, StringUtils.EMPTY));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

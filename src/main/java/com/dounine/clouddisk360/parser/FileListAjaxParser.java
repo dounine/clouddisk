@@ -22,19 +22,19 @@ public class FileListAjaxParser extends
 		super();
 	}
 
-	public FileListAjaxParser(LoginUserToken loginUser) {
+	public FileListAjaxParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileListAjaxParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(4);
-		datas.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
-		datas.add(new BasicNameValuePair(CONST.ID_NAME, parameter.getId()));
-		datas.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileListAjaxParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(4);
+		data.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
+		data.add(new BasicNameValuePair(CONST.ID_NAME, parameter.getId()));
+		data.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

@@ -25,31 +25,31 @@ public class LoginParserTest {
 	}
 
 	public void login(LoginUserToken loginUserToken) {
-		LoginParser loginParser = new LoginParser(loginUserToken);
-		Captcha captcha = loginParser.getDependResult(Captcha.class);
 
-		LoginParameter loginParameter = new LoginParameter();
+		final LoginParser loginParser = new LoginParser(loginUserToken);
+		final Captcha captcha = loginParser.getDependResult(Captcha.class);
+		final LoginParameter loginParameter = new LoginParameter();
 		if (captcha.getCaptchaFlag()) {
-			PassportParser passportParser = new PassportParser();
+			final PassportParser passportParser = new PassportParser();
 			passportParser.dataSmooth(loginParser);
-			PassportParameter passportParameter = new PassportParameter();
+			final PassportParameter passportParameter = new PassportParameter();
 			passportParameter.setUri(captcha.getCaptchaUrl());
 			passportParser.parse(passportParameter);
 
 			System.out.print("请输入验证码:");
-			Scanner scanner = new Scanner(System.in);
+			final Scanner scanner = new Scanner(System.in);
 			String captchaValue = scanner.nextLine().trim();
 			scanner.close();
 
 			loginParameter.setCaptchaValue(captchaValue);
 			loginParser.dataSmooth(passportParser);// 数据平滑
 		}
-		UserTokenParser userTokenParser = new UserTokenParser();
+		final UserTokenParser userTokenParser = new UserTokenParser();
 		userTokenParser.dataSmooth(loginParser);// 数据平滑
-		UserToken userToken = userTokenParser.parse();
+		final UserToken userToken = userTokenParser.parse();
 		loginParameter.setToken(userToken.getToken());
 
-		Login login = loginParser.parse(loginParameter);
+		final Login login = loginParser.parse(loginParameter);
 
 		LOGGER.info(login.toString());
 	}

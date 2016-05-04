@@ -22,18 +22,18 @@ public class FileDownloadAddressParser extends
 		super();
 	}
 
-	public FileDownloadAddressParser(LoginUserToken loginUser) {
+	public FileDownloadAddressParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileDownloadAddressParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(3);
-		datas.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
-		datas.add(new BasicNameValuePair(CONST.FNAME_NAME, parameter.getFname()));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileDownloadAddressParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(3);
+		data.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
+		data.add(new BasicNameValuePair(CONST.FNAME_NAME, parameter.getFname()));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

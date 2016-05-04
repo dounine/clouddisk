@@ -21,7 +21,7 @@ import java.io.IOException;
 public class FileUploadParser extends
 		BaseParser<HttpPost, FileUpload, FileUploadConst, FileUploadParameter, FileUploadRequestInterceptor, FileUploadResponseHandle, FileUploadParser> {
 
-	public FileUploadParser(LoginUserToken loginUser) {
+	public FileUploadParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
@@ -29,10 +29,10 @@ public class FileUploadParser extends
 		super();
 	}
 
-	public HttpPost initRequest(FileUploadParameter parameter) {
-		FileUploadAddress fileUploadAddress = getDependResult(FileUploadAddress.class);
-		HttpPost request = new HttpPost("http://" + fileUploadAddress.getData().getUp() + CONST.URI_PATH);
-		MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+	public HttpPost initRequest(final FileUploadParameter parameter) {
+		final FileUploadAddress fileUploadAddress = getDependResult(FileUploadAddress.class);
+		final HttpPost request = new HttpPost("http://" + fileUploadAddress.getData().getUp() + CONST.URI_PATH);
+		final MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
 		multipartEntity.setCharset(Consts.UTF_8);
 		multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 		multipartEntity.addPart(CONST.QID_NAME, new StringBody(getLoginInfo().getQid(), ContentType.DEFAULT_BINARY));
@@ -53,7 +53,7 @@ public class FileUploadParser extends
 	}
 
 	@Override
-	public FileUpload execute(HttpPost request) {
+	public FileUpload execute(final HttpPost request) {
 		if(hasException()){
 			return execClouddiskException();
 		}

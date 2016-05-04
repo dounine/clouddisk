@@ -14,10 +14,10 @@ public class DifferPressParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DifferPressParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		DifferPressParser differPressParser = new DifferPressParser(loginUserToken);
-		DifferPress differPress = differPressParser.parse();
+		final DifferPressParser differPressParser = new DifferPressParser(loginUserToken);
+		final DifferPress differPress = differPressParser.parse();
 		try {
 			LOGGER.info(differPress.getRedirectUrl().build().toString());
 		} catch (URISyntaxException e) {

@@ -12,12 +12,12 @@ import java.io.IOException;
 public class FileDownloadAddressRequestInterceptor extends BaseRequestInterceptor<FileDownloadAddressConst,FileDownloadAddressParser>
 		implements HttpRequestInterceptor {
 
-	public FileDownloadAddressRequestInterceptor(FileDownloadAddressParser parser) {
+	public FileDownloadAddressRequestInterceptor(final FileDownloadAddressParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request,final HttpContext context) throws HttpException, IOException {
 		super.process(request, context, true);
 	}
 

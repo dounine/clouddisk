@@ -14,12 +14,12 @@ public class UserTokenResponseHandle extends BaseResponseHandle<UserToken, UserT
 
 	public static final Pattern VAL_PAT = Pattern.compile("[{].*[}]");
 
-	public UserTokenResponseHandle(UserTokenParser parse) {
+	public UserTokenResponseHandle(final UserTokenParser parse) {
 		super(parse);
 	}
 
-	public String disassemblyResult(String result) {
-		Matcher matcher = VAL_PAT.matcher(result);
+	public String disassemblyResult(final String result) {
+		final Matcher matcher = VAL_PAT.matcher(result);
 		if(matcher.find()){
 			return matcher.group();
 		}

@@ -7,11 +7,11 @@ public class CloudDiskException extends RuntimeException{
 	 */
 	private static final long serialVersionUID = -2783602265989962551L;
 	
-	public CloudDiskException(String errMsg){
+	public CloudDiskException(final String errMsg){
 		super(errMsg);
 	}
 
-	public CloudDiskException(Exception e){
+	public CloudDiskException(final Exception e){
 		super(e);
 	}
 }

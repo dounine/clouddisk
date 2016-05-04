@@ -12,10 +12,10 @@ public class CaptchaParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		CaptchaParser captchaParser = new CaptchaParser(loginUserToken);
-		Captcha captcha = captchaParser.parse();
+		final CaptchaParser captchaParser = new CaptchaParser(loginUserToken);
+		final Captcha captcha = captchaParser.parse();
 
 		LOGGER.info(captcha.toString());
 	}

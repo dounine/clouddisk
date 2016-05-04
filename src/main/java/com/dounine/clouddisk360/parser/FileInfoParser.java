@@ -21,16 +21,16 @@ public class FileInfoParser extends
 		super();
 	}
 
-	public FileInfoParser(LoginUserToken loginUser) {
+	public FileInfoParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public FileInfo parse(FileInfoParameter parameter) {
+	public FileInfo parse(final FileInfoParameter parameter) {
 		if(hasException()){
 			return execClouddiskException();
 		}
-		FileListParser fileListParser = new FileListParser(loginUserToken);
+		final FileListParser fileListParser = new FileListParser(loginUserToken);
 		if(StringUtils.isBlank(parameter.getFilePath())){
 			throw new CloudDiskException("要查找的文件路径不能为空.");
 		}else if(parameter.getFilePath().charAt(parameter.getFilePath().length()-1)=='/'){
@@ -38,21 +38,17 @@ public class FileInfoParser extends
 		}
 		parameter.getFileListParameter()
 				.setPath(parameter.getFilePath().substring(0, parameter.getFilePath().lastIndexOf("/") + 1));
-		FileList fileList = fileListParser.parse(parameter.getFileListParameter());
-		FileInfo fileInfo = new FileInfo();
+		final FileList fileList = fileListParser.parse(parameter.getFileListParameter());
+		final FileInfo fileInfo = new FileInfo();
 		fileInfo.setErrmsg(fileList.getErrmsg());
 		fileInfo.setErrno(fileList.getErrno());
 		if (fileList.getData().size() > 0) {
-			List<FileListData> fileInfosRemoveRepeat = new ArrayList<>(0);//去空内容
-			for(FileListData fileListData : fileList.getData()){
-				if(StringUtils.isNotBlank(fileListData.getOriName())){
-					fileInfosRemoveRepeat.add(fileListData);
-				}
-			}
-			List<FileListData> fileInfos = fileInfosRemoveRepeat.stream()
+			final List<FileListData> fileInfoRemoveRepeat = new ArrayList<>(0);//去空内容
+			fileInfoRemoveRepeat.addAll(fileList.getData().stream().filter(fileListData -> StringUtils.isNotBlank(fileListData.getOriName())).collect(Collectors.toList()));
+			final List<FileListData> fileIfs = fileInfoRemoveRepeat.stream()
 					.filter(f -> f.getPath().equals(parameter.getFilePath())).collect(Collectors.toList());
-			if (null != fileInfos && fileInfos.size() == 1) {
-				FileListData fileListData = fileInfos.get(0);
+			if (null != fileIfs && fileIfs.size() == 1) {
+				final FileListData fileListData = fileIfs.get(0);
 				fileInfo.setDate(fileListData.getDate());
 				fileInfo.setFhash(fileListData.getFhash());
 				fileInfo.setFileType(fileListData.getFileType());

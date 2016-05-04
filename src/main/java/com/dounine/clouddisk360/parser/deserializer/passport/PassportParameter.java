@@ -8,7 +8,7 @@ public class PassportParameter extends BaseParameter {
 	/**
 	 * 手动检查
 	 */
-	private boolean manual = false;
+	private boolean manual;
 
 	public boolean isManual() {
 		return manual;

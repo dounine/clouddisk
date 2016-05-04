@@ -13,13 +13,13 @@ public class FileRestoreParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileRestoreParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileRestoreParser fileRestoreParser = new FileRestoreParser(loginUserToken);
-		FileRestoreParameter fileRestoreParameter = new FileRestoreParameter();
+		final FileRestoreParser fileRestoreParser = new FileRestoreParser(loginUserToken);
+		final FileRestoreParameter fileRestoreParameter = new FileRestoreParameter();
 		fileRestoreParameter.setNid("14502383266144986");
 		fileRestoreParameter.setId("56e1395daf263c86518be190");
-		FileRestore fileRestore = fileRestoreParser.parse(fileRestoreParameter);
+		final FileRestore fileRestore = fileRestoreParser.parse(fileRestoreParameter);
 
 		LOGGER.info(fileRestore.toString());
 	}

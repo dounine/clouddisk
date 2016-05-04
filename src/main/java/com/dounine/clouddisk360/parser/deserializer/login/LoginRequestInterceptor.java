@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class LoginRequestInterceptor extends BaseRequestInterceptor<LoginConst,LoginParser> implements HttpRequestInterceptor {
 
-	public LoginRequestInterceptor(LoginParser parser) {
+	public LoginRequestInterceptor(final LoginParser parser) {
 		super(parser);
 	}
 

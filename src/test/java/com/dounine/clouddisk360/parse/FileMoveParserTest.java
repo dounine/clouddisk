@@ -13,13 +13,13 @@ public class FileMoveParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileMoveParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileMoveParser fileMoveParser = new FileMoveParser(loginUserToken);
-		FileMoveParameter fileMoveParameter = new FileMoveParameter();
+		final FileMoveParser fileMoveParser = new FileMoveParser(loginUserToken);
+		final FileMoveParameter fileMoveParameter = new FileMoveParameter();
 		fileMoveParameter.getMoveFiles().add("/a/");
 		fileMoveParameter.setNewPath("/黄/");
-		FileMove fileMove = fileMoveParser.parse(fileMoveParameter);
+		final FileMove fileMove = fileMoveParser.parse(fileMoveParameter);
 
 		LOGGER.info(fileMove.toString());
 	}

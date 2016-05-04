@@ -10,6 +10,6 @@ public final class TestUser {
 	}
 
 	public static final LoginUserToken LOGIN_USER_TOKEN = new LoginUserToken("102535481@qq.com",
-			"xxxxx");
+			"",false);
 
 }

@@ -12,10 +12,10 @@ public class FileUploadAddressParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileUploadAddressParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 		
-		FileUploadAddressParser fileUploadAddressParser = new FileUploadAddressParser(loginUserToken);
-		FileUploadAddress fileUploadAddress = fileUploadAddressParser.parse();
+		final FileUploadAddressParser fileUploadAddressParser = new FileUploadAddressParser(loginUserToken);
+		final FileUploadAddress fileUploadAddress = fileUploadAddressParser.parse();
 		
 		LOGGER.info(fileUploadAddress.toString());
 	}

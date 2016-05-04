@@ -20,17 +20,17 @@ public class FileAddFileParser extends
 		super();
 	}
 
-	public FileAddFileParser(LoginUserToken loginUser) {
+	public FileAddFileParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileAddFileParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(2);
-		datas.add(new BasicNameValuePair(CONST.TK_NAME, parameter.getTk()));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileAddFileParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(2);
+		data.add(new BasicNameValuePair(CONST.TK_NAME, parameter.getTk()));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

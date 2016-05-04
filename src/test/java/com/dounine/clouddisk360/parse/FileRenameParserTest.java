@@ -13,14 +13,14 @@ public class FileRenameParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileRenameParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileRenameParser fileRenameParser = new FileRenameParser(loginUserToken);
-		FileRenameParameter fileRenameParameter = new FileRenameParameter();
+		final FileRenameParser fileRenameParser = new FileRenameParser(loginUserToken);
+		final FileRenameParameter fileRenameParameter = new FileRenameParameter();
 		fileRenameParameter.setPath("/lake/lake3/");
 		fileRenameParameter.setNid("14575078756171719");
 		fileRenameParameter.setNewpath("lake2/");
-		FileRename fileRename = fileRenameParser.parse(fileRenameParameter);
+		final FileRename fileRename = fileRenameParser.parse(fileRenameParameter);
 
 		LOGGER.info(fileRename.toString());
 	}

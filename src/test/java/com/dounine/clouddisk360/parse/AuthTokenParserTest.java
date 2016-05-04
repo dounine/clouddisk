@@ -12,10 +12,10 @@ public class AuthTokenParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthTokenParserTest.class);
 
 	public void testDependParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		AuthTokenParser authTokenParse = new AuthTokenParser(loginUserToken);
-		AuthToken authToken = authTokenParse.parse();
+		final AuthTokenParser authTokenParse = new AuthTokenParser(loginUserToken);
+		final AuthToken authToken = authTokenParse.parse();
 		LOGGER.info(authToken.getToken());
 	}
 }

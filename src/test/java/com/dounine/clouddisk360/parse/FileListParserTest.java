@@ -16,17 +16,14 @@ public class FileListParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileListParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
-
-		FileListParser fileListParser = new FileListParser(loginUserToken);
-		FileListParameter fileListParameter = new FileListParameter();
+		final LoginUserToken loginUserToken = new LoginUserToken("102535481@qq.com","",false);
+		final FileListParser fileListParser = new FileListParser(loginUserToken);
+		final FileListParameter fileListParameter = new FileListParameter();
 		fileListParameter.setOrder(Order.DESC);
 		fileListParameter.setPage(0);
 		fileListParameter.setPage_size(300);
 		fileListParameter.setPath(fileListParameter.ROOT_PATH);
-		FileList fileList = fileListParser.parse(fileListParameter);
+		final FileList fileList = fileListParser.parse(fileListParameter);
 		LOGGER.info(fileList.toString());
-		LOGGER.info(fileListParser.readAuthTokenValue());
-
 	}
 }

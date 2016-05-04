@@ -13,8 +13,6 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClients;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -28,7 +26,7 @@ public class UserInfoParser extends
 	public UserInfoParser(){
 		super();
 	}
-	public UserInfoParser(LoginUserToken loginUser) {
+	public UserInfoParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
@@ -36,12 +34,10 @@ public class UserInfoParser extends
 		System.out.println(MD5Util.MD5("BJIKE..++"));
 	}
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoParser.class);
-
 	@Override
-	public HttpGet initRequest(UserInfoParameter userInfoParameter) {
+	public HttpGet initRequest(final UserInfoParameter userInfoParameter) {
 		try {
-			URIBuilder uriBuilder = new URIBuilder(CONST.URI_PATH);
+			final URIBuilder uriBuilder = new URIBuilder(CONST.URI_PATH);
 			uriBuilder.addParameter(CONST.SRC_KEY, CONST.SRC_VAL);
 			uriBuilder.addParameter(CONST.FROM_KEY, CONST.FROM_VAL);
 			uriBuilder.addParameter(CONST.CHARSET_KEY, CONST.CHARSET_VAL);
@@ -51,7 +47,7 @@ public class UserInfoParser extends
 			uriBuilder.addParameter(CONST.SHOW_NAME_FLAG_NAME, CONST.SHOW_NAME_FLAG_VALUE);
 			uriBuilder.addParameter(CONST.HEAD_TYPE_NAME, CONST.HEAD_TYPE_VAL);
 			uriBuilder.addParameter("-", TimeUtil.getTimeLenth(13));
-			HttpGet request = new HttpGet(uriBuilder.build());
+			final HttpGet request = new HttpGet(uriBuilder.build());
 			request.setConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.NETSCAPE).build());
 			return request;
 		} catch (URISyntaxException e) {
@@ -61,7 +57,7 @@ public class UserInfoParser extends
 	}
 
 	@Override
-	public UserInfo execute(HttpGet request) {
+	public UserInfo execute(final HttpGet request) {
 		httpClient = HttpClients.custom()
 				.setConnectionManager(PoolingHttpClientConnection.getInstalce())
 				.addInterceptorLast(requestInterceptor)

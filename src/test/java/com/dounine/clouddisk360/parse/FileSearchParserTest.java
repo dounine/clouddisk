@@ -13,14 +13,14 @@ public class FileSearchParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileSearchParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileSearchParser fileSearchParser = new FileSearchParser(loginUserToken);
-		FileSearchParameter fileSearchParameter = new FileSearchParameter();
+		final FileSearchParser fileSearchParser = new FileSearchParser(loginUserToken);
+		final FileSearchParameter fileSearchParameter = new FileSearchParameter();
 		fileSearchParameter.setKey("lake");
 		fileSearchParameter.setPage(0);
 		fileSearchParameter.setPage_size(50);
-		FileSearch fileSearch = fileSearchParser.parse(fileSearchParameter);
+		final FileSearch fileSearch = fileSearchParser.parse(fileSearchParameter);
 
 		LOGGER.info(fileSearch.toString());
 	}

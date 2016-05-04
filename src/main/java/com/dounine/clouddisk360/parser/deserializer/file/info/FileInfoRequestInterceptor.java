@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class FileInfoRequestInterceptor extends BaseRequestInterceptor<FileInfoConst,FileInfoParser> implements HttpRequestInterceptor{
 
-	public FileInfoRequestInterceptor(FileInfoParser parser) {
+	public FileInfoRequestInterceptor(final FileInfoParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context,true);
 	}
 

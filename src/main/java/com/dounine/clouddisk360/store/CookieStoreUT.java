@@ -1,6 +1,5 @@
 package com.dounine.clouddisk360.store;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONReader;
 import com.alibaba.fastjson.JSONWriter;
 import com.dounine.clouddisk360.parser.deserializer.BaseConst;
@@ -26,11 +25,11 @@ public class CookieStoreUT {
 	private CookieStore cookieStore;
 	private LoginUserToken loginUserToken;
 
-	public void writeCookieStoreToDisk(CookieStore cookieStore, String[] filterCookies) {
+	public void writeCookieStoreToDisk(final CookieStore cookieStore, final String[] filterCookies) {
 		writeCookiesToDisk(cookieStore.getCookies(), filterCookies, true);
 	}
 
-	public void writeCookieStoreToDisk(CookieStore cookieStore, String[] filterCookies, boolean converCookieStore) {
+	public void writeCookieStoreToDisk(final CookieStore cookieStore, final String[] filterCookies, boolean converCookieStore) {
 		writeCookiesToDisk(cookieStore.getCookies(), filterCookies, converCookieStore);
 	}
 
@@ -38,10 +37,10 @@ public class CookieStoreUT {
 		return readCookieStoreForDisk(null);
 	}
 
-	public String readCookieValueForDisk(String filter) {
-		CookieStore cookieStore = readCookieStoreForDisk(new String[] { filter });
-		List<Cookie> cookies = cookieStore.getCookies();
-		for (Cookie cookie : cookies) {
+	public String readCookieValueForDisk(final String filter) {
+		final CookieStore cookieStore = readCookieStoreForDisk(new String[] { filter });
+		final List<Cookie> cookies = cookieStore.getCookies();
+		for (final Cookie cookie : cookies) {
 			if (cookie.getName().equals(filter)) {
 				return cookie.getValue();
 			}
@@ -50,14 +49,12 @@ public class CookieStoreUT {
 	}
 
 	public CookieStore readCookieStoreForDisk(String[] filterCookies) {
-		if (null != cookieStore)
-			return cookieStore;
-
-		if (null == filterCookies)
+		if (null == filterCookies){
 			filterCookies = new String[0];
-		List<BasicCookieStore3> cookies = new ArrayList<>(0);
-		String path = new StringBuilder(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(COOKIE_STORE_PATH).append(BaseConst.COOKIES_PATH_NAME).toString();
-		File cookiesFile = new File(path);
+		}
+		final List<BasicCookieStore3> cookies = new ArrayList<>(0);
+		final String path = new StringBuilder(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(COOKIE_STORE_PATH).append(BaseConst.COOKIES_PATH_NAME).toString();
+		final File cookiesFile = new File(path);
 		JSONReader reader = null;
 		FileReader fileReader = null;
 		try {
@@ -94,9 +91,9 @@ public class CookieStoreUT {
 				reader.close();
 			}
 		}
-		List<Cookie> appacheCookies = new ArrayList<>(cookies.size());
+		final List<Cookie> appacheCookies = new ArrayList<>(cookies.size());
 		BasicClientCookie2 cookie2 = null;
-		for (BasicCookieStore3 cookieStore3 : cookies) {
+		for (final BasicCookieStore3 cookieStore3 : cookies) {
 			cookie2 = new BasicClientCookie2(cookieStore3.getName(), cookieStore3.getValue());
 			cookie2.setCreationDate(cookieStore3.getCreationDate());
 			cookie2.setDomain(cookieStore3.getDomain());
@@ -106,13 +103,13 @@ public class CookieStoreUT {
 			cookie2.setVersion(cookieStore3.getVersion());
 			appacheCookies.add(cookie2);
 		}
-		List<Cookie> filterCookieLists = new ArrayList<>(appacheCookies.size());
-		for (Cookie cookie : appacheCookies) {
+		final List<Cookie> filterCookieLists = new ArrayList<>(appacheCookies.size());
+		for (final Cookie cookie : appacheCookies) {
 			boolean isFilter = false;
 			if (filterCookies.length == 0) {
 				isFilter = true;
 			} else {
-				for (String cookieName : filterCookies) {
+				for (final String cookieName : filterCookies) {
 					if (cookie.getName().equals(cookieName)) {
 						isFilter = true;
 						break;
@@ -127,21 +124,21 @@ public class CookieStoreUT {
 		return cookieStore;
 	}
 
-	private void writeCookiesToDisk(List<Cookie> responseCookies, String[] filterCookies, boolean converCookieStore) {
+	private void writeCookiesToDisk(final List<Cookie> responseCookies, String[] filterCookies, final boolean converCookieStore) {
 		if (null == filterCookies) {
 			filterCookies = new String[0];// 手动初始化,防止异常
 		}
 		if (null != responseCookies && responseCookies.size() > 0) {
 			List<Cookie> writeDiskCookies = new ArrayList<>(0);// 真正写入磁盘的cookies集合
 
-			List<Cookie> readDiskCookies = readCookieStoreForDisk().getCookies();// 读取磁盘上的cookies缓存
+			final List<Cookie> readDiskCookies = readCookieStoreForDisk().getCookies();// 读取磁盘上的cookies缓存
 
 			if (converCookieStore) {
-				for (Cookie responseCookie : responseCookies) {
+				for (final Cookie responseCookie : responseCookies) {
 					if (filterCookies.length == 0) {
 						writeDiskCookies.add(responseCookie);
 					} else {
-						for (String cookieName : filterCookies) {
+						for (final String cookieName : filterCookies) {
 							if (responseCookie.getName().equals(cookieName)) {
 								writeDiskCookies.add(responseCookie);
 								break;
@@ -149,19 +146,19 @@ public class CookieStoreUT {
 						}
 					}
 				}
-				for (Cookie diskCookie : readDiskCookies) {
+				for (final Cookie diskCookie : readDiskCookies) {
 					if (false == writeDiskCookies.stream().anyMatch(c -> c.getName().equals(diskCookie.getName()))) {// 把不存在的cookie重新添加回去
 						writeDiskCookies.add(diskCookie);
 					}
 				}
 			} else {
 				writeDiskCookies = new ArrayList<>(readDiskCookies);
-				for (Cookie responseCookie : responseCookies) {
+				for (final Cookie responseCookie : responseCookies) {
 					if (false == readDiskCookies.stream().anyMatch(c -> c.getName().equals(responseCookie.getName()))) {// 把新的cookie添加进去
 						if (filterCookies.length == 0) {
 							writeDiskCookies.add(responseCookie);
 						} else {
-							for (String cookieName : filterCookies) {
+							for (final String cookieName : filterCookies) {
 								if (responseCookie.getName().equals(cookieName)) {
 									writeDiskCookies.add(responseCookie);
 									break;
@@ -172,7 +169,7 @@ public class CookieStoreUT {
 				}
 			}
 
-			File cookiesFile = new File(new StringBuffer(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(COOKIE_STORE_PATH).append(BaseConst.COOKIES_PATH_NAME).toString());
+			final File cookiesFile = new File(new StringBuffer(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(COOKIE_STORE_PATH).append(BaseConst.COOKIES_PATH_NAME).toString());
 			JSONWriter writer = null;
 			FileWriter fileWriter = null;
 			try {
@@ -211,7 +208,7 @@ public class CookieStoreUT {
 		}
 	}
 
-	public void writeCookieStoreToDisk(CookieStore cookieStore, boolean converCookieStore) {
+	public void writeCookieStoreToDisk(final CookieStore cookieStore,final  boolean converCookieStore) {
 		writeCookiesToDisk(cookieStore.getCookies(), null, converCookieStore);
 	}
 

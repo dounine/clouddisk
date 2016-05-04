@@ -15,8 +15,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,32 +27,30 @@ public class UserCheckLoginParser extends
 	public UserCheckLoginParser(){
 		super();
 	}
-	public UserCheckLoginParser(LoginUserToken loginUser) {
+	public UserCheckLoginParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserCheckLoginParser.class);
-
 	@Override
-	public HttpPost initRequest(UserCheckLoginParameter userCheckLoginParameter) {
-		setBianaryFilename(LoginConst.USER_INFO_PATH_NAME);
+	public HttpPost initRequest(final UserCheckLoginParameter userCheckLoginParameter) {
+		setBinaryFilename(LoginConst.USER_INFO_PATH_NAME);
 		Login login = readObjForDisk(Login.class);
 		if(null==login){
 			login = new Login();
 		}
-		HttpPost request = new HttpPost(CONST.URI_PATH);
-		List<NameValuePair> datas = new ArrayList<>();
-		datas.add(new BasicNameValuePair(CONST.QID_NAME, login.getQid()));
-		datas.add(new BasicNameValuePair(CONST.METHOD_KEY, CONST.METHOD_VAL));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		datas.add(new BasicNameValuePair("t", TimeUtil.getTimeLenth(13)));
+		final HttpPost request = new HttpPost(CONST.URI_PATH);
+		final List<NameValuePair> data = new ArrayList<>();
+		data.add(new BasicNameValuePair(CONST.QID_NAME, login.getQid()));
+		data.add(new BasicNameValuePair(CONST.METHOD_KEY, CONST.METHOD_VAL));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		data.add(new BasicNameValuePair("t", TimeUtil.getTimeLenth(13)));
 		request.setConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.NETSCAPE).build());
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 
 	@Override
-	public UserCheckLogin execute(HttpPost request) {
+	public UserCheckLogin execute(final HttpPost request) {
 		httpClient = HttpClients.custom()
 				.setConnectionManager(PoolingHttpClientConnection.getInstalce())
 				.addInterceptorLast(requestInterceptor)

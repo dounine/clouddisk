@@ -10,12 +10,12 @@ import java.io.IOException;
 
 public class UserTokenRequestInterceptor extends BaseRequestInterceptor<UserTokenConst,UserTokenParser> {
 
-	public UserTokenRequestInterceptor(UserTokenParser parser) {
+	public UserTokenRequestInterceptor(final UserTokenParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context);
 		request.addHeader(UserTokenConst.HOST_KEY, UserTokenConst.HOST_VAL);
 		request.addHeader(UserTokenConst.REFERER_KEY, UserTokenConst.REFERER_VAL);

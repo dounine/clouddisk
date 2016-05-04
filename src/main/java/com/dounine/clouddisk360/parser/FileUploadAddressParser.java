@@ -24,15 +24,15 @@ public class FileUploadAddressParser extends
 		super();
 	}
 
-	public FileUploadAddressParser(LoginUserToken loginUser) {
+	public FileUploadAddressParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
-	public HttpPost initRequest(FileUploadAddressParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(1);
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileUploadAddressParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(1);
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

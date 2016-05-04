@@ -15,12 +15,12 @@ public class FileInfoParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileInfoParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileInfoParser fileInfoParser = new FileInfoParser(loginUserToken);
-		FileInfoParameter fileInfoParameter = new FileInfoParameter();
+		final FileInfoParser fileInfoParser = new FileInfoParser(loginUserToken);
+		final FileInfoParameter fileInfoParameter = new FileInfoParameter();
 		fileInfoParameter.setFilePath("/黄/工作日报最新模板.xlsx");
-		FileInfo fileInfo = fileInfoParser.parse(fileInfoParameter);
+		final FileInfo fileInfo = fileInfoParser.parse(fileInfoParameter);
 
 		LOGGER.info(fileInfo.toString());
 

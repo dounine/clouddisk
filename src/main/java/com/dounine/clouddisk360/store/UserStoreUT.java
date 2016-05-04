@@ -1,27 +1,26 @@
 package com.dounine.clouddisk360.store;
 
+import com.alibaba.fastjson.JSONWriter;
+import com.dounine.clouddisk360.parser.deserializer.login.Login;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSONWriter;
-import com.dounine.clouddisk360.parser.deserializer.login.Login;
-
 public class UserStoreUT {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserStoreUT.class);
 
-	public void writeStoreToDisk(String diskPath,Login login){
-		File cookiesFile = new File(diskPath + "userinfo.txt");
+	public void writeStoreToDisk(final String diskPath,final Login login){
+		final File cookiesFile = new File(diskPath + "userinfo.txt");
 		try {
 			if (!cookiesFile.exists()) {
 				cookiesFile.getParentFile().mkdirs();
 			}
-			JSONWriter writer = new JSONWriter(new FileWriter(cookiesFile));
+			final JSONWriter writer = new JSONWriter(new FileWriter(cookiesFile));
 			writer.startObject();
 			writer.writeObject(login);
 			writer.endObject();

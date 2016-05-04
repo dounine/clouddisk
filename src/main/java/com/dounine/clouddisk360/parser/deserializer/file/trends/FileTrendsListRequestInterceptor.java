@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class FileTrendsListRequestInterceptor extends BaseRequestInterceptor<FileTrendsListConst,FileTrendsListParser> implements HttpRequestInterceptor{
 
-	public FileTrendsListRequestInterceptor(FileTrendsListParser parser) {
+	public FileTrendsListRequestInterceptor(final FileTrendsListParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context,true);
 	}
 

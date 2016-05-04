@@ -18,19 +18,19 @@ public class FileAddParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileAddParserTest.class);
 
 	public void testDependParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileUploadParser fileUploadParser = new FileUploadParser(loginUserToken);
-		FileUploadParameter fileUploadParameter = new FileUploadParameter();
+		final FileUploadParser fileUploadParser = new FileUploadParser(loginUserToken);
+		final FileUploadParameter fileUploadParameter = new FileUploadParameter();
 		fileUploadParameter.setPath("/");
 		fileUploadParameter.setUploadFile(new File("/Users/huanghuanlai/java/lake/lake副本.txt"));
-		FileUpload fileUpload = fileUploadParser.parse(fileUploadParameter);
+		final FileUpload fileUpload = fileUploadParser.parse(fileUploadParameter);
 
-		FileAddFileParser fileAddParser = new FileAddFileParser();
+		final FileAddFileParser fileAddParser = new FileAddFileParser();
 		fileAddParser.dataSmooth(fileUploadParser);// 数据平滑
-		FileAddFileParameter fileAddParameter = new FileAddFileParameter();
+		final FileAddFileParameter fileAddParameter = new FileAddFileParameter();
 		fileAddParameter.setTk(fileUpload.getData().getTk());
-		FileAddFile fileAdd = fileAddParser.parse(fileAddParameter);
+		final FileAddFile fileAdd = fileAddParser.parse(fileAddParameter);
 
 		LOGGER.info(fileAdd.toString());
 	}

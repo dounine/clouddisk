@@ -16,27 +16,27 @@ public class PassportParser extends
 		super();
 	}
 
-	public PassportParser(LoginUserToken loginUser) {
+	public PassportParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpGet initRequest(PassportParameter passportParameter) {
+	public HttpGet initRequest(final PassportParameter passportParameter) {
 		return new HttpGet(parameter.getUri());
 	}
 
 	@Override
-	public Passport parse(PassportParameter parameter) {
+	public Passport parse(final PassportParameter parameter) {
 		if(parameter.isManual()){//手动检查
-			UserCheckLoginParser userCheckLoginParser = new UserCheckLoginParser(loginUserToken);
-			UserCheckLogin userCheckLogin = userCheckLoginParser.parse();
+			final UserCheckLoginParser userCheckLoginParser = new UserCheckLoginParser(loginUserToken);
+			final UserCheckLogin userCheckLogin = userCheckLoginParser.parse();
 			if(userCheckLogin.getErrno()!=0){//没有登录可获取验证码
-				CaptchaParser captchaParser = new CaptchaParser();
+				final CaptchaParser captchaParser = new CaptchaParser();
 				captchaParser.dataSmooth(userCheckLoginParser);//数据平滑
-				Captcha captcha = captchaParser.parse();
+				final Captcha captcha = captchaParser.parse();
 				parameter.setUri(captcha.getCaptchaUrl());
 				if(captcha.getCaptchaFlag()){//需要验码
-					Passport passport = super.parse(parameter);
+					final Passport passport = super.parse(parameter);
 					CaptThread.push_passport(loginUserToken.getAccount(),this);//手动更新验证码
 					return passport;
 				}

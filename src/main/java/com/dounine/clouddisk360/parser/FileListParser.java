@@ -20,26 +20,24 @@ import java.util.List;
 public class FileListParser extends
 		BaseParser<HttpPost, FileList, FileListConst, FileListParameter, FileListRequestInterceptor, FileListResponseHandle, FileListParser> {
 	
-	private static final Logger LOGGER = LoggerFactory.getLogger(FileListParser.class);
-
 	public FileListParser() {
 		super();
 	}
 
-	public FileListParser(LoginUserToken loginUser) {
+	public FileListParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
-	public HttpPost initRequest(FileListParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(0);
-		datas.add(new BasicNameValuePair(CONST.TYPE_NAME, String.valueOf(parameter.getType())));
-		datas.add(new BasicNameValuePair(CONST.ORDER_NAME, parameter.getOrder().getValue()));
-		datas.add(new BasicNameValuePair(CONST.FIELD_KEY, FileListConst.FIELD_VAL));
-		datas.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
-		datas.add(new BasicNameValuePair(CONST.PAGE_SIZE_NAME, String.valueOf(parameter.getPage_size())));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileListParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(0);
+		data.add(new BasicNameValuePair(CONST.TYPE_NAME, String.valueOf(parameter.getType())));
+		data.add(new BasicNameValuePair(CONST.ORDER_NAME, parameter.getOrder().getValue()));
+		data.add(new BasicNameValuePair(CONST.FIELD_KEY, FileListConst.FIELD_VAL));
+		data.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
+		data.add(new BasicNameValuePair(CONST.PAGE_SIZE_NAME, String.valueOf(parameter.getPage_size())));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

@@ -17,20 +17,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONBianary {
+public class JSONBinary {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JSONBianary.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JSONBinary.class);
 
-	private String bianaryFilename;
+	private String binaryFilename;
 	protected LoginUserToken loginUserToken;
 
 	public String getBianaryFilenamePath(){
-		return new StringBuffer(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(File.separator).append(bianaryFilename).toString();
+		return new StringBuffer(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(File.separator).append(binaryFilename).toString();
 	}
 
-	public <T> void writeObjToDisk(T obj) {
-		if (StringUtils.isNotBlank(bianaryFilename)) {
-			File file = new File(getBianaryFilenamePath());
+	public <T> void writeObjToDisk(final T obj) {
+		if (StringUtils.isNotBlank(binaryFilename)) {
+			final File file = new File(getBianaryFilenamePath());
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
 			}
@@ -61,9 +61,9 @@ public class JSONBianary {
 		}
 	}
 
-	public <T> T readObjForDisk(Class<T> clazz) {
-		if (StringUtils.isNotBlank(bianaryFilename)) {
-			File file = new File(getBianaryFilenamePath());
+	public <T> T readObjForDisk(final Class<T> clazz) {
+		if (StringUtils.isNotBlank(binaryFilename)) {
+			final File file = new File(getBianaryFilenamePath());
 			if (!file.exists()) {
 				LOGGER.error("读取的文件:[ " + file.getAbsolutePath() + " ]不存在,自动创建一个空文件");
 				file.getParentFile().mkdirs();
@@ -105,9 +105,9 @@ public class JSONBianary {
 		throw new CloudDiskException("读取的对象文件位置与文件名不能为空");
 	}
 
-	public <T> void writeListToDisk(List<T> lists) {
-		if (StringUtils.isNotBlank(bianaryFilename)) {
-			File file = new File(getBianaryFilenamePath());
+	public <T> void writeListToDisk(final List<T> lists) {
+		if (StringUtils.isNotBlank(binaryFilename)) {
+			final File file = new File(getBianaryFilenamePath());
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
 			}
@@ -137,10 +137,10 @@ public class JSONBianary {
 		}
 	}
 
-	public <T> List<T> readListForDisk(Class<T> clazz) {
-		List<T> lists = new ArrayList<>(0);
-		if (StringUtils.isNotBlank(bianaryFilename)) {
-			File file = new File(getBianaryFilenamePath());
+	public <T> List<T> readListForDisk(final Class<T> clazz) {
+		final List<T> lists = new ArrayList<>(0);
+		if (StringUtils.isNotBlank(binaryFilename)) {
+			final File file = new File(getBianaryFilenamePath());
 			if (!file.exists()) {
 				throw new CloudDiskException("读取的文件:[ " + file.getAbsolutePath() + " ]不存在");
 			}
@@ -173,15 +173,15 @@ public class JSONBianary {
 		throw new CloudDiskException("读取的对象集合文件位置与文件名不能为空");
 	}
 
-	public void setBianaryFilename(String bianaryFilename) {
-		this.bianaryFilename = bianaryFilename;
+	public void setBinaryFilename(final String binaryFilename) {
+		this.binaryFilename = binaryFilename;
 	}
 
 	public LoginUserToken getLoginUserToken() {
 		return loginUserToken;
 	}
 
-	public void setLoginUserToken(LoginUserToken loginUserToken) {
+	public void setLoginUserToken(final LoginUserToken loginUserToken) {
 		this.loginUserToken = loginUserToken;
 	}
 

@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class FileListAjaxRequestInterceptor extends BaseRequestInterceptor<FileListAjaxConst,FileListAjaxParser> implements HttpRequestInterceptor{
 
-	public FileListAjaxRequestInterceptor(FileListAjaxParser parser) {
+	public FileListAjaxRequestInterceptor(final FileListAjaxParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context,true);
 	}
 

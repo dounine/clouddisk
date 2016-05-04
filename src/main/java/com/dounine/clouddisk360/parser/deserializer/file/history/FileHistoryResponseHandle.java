@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileHistoryResponseHandle extends BaseResponseHandle<FileHistory, FileHistoryParser>
 		implements ResponseHandler<FileHistory> {
 
-	public FileHistoryResponseHandle(FileHistoryParser parse) {
+	public FileHistoryResponseHandle(final FileHistoryParser parse) {
 		super(parse);
 	}
 

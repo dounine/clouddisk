@@ -13,13 +13,13 @@ public class FileDownloadAddressParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileDownloadAddressParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileDownloadAddressParser fileDownloadAddressParser = new FileDownloadAddressParser(loginUserToken);
-		FileDownloadAddressParameter fileDownloadAddressParameter = new FileDownloadAddressParameter();
+		final FileDownloadAddressParser fileDownloadAddressParser = new FileDownloadAddressParser(loginUserToken);
+		final FileDownloadAddressParameter fileDownloadAddressParameter = new FileDownloadAddressParameter();
 		fileDownloadAddressParameter.setFname("/lake.txt");
 		fileDownloadAddressParameter.setNid("14502383266144986");
-		FileDownloadAddress fileDownloadAddress = fileDownloadAddressParser.parse(fileDownloadAddressParameter);
+		final FileDownloadAddress fileDownloadAddress = fileDownloadAddressParser.parse(fileDownloadAddressParameter);
 
 		LOGGER.info(fileDownloadAddress.toString());
 	}

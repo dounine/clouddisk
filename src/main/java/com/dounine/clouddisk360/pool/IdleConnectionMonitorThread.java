@@ -1,15 +1,15 @@
 package com.dounine.clouddisk360.pool;
 
-import java.util.concurrent.TimeUnit;
-
 import org.apache.http.conn.HttpClientConnectionManager;
+
+import java.util.concurrent.TimeUnit;
 
 public class IdleConnectionMonitorThread extends Thread{
 
 	private final HttpClientConnectionManager poolingHttpClientConnectionManager;  
-    private volatile boolean shutdown;  
+    private boolean shutdown;
       
-    public IdleConnectionMonitorThread(HttpClientConnectionManager poolingHttpClientConnectionManager) {  
+    public IdleConnectionMonitorThread(final HttpClientConnectionManager poolingHttpClientConnectionManager) {
         super();  
         this.poolingHttpClientConnectionManager = poolingHttpClientConnectionManager;  
     }  

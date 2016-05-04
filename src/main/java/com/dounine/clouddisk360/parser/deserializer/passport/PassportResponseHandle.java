@@ -16,16 +16,16 @@ import java.io.*;
 public class PassportResponseHandle extends BaseResponseHandle<Passport, PassportParser>
 		implements ResponseHandler<Passport> {
 
-	public PassportResponseHandle(PassportParser parse) {
+	public PassportResponseHandle(final PassportParser parse) {
 		super(parse);
 	}
 
 	@Override
-	public Passport handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+	public Passport handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
 		executeBefore(response);
 		saveCookie();
 		executeAfter(response);
-		Passport passport = new Passport();
+		final Passport passport = new Passport();
 		passport.setCaptchaUrl(BasePathCommon.BASE_PATH + parse.getLoginUserToken().getAccount()+"/captcha.jpg");
 		return passport;
 	}
@@ -36,8 +36,8 @@ public class PassportResponseHandle extends BaseResponseHandle<Passport, Passpor
 	}
 
 	@Override
-	public void executeBefore(HttpResponse response) {
-		HttpEntity entity = response.getEntity();
+	public void executeBefore(final HttpResponse response) {
+		final HttpEntity entity = response.getEntity();
 		InputStream is = null;
 		try {
 			is = entity.getContent();
@@ -45,8 +45,8 @@ public class PassportResponseHandle extends BaseResponseHandle<Passport, Passpor
 			e2.printStackTrace();
 		}
 		try {
-			LoginUserToken loginUser = parse.getLoginUserToken();
-			File file = new File(BasePathCommon.BASE_PATH + loginUser.getAccount()+"/captcha.jpg");
+			final LoginUserToken loginUser = parse.getLoginUserToken();
+			final File file = new File(BasePathCommon.BASE_PATH + loginUser.getAccount()+"/captcha.jpg");
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
 				file.createNewFile();

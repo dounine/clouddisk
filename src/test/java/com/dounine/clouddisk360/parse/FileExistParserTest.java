@@ -16,15 +16,15 @@ public class FileExistParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileExistParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileExistParser fileExistParser = new FileExistParser(loginUserToken);
-		FileExistParameter fileExistParameter = new FileExistParameter();
+		final FileExistParser fileExistParser = new FileExistParser(loginUserToken);
+		final FileExistParameter fileExistParameter = new FileExistParameter();
 		fileExistParameter.setDir("/");
-		List<String> fnames = new ArrayList<>();
+		final List<String> fnames = new ArrayList<>();
 		fnames.add("加班记录.numbers");
 		fileExistParameter.setFnames(fnames);
-		FileExist fileExist = fileExistParser.parse(fileExistParameter);
+		final FileExist fileExist = fileExistParser.parse(fileExistParameter);
 
 		LOGGER.info(fileExist.toString());
 	}

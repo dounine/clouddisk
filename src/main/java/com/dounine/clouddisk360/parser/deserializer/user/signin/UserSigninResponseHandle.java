@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class UserSigninResponseHandle extends BaseResponseHandle<UserSignin, UserSigninParser>
 		implements ResponseHandler<UserSignin> {
 
-	public UserSigninResponseHandle(UserSigninParser parse) {
+	public UserSigninResponseHandle(final UserSigninParser parse) {
 		super(parse);
 	}
 

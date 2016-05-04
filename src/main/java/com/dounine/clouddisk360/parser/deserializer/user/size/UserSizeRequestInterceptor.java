@@ -12,12 +12,12 @@ import java.io.IOException;
 public class UserSizeRequestInterceptor extends BaseRequestInterceptor<UserSizeConst,UserSizeParser>
 		implements HttpRequestInterceptor {
 
-	public UserSizeRequestInterceptor(UserSizeParser parser) {
+	public UserSizeRequestInterceptor(final UserSizeParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context, true);
 	}
 

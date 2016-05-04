@@ -9,7 +9,7 @@ public class CaptchaValidator {
 	private LocalDateTime validTime;
 	private String captFilePath;
 	private String validMsg;
-	private boolean success=false;
+	private boolean success;
 
 	public boolean isSuccess() {
 		return success;
@@ -33,9 +33,6 @@ public class CaptchaValidator {
 
 	public void setCaptFilePath(String captFilePath) {
 		this.captFilePath = captFilePath;
-	}
-
-	public CaptchaValidator() {
 	}
 
 	public String getCaptchaValue() {

@@ -22,19 +22,19 @@ public class FileRenameParser extends
 		super();
 	}
 
-	public FileRenameParser(LoginUserToken loginUser) {
+	public FileRenameParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileRenameParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(0);
-		datas.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
-		datas.add(new BasicNameValuePair(CONST.NEWPATH_NAME, parameter.getNewpath()));
-		datas.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileRenameParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(0);
+		data.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
+		data.add(new BasicNameValuePair(CONST.NEWPATH_NAME, parameter.getNewpath()));
+		data.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

@@ -5,7 +5,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 
 public class FileSearchResponseHandle extends BaseResponseHandle<FileSearch, FileSearchParser> {
 
-	public FileSearchResponseHandle(FileSearchParser parse) {
+	public FileSearchResponseHandle(final FileSearchParser parse) {
 		super(parse);
 	}
 

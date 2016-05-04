@@ -6,188 +6,179 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CaptchaThreadValidator implements Runnable {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaThreadValidator.class);
-	public static final int timeoutMin = 10*60;
+    private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaThreadValidator.class);
+    public static final int timeoutMin = 10 * 60;
+    private static final String ACCOUNT_NOT_NULL = "account not empty";
 
-	private CaptchaThreadValidator() {
-	}
+    private CaptchaThreadValidator() {
+    }
 
-	private static CaptchaThreadValidator captchaThreadValidator;
+    private static final CaptchaThreadValidator captchaThreadValidator;
 
-	static {
-		captchaThreadValidator = new CaptchaThreadValidator();
-		new Thread(captchaThreadValidator).start();
-	}
+    static {
+        captchaThreadValidator = new CaptchaThreadValidator();
+        new Thread(captchaThreadValidator).start();
+    }
 
-	public static CaptchaThreadValidator getInstance() {
-		return captchaThreadValidator;
-	}
+    public static CaptchaThreadValidator getInstance() {
+        return captchaThreadValidator;
+    }
 
-	private static Map<String, CaptchaValidator> captchaValidators = new HashMap<>(100);
+    private static Map<String, CaptchaValidator> captchaValidators = new ConcurrentHashMap(100);
 
-	public static boolean isTimeout(String account) {
-		return isTimeout(account, false);
-	}
+    public static boolean isTimeout(final String account) {
+        return isTimeout(account, false);
+    }
 
-	public static boolean isTimeout(String account, boolean removeTime) {
-		synchronized (captchaValidators) {
-			if (null == account) {
-				LOGGER.error("account 不能为空");
-				return false;
-			}
-			if (StringUtils.isNotBlank(account)) {
-				CaptchaValidator captchaValidator = captchaValidators.get(account);
-				if (null != captchaValidator) {
-					if (captchaValidator.getAddTime().plusMinutes(timeoutMin).isBefore(LocalDateTime.now())) {
-						if (removeTime) {
-							captchaValidators.remove(account);
-						}
-					}
-				}
-				return true;
-			} else {
-				LOGGER.error("account 不能为空");
-			}
-			return false;
-		}
-	}
+    public static boolean isTimeout(final String account,final boolean removeTime) {
+        boolean timeout = false;
+        if (StringUtils.isBlank(account)) {
+            LOGGER.error(ACCOUNT_NOT_NULL);
+        }else{
+            synchronized (captchaValidators) {
+                final CaptchaValidator captchaValidator = captchaValidators.get(account);
+                if (removeTime && null != captchaValidator && captchaValidator.getAddTime().plusMinutes(timeoutMin).isBefore(LocalDateTime.now())) {
+                    timeout = captchaValidators.remove(account).isSuccess();
+                }
+            }
+        }
+        return timeout;
+    }
 
-	public static void validCaptchaValidator(String account, CaptchaValidator captchaValidator) {
-		synchronized (captchaValidators) {
-			if (null == captchaValidator) {
-				LOGGER.error("captchaValidator 不能为空");
-				return;
-			}
-			if (StringUtils.isNotBlank(account)) {
-				CaptchaValidator cv = captchaValidators.get(account);
-				if(null!=cv){
-					cv.setCaptchaValue(captchaValidator.getCaptchaValue());
-					captchaValidators.put(account,cv);
-				}
-			} else {
-				LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
-			}
-		}
-	}
+    public static void validCaptchaValidator(final String account,final CaptchaValidator captchaValidator) {
+        if (StringUtils.isBlank(account)) {
+            LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+        }
+        if (null == captchaValidator) {
+            LOGGER.error("captchaValidator 不能为空");
+            return;
+        }
+        final CaptchaValidator cv = captchaValidators.get(account);
+        if (null != cv) {
+            synchronized (captchaValidators) {
+                cv.setCaptchaValue(captchaValidator.getCaptchaValue());
+                captchaValidators.put(account, cv);
+            }
+        }
+    }
 
-	public static void addCaptchaValidator(String account, CaptchaValidator captchaValidator) {
-		synchronized (captchaValidators) {
-			if (null == captchaValidator) {
-				LOGGER.error("captchaValidator 不能为空");
-				return;
-			}
-			if (StringUtils.isNotBlank(account)) {
-				captchaValidators.put(account, captchaValidator);
-			} else {
-				LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
-			}
-		}
-	}
+    public static void addCaptchaValidator(final String account,final CaptchaValidator captchaValidator) {
+        if (null == captchaValidator) {
+            LOGGER.error("captchaValidator 不能为空");
+            return;
+        }
+        synchronized (captchaValidators) {
+            if (StringUtils.isNotBlank(account)) {
+                captchaValidators.put(account, captchaValidator);
+            } else {
+                LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+            }
+        }
+    }
 
-	public static void removeCaptchaValidator(String account) {
-		synchronized (captchaValidators) {
-			if (null == account) {
-				LOGGER.error("account 不能为空");
-				return;
-			}
-			if (StringUtils.isNotBlank(account)) {
-				captchaValidators.remove(account);
-			} else {
-				LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
-			}
-		}
-	}
+    public static void removeCaptchaValidator(final String account) {
+        if (null == account) {
+            LOGGER.error("account 不能为空");
+            return;
+        }
+        synchronized (captchaValidators) {
+            if (StringUtils.isNotBlank(account)) {
+                captchaValidators.remove(account);
+            } else {
+                LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+            }
+        }
+    }
 
-	public static CaptchaValidator getCaptchaValidator(String account) {
-		return getCaptchaValidator(account, false);
-	}
+    public static CaptchaValidator getCaptchaValidator(final String account) {
+        return getCaptchaValidator(account, false);
+    }
 
-	public static CaptchaValidator getCaptchaValidator(LoginUserToken loginUserToken) {
-		return getCaptchaValidator(loginUserToken.getAccount(), false);
-	}
+    public static CaptchaValidator getCaptchaValidator(final LoginUserToken loginUserToken) {
+        return getCaptchaValidator(loginUserToken.getAccount(), false);
+    }
 
-	public static boolean hasCaptcha(String account){
-		synchronized (captchaValidators){
-			return null!=captchaValidators.get(account);
-		}
-	}
-	public static CaptchaValidator getCaptchaValidator(String account, boolean removePass) {
-		synchronized (captchaValidators) {
-			if (null == account) {
-				LOGGER.error("account 不能为空");
-				return null;
-			}
-			if (StringUtils.isNotBlank(account)) {
-				return captchaValidators.get(account);
-			} else {
-				LOGGER.error("account 不能为空");
-			}
-			return null;
-		}
-	}
+    public static boolean hasCaptcha(final String account) {
+        synchronized (captchaValidators) {
+            return null != captchaValidators.get(account);
+        }
+    }
 
-	public static Map<String, CaptchaValidator> getCaptchaValidators() {
-		return captchaValidators;
-	}
+    public static CaptchaValidator getCaptchaValidator(final String account,final boolean removePass) {
+        CaptchaValidator cv = null;
+        if (null == account) {
+            LOGGER.error("account 不能为空");
+        }else if (StringUtils.isNotBlank(account)) {
+            cv = captchaValidators.get(account);
+        } else {
+            LOGGER.error("account 不能为空");
+        }
+        return cv;
+    }
 
-	@Override
-	public void run() {
-		for(;;){
-			try {
-				Thread.sleep(1000);
-				synchronized (captchaValidators) {
-					String removeTimeoutKey = null;
-					for (String key : captchaValidators.keySet()) {
-						CaptchaValidator captchaValidator2 = captchaValidators.get(key);
-						if (captchaValidator2.getAddTime().plusMinutes(timeoutMin).isBefore(LocalDateTime.now())) {
-							removeTimeoutKey = key;
-							break;
-						}else if(null!=captchaValidator2.getValidTime()){
-							if (captchaValidator2.getValidTime().plusMinutes(timeoutMin).isBefore(LocalDateTime.now())) {
-								removeTimeoutKey = key;
-								break;
-							}
-						}
-					}
-					if (null != removeTimeoutKey) {
-						captchaValidators.remove(removeTimeoutKey);
-					}
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    public static Map<String, CaptchaValidator> getCaptchaValidators() {
+        return captchaValidators;
+    }
 
-	/**
-	 * 更新验证时间及验证信息
-	 * @param account
-	 */
-	public static void updateValidMsgAndTime(String account,String msg,boolean validStatus) {
-		synchronized (captchaValidators){
-			CaptchaValidator captchaValidator = captchaValidators.get(account);
-			if(null!=captchaValidator){
-				captchaValidator.setValidMsg(msg);
-				captchaValidator.setValidTime(LocalDateTime.now());
-				captchaValidator.setSuccess(validStatus);
-				captchaValidators.put(account,captchaValidator);
-			}else{
-				LOGGER.info("用户无需处理验证码");
-			}
-		}
-	}
-	public static void emptyCaptchaValue(String account) {
-		synchronized (captchaValidators){
-			CaptchaValidator captchaValidator = captchaValidators.get(account);
-			if(null!=captchaValidator){
-				captchaValidator.setCaptchaValue(null);
-				captchaValidators.put(account,captchaValidator);
-			}
-		}
-	}
+    @Override
+    public void run() {
+        for (; ; ) {
+            try {
+                Thread.sleep(1000);
+                String removeTimeoutKey = null;
+                for (final String key : captchaValidators.keySet()) {
+                    final CaptchaValidator captchaValidator2 = captchaValidators.get(key);
+                    if (captchaValidator2.getAddTime().plusMinutes(timeoutMin).isBefore(LocalDateTime.now())) {
+                        removeTimeoutKey = key;
+                        break;
+                    } else if (null != captchaValidator2.getValidTime() && captchaValidator2.getValidTime().plusMinutes(timeoutMin).isBefore(LocalDateTime.now())) {
+                        removeTimeoutKey = key;
+                        break;
+                    }
+                }
+                if (null != removeTimeoutKey) {
+                    synchronized (captchaValidators) {
+                        captchaValidators.remove(removeTimeoutKey);
+                    }
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 更新验证时间及验证信息
+     *
+     * @param account
+     */
+    public static void updateValidMsgAndTime(final String account,final String msg,final boolean validStatus) {
+        synchronized (captchaValidators) {
+            final CaptchaValidator captchaValidator = captchaValidators.get(account);
+            if (null != captchaValidator) {
+                captchaValidator.setValidMsg(msg);
+                captchaValidator.setValidTime(LocalDateTime.now());
+                captchaValidator.setSuccess(validStatus);
+                captchaValidators.put(account, captchaValidator);
+            } else {
+                LOGGER.info("用户无需处理验证码");
+            }
+        }
+    }
+
+    public static void emptyCaptchaValue(final String account) {
+        synchronized (captchaValidators) {
+            final CaptchaValidator captchaValidator = captchaValidators.get(account);
+            if (null != captchaValidator) {
+                captchaValidator.setCaptchaValue(null);
+                captchaValidators.put(account, captchaValidator);
+            }
+        }
+    }
 }

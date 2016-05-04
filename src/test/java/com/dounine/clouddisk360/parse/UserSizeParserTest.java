@@ -12,12 +12,12 @@ public class UserSizeParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserSizeParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = new LoginUserToken("102535481@qq.com","");
+		final LoginUserToken loginUserToken = new LoginUserToken("102535481@qq.com","");
 
-		UserSizeParser userSizeParser = new UserSizeParser(loginUserToken);
-		UserSize userSize = userSizeParser.parse();
+		final UserSizeParser userSizeParser = new UserSizeParser(loginUserToken);
+		final UserSize userSize = userSizeParser.parse();
 
-		userSizeParser.setBianaryFilename("user/userSize.txt");
+		userSizeParser.setBinaryFilename("user/userSize.txt");
 
 		LOGGER.info(userSize.toString());
 	}

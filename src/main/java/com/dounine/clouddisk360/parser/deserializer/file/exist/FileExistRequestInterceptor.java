@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class FileExistRequestInterceptor extends BaseRequestInterceptor<FileExistConst,FileExistParser> implements HttpRequestInterceptor{
 
-	public FileExistRequestInterceptor(FileExistParser parser) {
+	public FileExistRequestInterceptor(final FileExistParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request,final HttpContext context) throws HttpException, IOException {
 		super.process(request, context,true);
 	}
 

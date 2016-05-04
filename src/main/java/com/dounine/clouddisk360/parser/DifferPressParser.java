@@ -29,41 +29,41 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Parse("分压重定向域名")
 @DependResult(customInit = false, result = DifferPress.class)
 public class DifferPressParser extends
 		BaseParser<HttpGet, DifferPress, DifferPressConst, DifferPressParameter, DifferPressRequestInterceptor, DifferPressResponseHandle, DifferPressParser> {
 
-	public static Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new HashMap<>();
-	private Captcha captcha = null;
-	private CaptchaParser captchaParser = null;
+	public static Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();
+	private Captcha captcha;
+	private CaptchaParser captchaParser;
 
 	public DifferPressParser() {
 		super();
 	}
 
-	public DifferPressParser(LoginUserToken loginUser) {
+	public DifferPressParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(DifferPressParser.class);
 
 	@Override
-	public HttpGet initRequest(DifferPressParameter parameter) {
+	public HttpGet initRequest(final DifferPressParameter parameter) {
+		HttpGet request = null;
 		try {
-			URIBuilder uri = new URIBuilder(CONST.URI_PATH);
+			final URIBuilder uri = new URIBuilder(CONST.URI_PATH);
 			uri.setParameter(CONST.ST_KEY, TimeUtil.getTimeLenth(10));
 			uri.setParameter(CONST.SID_KEY, StringUtils.EMPTY);
 			uri.setParameter(CONST.KEEPALIVE_KEY, CONST.KEEPALIVE_VAL);
-			HttpGet request = new HttpGet(uri.build());
-			return request;
+			request = new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return request;
 	}
 
 	@Override
@@ -71,23 +71,23 @@ public class DifferPressParser extends
 		if(hasException()){
 			return execClouddiskException();
 		}
-		String account = loginUserToken.getAccount();
-		CaptchaValidator captchaValidator = CaptchaThreadValidator.getCaptchaValidator(account);
-		if((null!=captchaValidator&&!captchaValidator.isSuccess())){
+		final String account = loginUserToken.getAccount();
+		final CaptchaValidator captchaValidator = CaptchaThreadValidator.getCaptchaValidator(account);
+		if(null!=captchaValidator&&!captchaValidator.isSuccess()){
 			this.setCloudDiskException(new CloudDiskException("请验证帐户验证码成功后再操作."));
 			return null;
 		}
-		DifferPressParser differPressParser = DIFFER_PRESS_PARSERS.get(account);
+		final DifferPressParser differPressParser = DIFFER_PRESS_PARSERS.get(account);
 		if (null != differPressParser) {
 			this.dataSmooth(differPressParser);
-			DifferPress differPress = differPressParser.getParseResult();
+			final DifferPress differPress = differPressParser.getParseResult();
 			if(null!=differPress&&null!=differPress.getRedirectUrl()){
 				return differPressParser.getParseResult();
 			}
 			DIFFER_PRESS_PARSERS.remove(loginUserToken.getAccount());
 		}
-		HttpGet request = initRequest(parameter);
-		DifferPress differPress = execute(request);
+		final HttpGet request = initRequest(parameter);
+		final DifferPress differPress = execute(request);
 		if(null!=differPress){
 			this.dependencys.put(DifferPress.class,differPress);//把parser结果保存到自己的解析器当中,方便下次获取
 			DIFFER_PRESS_PARSERS.put(loginUserToken.getAccount(), this);// 保存当前parser解析器
@@ -95,16 +95,16 @@ public class DifferPressParser extends
 		return differPress;
 	}
 
-	public DifferPress execute(HttpGet request) {
+	public DifferPress execute(final HttpGet request) {
 		if(hasException()){
 			return execClouddiskException();
 		}
-		UserCheckLoginParser userCheckLoginParser = new UserCheckLoginParser(loginUserToken);
-		UserCheckLogin userCheckLogin = userCheckLoginParser.parse();
+		final UserCheckLoginParser userCheckLoginParser = new UserCheckLoginParser(loginUserToken);
+		final UserCheckLogin userCheckLogin = userCheckLoginParser.parse();
 		if(userCheckLogin.getErrno()!=0){//检测用户是否已经正常使用
 
-			CaptchaParser captchaParser = new CaptchaParser(loginUserToken);
-			Captcha captcha = captchaParser.parse();
+			final CaptchaParser captchaParser = new CaptchaParser(loginUserToken);
+			final Captcha captcha = captchaParser.parse();
 			if(captchaParser.hasException()){
 				this.cloudDiskException = captchaParser.getCloudDiskException();
 				return null;
@@ -114,19 +114,19 @@ public class DifferPressParser extends
 				this.captcha = captcha;
 				new Thread(new CaptThread(this)).start();//启动线程进行侦听登录操作
 				this.setCloudDiskException(new CloudDiskException("请验证帐户验证码成功后再操作."));
-				DifferPress differPress = new DifferPress();
+				final DifferPress differPress = new DifferPress();
 				differPress.setErrno(401);
 				differPress.setCddmsg("请验证帐户验证码成功后再操作.");
 				return differPress;
 			}else{//无验证码,直接登录
-				UserTokenParser userTokenParser = new UserTokenParser(loginUserToken);
-				UserToken userToken = userTokenParser.parse();
+				final UserTokenParser userTokenParser = new UserTokenParser(loginUserToken);
+				final UserToken userToken = userTokenParser.parse();
 
-				LoginParameter loginParameter = new LoginParameter();
-				LoginParser loginParser = new LoginParser(loginUserToken);
+				final LoginParameter loginParameter = new LoginParameter();
+				final LoginParser loginParser = new LoginParser(loginUserToken);
 				loginParameter.setToken(userToken.getToken());
 
-				Login login = loginParser.parse(loginParameter);
+				final Login login = loginParser.parse(loginParameter);
 				if (null == login) {//登录失败
 					throw new CloudDiskException("登录失败");
 				}else{//登录成功
@@ -140,7 +140,7 @@ public class DifferPressParser extends
 				.setDefaultCookieStore(readCookieStoreDisk())
 				.build();
 
-		RequestConfig differPressConfig = RequestConfig.copy(COOKIE_REQUEST_CONFIG).setCookieSpec(CookieSpecs.NETSCAPE)
+		final RequestConfig differPressConfig = RequestConfig.copy(COOKIE_REQUEST_CONFIG).setCookieSpec(CookieSpecs.NETSCAPE)
 				.setRedirectsEnabled(false).build();// use my config
 		request.setConfig(differPressConfig);
 		try {
@@ -148,7 +148,7 @@ public class DifferPressParser extends
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		DifferPress differPress = new DifferPress();
+		final DifferPress differPress = new DifferPress();
 		differPress.setCddmsg(userCheckLogin.getCddmsg());
 		differPress.setErrno(userCheckLogin.getErrno());
 		differPress.setErrmsg(userCheckLogin.getErrmsg());

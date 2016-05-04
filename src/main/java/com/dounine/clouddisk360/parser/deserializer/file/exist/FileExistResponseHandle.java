@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileExistResponseHandle extends BaseResponseHandle<FileExist, FileExistParser>
 		implements ResponseHandler<FileExist> {
 
-	public FileExistResponseHandle(FileExistParser parse) {
+	public FileExistResponseHandle(final FileExistParser parse) {
 		super(parse);
 	}
 

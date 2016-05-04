@@ -13,12 +13,12 @@ public class FileListAjaxParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileListAjaxParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileListAjaxParser fileListAjaxParser = new FileListAjaxParser(loginUserToken);
-		FileListAjaxParameter fileListAjaxParameter = new FileListAjaxParameter();
+		final FileListAjaxParser fileListAjaxParser = new FileListAjaxParser(loginUserToken);
+		final FileListAjaxParameter fileListAjaxParameter = new FileListAjaxParameter();
 		fileListAjaxParameter.setPath("/黄/");
-		FileListAjax fileListAjax = fileListAjaxParser.parse(fileListAjaxParameter);
+		final FileListAjax fileListAjax = fileListAjaxParser.parse(fileListAjaxParameter);
 		LOGGER.info(fileListAjax.toString());
 	}
 }

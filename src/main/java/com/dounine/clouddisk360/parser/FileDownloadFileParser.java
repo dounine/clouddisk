@@ -18,12 +18,12 @@ public class FileDownloadFileParser extends
 		super();
 	}
 
-	public FileDownloadFileParser(LoginUserToken loginUser) {
+	public FileDownloadFileParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpGet initRequest(FileDownloadFileParameter parameter) {
+	public HttpGet initRequest(final FileDownloadFileParameter parameter) {
 		return new HttpGet(parameter.getDownloadPath());
 	}
 

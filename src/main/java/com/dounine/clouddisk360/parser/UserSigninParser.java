@@ -23,18 +23,18 @@ public class UserSigninParser extends
 	public UserSigninParser(){
 		super();
 	}
-	public UserSigninParser(LoginUserToken loginUser) {
+	public UserSigninParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(UserSigninParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(4);
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		datas.add(new BasicNameValuePair(CONST.METHOD_KEY, UserSizeConst.METHOD_VAL));
-		datas.add(new BasicNameValuePair("t", TimeUtil.getTimeLenth(10)));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final UserSigninParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(4);
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		data.add(new BasicNameValuePair(CONST.METHOD_KEY, UserSizeConst.METHOD_VAL));
+		data.add(new BasicNameValuePair("t", TimeUtil.getTimeLenth(10)));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

@@ -13,6 +13,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Parse("判断文件是否存在")
 @Dependency(depends = { AuthTokenParser.class })
@@ -24,20 +25,18 @@ public class FileExistParser extends
 		super();
 	}
 
-	public FileExistParser(LoginUserToken loginUser) {
+	public FileExistParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileExistParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(0);
-		datas.add(new BasicNameValuePair(CONST.DIR_NAME, parameter.getDir()));
-		for (String fname : parameter.getFnames()) {
-			datas.add(new BasicNameValuePair(CONST.FNAME_NAME, fname));
-		}
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileExistParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(0);
+		data.add(new BasicNameValuePair(CONST.DIR_NAME, parameter.getDir()));
+		data.addAll(parameter.getFnames().stream().map(fame -> new BasicNameValuePair(CONST.FNAME_NAME, fame)).collect(Collectors.toList()));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

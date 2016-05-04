@@ -13,13 +13,13 @@ public class FileDownloadAddressResponseHandle
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileDownloadAddressResponseHandle.class);
 
-	public FileDownloadAddressResponseHandle(FileDownloadAddressParser parse) {
+	public FileDownloadAddressResponseHandle(final FileDownloadAddressParser parse) {
 		super(parse);
 	}
 
 	@Override
-	public FileDownloadAddress desializer(String result) {
-		FileDownloadAddress fileDownloadAddress = super.desializer(result);
+	public FileDownloadAddress desializer(final String result) {
+		final FileDownloadAddress fileDownloadAddress = super.desializer(result);
 		if(fileDownloadAddress.getErrno()!=0){
 			LOGGER.error(fileDownloadAddress.getErrmsg());
 		}

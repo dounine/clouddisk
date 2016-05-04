@@ -16,15 +16,15 @@ public class BaseRequestInterceptor<Const extends BaseConst,Parser extends BaseP
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseRequestInterceptor.class);
 
 	protected Parser parser;
-	public BaseRequestInterceptor(Parser parser){
+	public BaseRequestInterceptor(final Parser parser){
 		this.parser = parser;
 	}
 	
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		requestInit(request,context);
 	}
 	
-	public void requestInit(HttpRequest request, HttpContext context)throws HttpException, IOException {
+	public void requestInit(final HttpRequest request, final HttpContext context)throws HttpException, IOException {
 		request.setHeader(Const.ACCEPT_KEY, Const.ACCEPT_VAL);
 		request.setHeader(Const.ACCEPT_ENCODING_KEY, Const.ACCEPT_ENCODING_VAL);
 		request.setHeader(Const.ACCEPT_LANGUAGE_KEY, Const.ACCEPT_LANGUAGE_VAL);
@@ -33,10 +33,10 @@ public class BaseRequestInterceptor<Const extends BaseConst,Parser extends BaseP
 		request.setHeader(Const.USER_AGENT_KEY, Const.USER_AGENT_VAL);
 	}
 	
-	public void process(HttpRequest request, HttpContext context,boolean useHost) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context,boolean useHost) throws HttpException, IOException {
 		requestInit(request,context);
-		String hostName = parser.getRedHost();
-		String host = parser.getRedSchmemHost();
+		final String hostName = parser.getRedHost();
+		final String host = parser.getRedSchmemHost();
 		if(StringUtils.isNotBlank(hostName)){
 			request.setHeader(Const.HOST_KEY,hostName);
 		}else{

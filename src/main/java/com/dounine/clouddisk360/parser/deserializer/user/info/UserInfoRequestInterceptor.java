@@ -12,12 +12,12 @@ import java.io.IOException;
 public class UserInfoRequestInterceptor extends BaseRequestInterceptor<UserInfoConst,UserInfoParser>
 		implements HttpRequestInterceptor {
 
-	public UserInfoRequestInterceptor(UserInfoParser parser) {
+	public UserInfoRequestInterceptor(final UserInfoParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context,true);
 		request.setHeader(UserInfoConst.HOST_KEY,UserInfoConst.HOST_VAL);
 	}

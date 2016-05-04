@@ -2,8 +2,8 @@ package com.dounine.clouddisk360.util;
 
 public class TimeUtil {
 
-	public static String getTimeLenth(int length){
-		String time = String.valueOf(System.currentTimeMillis());
+	public static String getTimeLenth(final int length){
+		final String time = String.valueOf(System.currentTimeMillis());
 		if(length>time.length()){
 			return time;
 		}

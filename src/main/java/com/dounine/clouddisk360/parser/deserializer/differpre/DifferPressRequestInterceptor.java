@@ -12,7 +12,7 @@ import java.io.IOException;
 public class DifferPressRequestInterceptor extends BaseRequestInterceptor<DifferPressConst,DifferPressParser>
 		implements HttpRequestInterceptor {
 
-	public DifferPressRequestInterceptor(DifferPressParser parser) {
+	public DifferPressRequestInterceptor(final DifferPressParser parser) {
 		super(parser);
 	}
 

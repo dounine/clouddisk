@@ -22,19 +22,19 @@ public class FileRestoreParser extends
 		super();
 	}
 
-	public FileRestoreParser(LoginUserToken loginUser) {
+	public FileRestoreParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileRestoreParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(4);
-		datas.add(new BasicNameValuePair(CONST.ID_NAME, parameter.getId()));
-		datas.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
-		datas.add(new BasicNameValuePair(CONST.SOURCE_NAME, parameter.getSource()));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileRestoreParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(4);
+		data.add(new BasicNameValuePair(CONST.ID_NAME, parameter.getId()));
+		data.add(new BasicNameValuePair(CONST.NID_NAME, parameter.getNid()));
+		data.add(new BasicNameValuePair(CONST.SOURCE_NAME, parameter.getSource()));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

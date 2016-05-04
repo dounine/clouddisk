@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileTrendsListResponseHandle extends BaseResponseHandle<FileTrendsList, FileTrendsListParser>
 		implements ResponseHandler<FileTrendsList> {
 
-	public FileTrendsListResponseHandle(FileTrendsListParser parse) {
+	public FileTrendsListResponseHandle(final FileTrendsListParser parse) {
 		super(parse);
 	}
 

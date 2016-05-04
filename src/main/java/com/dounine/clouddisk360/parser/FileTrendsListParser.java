@@ -20,7 +20,7 @@ public class FileTrendsListParser extends
 		super();
 	}
 
-	public FileTrendsListParser(LoginUserToken loginUser) {
+	public FileTrendsListParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 

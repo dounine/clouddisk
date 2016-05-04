@@ -14,16 +14,16 @@ public class FileHistoryParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileHistoryParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileHistoryParser fileHistoryParser = new FileHistoryParser(loginUserToken);
-		FileHistoryParameter fileHistoryParameter = new FileHistoryParameter();
+		final FileHistoryParser fileHistoryParser = new FileHistoryParser(loginUserToken);
+		final FileHistoryParameter fileHistoryParameter = new FileHistoryParameter();
 		fileHistoryParameter.setHis_nid("14502383266144986");
 		fileHistoryParameter.setNid("14502383266144986");
 		fileHistoryParameter.setStart("0");
 		fileHistoryParameter.setNum("300");
 		fileHistoryParameter.setSource(StringUtils.EMPTY);
-		FileHistory fileHistory = fileHistoryParser.parse(fileHistoryParameter);
+		final FileHistory fileHistory = fileHistoryParser.parse(fileHistoryParameter);
 
 		LOGGER.info(fileHistory.toString());
 	}

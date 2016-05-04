@@ -11,12 +11,12 @@ import java.io.IOException;
 
 public class CaptchaRequestInterceptor extends BaseRequestInterceptor<CaptchaConst,CaptchaParser> implements HttpRequestInterceptor {
 
-	public CaptchaRequestInterceptor(CaptchaParser parser) {
+	public CaptchaRequestInterceptor(final CaptchaParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context);
 		request.setHeader(CaptchaConst.HOST_KEY, CaptchaConst.HOST_VAL);
 		request.setHeader(CaptchaConst.REFERER_KEY, CaptchaConst.REFERER_VAL);

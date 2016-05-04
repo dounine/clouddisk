@@ -7,7 +7,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 
 public class FileListResponseHandle extends BaseResponseHandle<FileList, FileListParser> implements ResponseHandler<FileList> {
 	
-	public FileListResponseHandle(FileListParser parse) {
+	public FileListResponseHandle(final FileListParser parse) {
 		super(parse);
 	}
 

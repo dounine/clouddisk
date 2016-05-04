@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileInfoResponseHandle extends BaseResponseHandle<FileInfo, FileInfoParser>
 		implements ResponseHandler<FileInfo> {
 
-	public FileInfoResponseHandle(FileInfoParser parse) {
+	public FileInfoResponseHandle(final FileInfoParser parse) {
 		super(parse);
 	}
 

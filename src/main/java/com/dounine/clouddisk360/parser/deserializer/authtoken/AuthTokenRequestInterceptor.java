@@ -12,12 +12,12 @@ import java.io.IOException;
 public class AuthTokenRequestInterceptor extends BaseRequestInterceptor<AuthTokenConst,AuthTokenParser>
 		implements HttpRequestInterceptor {
 
-	public AuthTokenRequestInterceptor(AuthTokenParser parser) {
+	public AuthTokenRequestInterceptor(final AuthTokenParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context, true);
 	}
 

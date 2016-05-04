@@ -15,26 +15,26 @@ import java.net.URISyntaxException;
 public class DifferPressResponseHandle extends BaseResponseHandle<DifferPress, DifferPressParser>
 		implements ResponseHandler<DifferPress> {
 
-	public DifferPressResponseHandle(DifferPressParser parse) {
+	public DifferPressResponseHandle(final DifferPressParser parse) {
 		super(parse);
 	}
 
 	@Override
-	public DifferPress handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+	public DifferPress handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
 		executeBefore(response);
-		Header[] headers = parse.getHttpClientContext().getResponse().getAllHeaders();
-		String localtion = null;
+		final Header[] headers = parse.getHttpClientContext().getResponse().getAllHeaders();
+		String location = null;
 		for (Header header : headers) {
 			if (header.getName().equals("Location")) {
-				localtion = header.getValue();
+				location = header.getValue();
 				break;
 			}
 		}
 		DifferPress differPress = null;
 		try {
-			if(StringUtils.isNotBlank(localtion)){
+			if(StringUtils.isNotBlank(location)){
 				differPress = new DifferPress();
-				differPress.setRedirectUrl(new URIBuilder(localtion));
+				differPress.setRedirectUrl(new URIBuilder(location));
 				parse.getDependencys().put(DifferPress.class,differPress);
 			}
 		} catch (URISyntaxException e) {

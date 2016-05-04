@@ -12,10 +12,10 @@ public class FileTrendsListParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileTrendsListParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileTrendsListParser fileTrendsListParser = new FileTrendsListParser(loginUserToken);
-		FileTrendsList fileTrendsList = fileTrendsListParser.parse();
+		final FileTrendsListParser fileTrendsListParser = new FileTrendsListParser(loginUserToken);
+		final FileTrendsList fileTrendsList = fileTrendsListParser.parse();
 
 		LOGGER.info(fileTrendsList.toString());
 	}

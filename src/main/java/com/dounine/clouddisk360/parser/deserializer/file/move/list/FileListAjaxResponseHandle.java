@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileListAjaxResponseHandle extends BaseResponseHandle<FileListAjax, FileListAjaxParser>
 		implements ResponseHandler<FileListAjax> {
 
-	public FileListAjaxResponseHandle(FileListAjaxParser parse) {
+	public FileListAjaxResponseHandle(final FileListAjaxParser parse) {
 		super(parse);
 	}
 

@@ -14,19 +14,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CaptThread implements Runnable{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CaptThread.class);
 
-	private static Map<String,PassportParser> PASSPORT_PARSER_MAP = new HashMap<>();
+	private static Map<String,PassportParser> PASSPORT_PARSER_MAP = new ConcurrentHashMap();
+	private final int timeOutSeconds = CaptchaThreadValidator.timeoutMin;
+	private static final int seconds = 3,sleepTimeSeconds = 1000*seconds;
 
-	private DifferPressParser differPressParser;
+	private final DifferPressParser differPressParser;
 	private LoginParser loginParser;
 	private PassportParser passportParser;
-	public CaptThread(DifferPressParser differPressParser){
+	public CaptThread(final DifferPressParser differPressParser){
 		LOGGER.info("云盘线程验证启动");
 		this.differPressParser = differPressParser;
 		init();
@@ -37,12 +39,12 @@ public class CaptThread implements Runnable{
 		loginParser.dataSmooth(differPressParser.getCaptchaParser());
 
 		passportParser = new PassportParser(differPressParser.getLoginUserToken());
-		PassportParameter passportParameter = new PassportParameter();
+		final PassportParameter passportParameter = new PassportParameter();
 		passportParameter.setUri(differPressParser.getCaptcha().getCaptchaUrl());
-		Passport passport = passportParser.parse(passportParameter);
+		final Passport passport = passportParser.parse(passportParameter);
 
-		String account = differPressParser.getLoginUserToken().getAccount();
-		CaptchaValidator accountValidator = new CaptchaValidator();
+		final String account = differPressParser.getLoginUserToken().getAccount();
+		final CaptchaValidator accountValidator = new CaptchaValidator();
 		accountValidator.setAddTime(LocalDateTime.now());
 		accountValidator.setCaptFilePath(passport.getCaptchaUrl());//验证码文件路径
 		CaptchaThreadValidator.addCaptchaValidator(account, accountValidator);// add
@@ -53,26 +55,23 @@ public class CaptThread implements Runnable{
 		// validator
 		boolean returnExist = true;
 		CaptchaValidator cValidator = null;
-		String account = differPressParser.getLoginUserToken().getAccount();
+		final String account = differPressParser.getLoginUserToken().getAccount();
 		try {
-			int timeOutSeconds = CaptchaThreadValidator.timeoutMin;
-			int seconds = 3;
 			int runTimeSeconds = 0;
-			int sleepTimeSeconds = 1000*seconds;
 			do{
 				Thread.sleep(sleepTimeSeconds);
 				runTimeSeconds += seconds;
 				cValidator = CaptchaThreadValidator.getCaptchaValidator(account);
-				if (null != cValidator && null != cValidator.getCaptchaValue()) {
+				if (null == cValidator) {
 					returnExist = false;
-				} else if (null == cValidator) {
+				}else if (null != cValidator && null != cValidator.getCaptchaValue()) {
 					returnExist = false;
 				}
 				if (runTimeSeconds >= timeOutSeconds) {
 					returnExist = false;
 					CaptchaThreadValidator.removeCaptchaValidator(account);
 				}
-				PassportParser _passportParser = get_passport(account);//获取手动变动的验证码解析器
+				final PassportParser _passportParser = get_passport(account);//获取手动变动的验证码解析器
 				if(null!=_passportParser){
 					passportParser = _passportParser;
 				}
@@ -86,16 +85,16 @@ public class CaptThread implements Runnable{
 			remove_passport(account);//移除验证码解析器
 			LOGGER.info("验证码超时未处理,线程监听验证结束");
 		}else{
-			LoginParameter loginParameter = new LoginParameter();
+			final LoginParameter loginParameter = new LoginParameter();
 			loginParameter.setCaptchaValue(cValidator.getCaptchaValue());
 			loginParser.dataSmooth(passportParser);// 数据平滑
 
-			UserTokenParser userTokenParser = new UserTokenParser(differPressParser.getLoginUserToken());
+			final UserTokenParser userTokenParser = new UserTokenParser(differPressParser.getLoginUserToken());
 			userTokenParser.dataSmooth(loginParser);// 数据平滑
-			UserToken userToken = userTokenParser.parse();
+			final UserToken userToken = userTokenParser.parse();
 			loginParameter.setToken(userToken.getToken());
 
-			Login login = loginParser.parse(loginParameter);
+			final Login login = loginParser.parse(loginParameter);
 			CaptchaThreadValidator.emptyCaptchaValue(account);//清空验证码
 			if (null != login&& StringUtils.isNotBlank(login.getQid())) {
 				CaptchaThreadValidator.updateValidMsgAndTime(account,"登录成功",true);//更新验证时间
@@ -111,19 +110,19 @@ public class CaptThread implements Runnable{
 		}
 	}
 
-	public static void push_passport(String account,PassportParser passportParser){
+	public static void push_passport(final String account,final PassportParser passportParser){
 		synchronized (PASSPORT_PARSER_MAP){
 			PASSPORT_PARSER_MAP.put(account,passportParser);
 		}
 	}
 
-	public PassportParser remove_passport(String account){
+	public PassportParser remove_passport(final String account){
 		synchronized (PASSPORT_PARSER_MAP){
 			return PASSPORT_PARSER_MAP.remove(account);
 		}
 	}
 
-	public PassportParser get_passport(String account){
+	public PassportParser get_passport(final String account){
 		synchronized (PASSPORT_PARSER_MAP){
 			return PASSPORT_PARSER_MAP.get(account);
 		}

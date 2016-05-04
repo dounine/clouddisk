@@ -9,38 +9,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class LoginResponseHandle extends BaseResponseHandle<Login, LoginParser> implements ResponseHandler<Login> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginResponseHandle.class);
 
-	public static final Pattern VAL_PAT = Pattern.compile("[{].*[}]");
-	public static final Pattern ERR_VAL_PAT = Pattern.compile("errno=\\d{2,}&errmsg=.{2,}[&]");//查找错误信息
-
-	public LoginResponseHandle(LoginParser parse) {
+	public LoginResponseHandle(final LoginParser parse) {
 		super(parse);
 	}
 
 	@Override
 	public Login desializer(String result) {
-		Login login = super.desializer(result);
-		if(login.getErrno()!=0){
-			return login;
+		final Login login = super.desializer(result);
+		if(login.getErrno()==0){
+			parse.setLoginInfo(login);//把用户信息放到上下文当中,以便随时获取
+			parse.setBinaryFilename(LoginConst.USER_INFO_PATH_NAME);
+			parse.writeObjToDisk(login);
 		}
-		parse.setLoginInfo(login);//把用户信息放到上下文当中,以便随时获取
-		parse.setBianaryFilename(LoginConst.USER_INFO_PATH_NAME);
-		parse.writeObjToDisk(login);
 		return login;
 	}
 
 	@Override
 	public String disassemblyResult(String result) {
 		result = URLUtil.decode(result);
-		Matcher matcher = VAL_PAT.matcher(result);
-		Matcher errMatcher = ERR_VAL_PAT.matcher(result);
+		final Matcher matcher = VAL_PAT.matcher(result);
+		final Matcher errMatcher = ERR_VAL_PAT.matcher(result);
 		if(errMatcher.find()){
-			String msg = errMatcher.group();
-			String[] vs = msg.split("&");
+			final String msg = errMatcher.group();
+			final String[] vs = msg.split("&");
 			return String.format("{'errno':%d,'errmsg':'%s'}",Integer.parseInt(vs[0].split("=")[1]),vs[1].split("=")[1]);
 		}else if(matcher.find()){
 			return matcher.group();

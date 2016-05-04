@@ -12,10 +12,10 @@ public class UserSigninParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserSigninParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		UserSigninParser userSigninParser = new UserSigninParser(loginUserToken);
-		UserSignin userSignin = userSigninParser.parse();
+		final UserSigninParser userSigninParser = new UserSigninParser(loginUserToken);
+		final UserSignin userSignin = userSigninParser.parse();
 
 		LOGGER.info(userSignin.toString());
 	}

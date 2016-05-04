@@ -22,26 +22,26 @@ public class AuthTokenResponseHandle extends BaseResponseHandle<AuthToken, AuthT
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthTokenResponseHandle.class);
 
-	public AuthTokenResponseHandle(AuthTokenParser parse) {
+	public AuthTokenResponseHandle(final AuthTokenParser parse) {
 		super(parse);
 	}
 
 	@Override
-	public AuthToken handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-		List<Cookie> cookies = parse.getHttpClientContext().getCookieStore().getCookies();
+	public AuthToken handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
+		final List<Cookie> cookies = parse.getHttpClientContext().getCookieStore().getCookies();
 		cookies.stream().filter(c -> c.getName().equals(AuthTokenConst.COOKIE_NAME));
-		Optional<Cookie> authCookieOptionsal = cookies.stream().filter(c -> c.getName().equals(AuthTokenConst.COOKIE_NAME)).findFirst();
+		final Optional<Cookie> authCookieOptionsal = cookies.stream().filter(c -> c.getName().equals(AuthTokenConst.COOKIE_NAME)).findFirst();
 		AuthToken authToken = null;
 		if(authCookieOptionsal.isPresent()){
 			authToken = this.desializer(authCookieOptionsal.get().getValue());
 			saveCookie();
 		}
 		if(null==parse.getHttpClientContext().getAttribute(AuthTokenConst.LOGIN_USER_INFO)){
-			parse.setBianaryFilename("user/userInfo.txt");
+			parse.setBinaryFilename("user/userInfo.txt");
 			Login loginUser = parse.readObjForDisk(Login.class);
-			if(null==loginUser||(null!=loginUser&& StringUtils.isBlank(loginUser.getQid()))){
-				UserInfoParser userInfoParser = new UserInfoParser(parse.getLoginUserToken());//用户信息解析器
-				UserInfo userInfo = userInfoParser.parse();
+			if(null==loginUser||null!=loginUser && StringUtils.isBlank(loginUser.getQid())){
+				final UserInfoParser userInfoParser = new UserInfoParser(parse.getLoginUserToken());//用户信息解析器
+				final UserInfo userInfo = userInfoParser.parse();
 				if(0==userInfo.getErrno()){
 					loginUser = new Login();
 					loginUser.setQid(userInfo.getQid());
@@ -64,7 +64,7 @@ public class AuthTokenResponseHandle extends BaseResponseHandle<AuthToken, AuthT
 		return authToken;
 	}
 
-	public String disassemblyResult(String result) {
+	public String disassemblyResult(final String result) {
 		return String.format("{\"token\":\"%s\"}", result);
 	}
 

@@ -22,20 +22,20 @@ public class FileSearchParser extends
 		super();
 	}
 
-	public FileSearchParser(LoginUserToken loginUser) {
+	public FileSearchParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileSearchParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(5);
-		datas.add(new BasicNameValuePair(CONST.KEY_NAME, parameter.getKey()));
-		datas.add(new BasicNameValuePair(CONST.ISFPATH_NAME, "1"));
-		datas.add(new BasicNameValuePair(CONST.PAGE_NAME, String.valueOf(parameter.getPage())));
-		datas.add(new BasicNameValuePair(CONST.PAGE_SIZE_NAME, String.valueOf(parameter.getPage_size())));
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+	public HttpPost initRequest(final FileSearchParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(5);
+		data.add(new BasicNameValuePair(CONST.KEY_NAME, parameter.getKey()));
+		data.add(new BasicNameValuePair(CONST.ISFPATH_NAME, "1"));
+		data.add(new BasicNameValuePair(CONST.PAGE_NAME, String.valueOf(parameter.getPage())));
+		data.add(new BasicNameValuePair(CONST.PAGE_SIZE_NAME, String.valueOf(parameter.getPage_size())));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

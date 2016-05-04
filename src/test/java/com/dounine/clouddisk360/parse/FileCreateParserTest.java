@@ -13,12 +13,12 @@ public class FileCreateParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileCreateParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileCreateParser fileCreateParser = new FileCreateParser(loginUserToken);
-		FileCreateParameter fileCreateParameter = new FileCreateParameter();
+		final FileCreateParser fileCreateParser = new FileCreateParser(loginUserToken);
+		final FileCreateParameter fileCreateParameter = new FileCreateParameter();
 		fileCreateParameter.setPath("/lake/你好");
-		FileCreate fileCreate = fileCreateParser.parse(fileCreateParameter);
+		final FileCreate fileCreate = fileCreateParser.parse(fileCreateParameter);
 
 		LOGGER.info(fileCreate.toString());
 	}

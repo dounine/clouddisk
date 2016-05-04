@@ -6,8 +6,6 @@ import com.dounine.clouddisk360.parser.deserializer.captcha.*;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginUserToken;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URISyntaxException;
 
@@ -20,15 +18,14 @@ public class CaptchaParser extends
 		super();
 	}
 
-	public CaptchaParser(LoginUserToken loginUser) {
+	public CaptchaParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaParser.class);
-
 	public HttpGet initRequest(CaptchaParameter parameter) {
+		HttpGet request = null;
 		try {
-			URIBuilder uri = new URIBuilder(CONST.URI_PATH);
+			final URIBuilder uri = new URIBuilder(CONST.URI_PATH);
 			uri.setParameter(CONST.SRC_KEY, CONST.SRC_VAL);
 			uri.setParameter(CONST.FROM_KEY, CONST.FROM_VAL);
 			uri.setParameter(CONST.CHARSET_KEY, CONST.CHARSET_VAL);
@@ -37,12 +34,11 @@ public class CaptchaParser extends
 			uri.setParameter(CONST.M_KEY, CONST.M_VAL);
 			uri.setParameter(CONST.ACCOUNT_NAME, loginUserToken.getAccount());
 			uri.setParameter(CONST.CAPTCHAAPP_KEY, CONST.CAPTCHAAPP_VAL);
-			HttpGet request = new HttpGet(uri.build());
-			return request;
+			request = new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return request;
 	}
 
 }

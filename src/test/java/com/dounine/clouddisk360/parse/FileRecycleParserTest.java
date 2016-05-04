@@ -13,13 +13,13 @@ public class FileRecycleParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileRecycleParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileRecycleParser fileRecycleParser = new FileRecycleParser(loginUserToken);
-		FileRecycleParameter fileRecycleParameter = new FileRecycleParameter();
+		final FileRecycleParser fileRecycleParser = new FileRecycleParser(loginUserToken);
+		final FileRecycleParameter fileRecycleParameter = new FileRecycleParameter();
 		fileRecycleParameter.getPath().add("/lake/现有功能.xlsx");
 		fileRecycleParameter.getPath().add("/lake/lake2/");
-		FileRecycle fileRecycle = fileRecycleParser.parse(fileRecycleParameter);
+		final FileRecycle fileRecycle = fileRecycleParser.parse(fileRecycleParameter);
 
 		LOGGER.info(fileRecycle.toString());
 	}

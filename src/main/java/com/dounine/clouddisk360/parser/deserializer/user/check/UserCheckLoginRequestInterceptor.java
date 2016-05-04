@@ -12,12 +12,12 @@ import java.io.IOException;
 public class UserCheckLoginRequestInterceptor extends BaseRequestInterceptor<UserCheckLoginConst,UserCheckLoginParser>
 		implements HttpRequestInterceptor {
 
-	public UserCheckLoginRequestInterceptor(UserCheckLoginParser parser) {
+	public UserCheckLoginRequestInterceptor(final UserCheckLoginParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context);
 	}
 }

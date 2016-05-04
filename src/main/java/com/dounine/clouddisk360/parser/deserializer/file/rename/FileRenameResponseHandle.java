@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileRenameResponseHandle extends BaseResponseHandle<FileRename, FileRenameParser>
 		implements ResponseHandler<FileRename> {
 
-	public FileRenameResponseHandle(FileRenameParser parse) {
+	public FileRenameResponseHandle(final FileRenameParser parse) {
 		super(parse);
 	}
 

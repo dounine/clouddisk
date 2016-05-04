@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Parse("文件回收")
 @Dependency(depends={AuthTokenParser.class})
@@ -22,21 +23,19 @@ public class FileRecycleParser extends
 		super();
 	}
 
-	public FileRecycleParser(LoginUserToken loginUser) {
+	public FileRecycleParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileRecycleParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(0);
+	public HttpPost initRequest(final FileRecycleParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(0);
 		if (null != parameter.getPath()) {
-			for (String pa : parameter.getPath()) {
-				datas.add(new BasicNameValuePair(CONST.PATH_NAME, pa));
-			}
+			data.addAll(parameter.getPath().stream().map(pa -> new BasicNameValuePair(CONST.PATH_NAME, pa)).collect(Collectors.toList()));
 		}
-		datas.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

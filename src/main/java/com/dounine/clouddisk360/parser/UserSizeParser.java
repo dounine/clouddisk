@@ -20,13 +20,11 @@ public class UserSizeParser extends
 	public UserSizeParser(){
 		super();
 	}
-	public UserSizeParser(LoginUserToken loginUser) {
+	public UserSizeParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(UserSizeParser.class);
-
-	public void writeDisk(UserSize userSize) {
+	public void writeDisk(final UserSize userSize) {
 		super.writeObjToDisk(userSize);
 	}
 
@@ -35,12 +33,11 @@ public class UserSizeParser extends
 	}
 
 	@Override
-	public HttpGet initRequest(UserSizeParameter userSizeParameter) {
+	public HttpGet initRequest(final UserSizeParameter userSizeParameter) {
 		try {
-			URIBuilder uri = new URIBuilder(getRequestUri());
+			final URIBuilder uri = new URIBuilder(getRequestUri());
 			uri.setParameter("t", TimeUtil.getTimeLenth(10));
-			HttpGet request = new HttpGet(uri.build());
-			return request;
+			return new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

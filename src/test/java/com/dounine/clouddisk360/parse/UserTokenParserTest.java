@@ -12,10 +12,10 @@ public class UserTokenParserTest extends TestCase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserTokenParserTest.class);
 
 	public void testParse() {
-		LoginUserToken loginUserToken = new LoginUserToken("102535481@qq.com","");
+		final LoginUserToken loginUserToken = new LoginUserToken("102535481@qq.com","",false);
 
-		UserTokenParser userTokenParse = new UserTokenParser(loginUserToken);
-		UserToken userToken = userTokenParse.parse();
+		final UserTokenParser userTokenParse = new UserTokenParser(loginUserToken);
+		final UserToken userToken = userTokenParse.parse();
 
 		LOGGER.info(userToken.toString());
 	}

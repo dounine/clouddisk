@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileRestoreResponseHandle extends BaseResponseHandle<FileRestore, FileRestoreParser>
 		implements ResponseHandler<FileRestore> {
 
-	public FileRestoreResponseHandle(FileRestoreParser parse) {
+	public FileRestoreResponseHandle(final FileRestoreParser parse) {
 		super(parse);
 	}
 

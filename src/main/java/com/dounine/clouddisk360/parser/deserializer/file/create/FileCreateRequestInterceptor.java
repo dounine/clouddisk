@@ -12,7 +12,7 @@ import java.io.IOException;
 public class FileCreateRequestInterceptor extends BaseRequestInterceptor<FileCreateConst,FileCreateParser>
 		implements HttpRequestInterceptor {
 
-	public FileCreateRequestInterceptor(FileCreateParser parser) {
+	public FileCreateRequestInterceptor(final FileCreateParser parser) {
 		super(parser);
 	}
 

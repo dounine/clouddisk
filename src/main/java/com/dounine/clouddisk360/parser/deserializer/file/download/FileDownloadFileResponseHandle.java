@@ -15,14 +15,14 @@ import java.io.IOException;
 public class FileDownloadFileResponseHandle extends BaseResponseHandle<FileDownloadFile, FileDownloadFileParser>
 		implements ResponseHandler<FileDownloadFile> {
 
-	public FileDownloadFileResponseHandle(FileDownloadFileParser parse) {
+	public FileDownloadFileResponseHandle(final FileDownloadFileParser parse) {
 		super(parse);
 	}
 
 	@Override
-	public FileDownloadFile handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
-		HttpEntity entity = response.getEntity();
-		File destination = new File(BasePathCommon.BASE_PATH + parse.getLoginUserToken().getAccount() + "/downloads/"
+	public FileDownloadFile handleResponse(final HttpResponse response) throws ClientProtocolException, IOException {
+		final HttpEntity entity = response.getEntity();
+		final File destination = new File(BasePathCommon.BASE_PATH + parse.getLoginUserToken().getAccount() + "/downloads/"
 				+ parse.getParameter().getFileName());
 		if (!destination.exists()) {
 			destination.getParentFile().mkdirs();
@@ -32,7 +32,7 @@ public class FileDownloadFileResponseHandle extends BaseResponseHandle<FileDownl
 	}
 
 	@Override
-	public String disassemblyResult(String result) {
+	public String disassemblyResult(final String result) {
 		return String.format("{\"filePath\":\"%s\"}", result).replace("\\", "/");
 	}
 

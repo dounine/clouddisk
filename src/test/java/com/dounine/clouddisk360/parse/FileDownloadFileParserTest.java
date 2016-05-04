@@ -27,20 +27,20 @@ public class FileDownloadFileParserTest extends TestCase {
 		</form>
 	 */
 	public void testParse() {
-		LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
+		final LoginUserToken loginUserToken = TestUser.LOGIN_USER_TOKEN;
 
-		FileDownloadAddressParser fileDownloadAddressParser = new FileDownloadAddressParser(loginUserToken);
-		FileDownloadAddressParameter fileDownloadAddressParameter = new FileDownloadAddressParameter();
+		final FileDownloadAddressParser fileDownloadAddressParser = new FileDownloadAddressParser(loginUserToken);
+		final FileDownloadAddressParameter fileDownloadAddressParameter = new FileDownloadAddressParameter();
 		fileDownloadAddressParameter.setFname("/黄/工作日报最新模板.xlsx");
 		fileDownloadAddressParameter.setNid("14576185026173704");
-		FileDownloadAddress fileDownloadAddress = fileDownloadAddressParser.parse(fileDownloadAddressParameter);
+		final FileDownloadAddress fileDownloadAddress = fileDownloadAddressParser.parse(fileDownloadAddressParameter);
 
-		FileDownloadFileParser fileDownloadFileParser = new FileDownloadFileParser();
+		final FileDownloadFileParser fileDownloadFileParser = new FileDownloadFileParser();
 		fileDownloadFileParser.dataSmooth(fileDownloadAddressParser);
-		FileDownloadFileParameter fileDownloadFileParameter = new FileDownloadFileParameter();
+		final FileDownloadFileParameter fileDownloadFileParameter = new FileDownloadFileParameter();
 		fileDownloadFileParameter.setDownloadPath(fileDownloadAddress.getData().getDownload_url());
 		fileDownloadFileParameter.setFileName(fileDownloadAddressParameter.getFname());
-		FileDownloadFile fileDownloadFile = fileDownloadFileParser.parse(fileDownloadFileParameter);
+		final FileDownloadFile fileDownloadFile = fileDownloadFileParser.parse(fileDownloadFileParameter);
 
 		LOGGER.info(fileDownloadFile.toString());
 	}

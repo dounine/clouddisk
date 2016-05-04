@@ -6,10 +6,9 @@ import com.dounine.clouddisk360.exception.CloudDiskException;
 
 public class DomainStoreUT {
 
-	private DomainStoreUT() {
-	}
+	private DomainStoreUT() {}
 
-	private static DomainStoreUT domainStoreUT = new DomainStoreUT();
+	private static final DomainStoreUT domainStoreUT = new DomainStoreUT();
 	private String domain;
 
 	public static DomainStoreUT getInstance() {
@@ -17,7 +16,7 @@ public class DomainStoreUT {
 	}
 	
 	public static String parserDomain(String uri){
-		uri = uri.substring(uri.indexOf("//")+2,uri.indexOf("."));
+		uri = uri.substring(uri.indexOf("//")+2,uri.indexOf('.'));
 		return uri;
 	}
 	
@@ -26,7 +25,7 @@ public class DomainStoreUT {
 			throw new CloudDiskException("domain子域名不能为空");
 		}
 		domain = parserDomain(domain);//解释
-		domainStoreUT.setDomain(domain);;
+		domainStoreUT.setDomain(domain);
 	}
 
 	public String getDomain() {

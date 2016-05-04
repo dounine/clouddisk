@@ -12,6 +12,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Parse("文件移动")
 @Dependency(depends={AuthTokenParser.class})
@@ -22,21 +23,19 @@ public class FileMoveParser extends
 		super();
 	}
 
-	public FileMoveParser(LoginUserToken loginUser) {
+	public FileMoveParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
 
 	@Override
-	public HttpPost initRequest(FileMoveParameter parameter) {
-		HttpPost request = new HttpPost(getRequestUri());
-		List<NameValuePair> datas = new ArrayList<>(0);
+	public HttpPost initRequest(final FileMoveParameter parameter) {
+		final HttpPost request = new HttpPost(getRequestUri());
+		final List<NameValuePair> data = new ArrayList<>(0);
 		if (null != parameter.getMoveFiles()) {
-			for (String moveFilename : parameter.getMoveFiles()) {
-				datas.add(new BasicNameValuePair(CONST.PATH_NAME, moveFilename));
-			}
+			data.addAll(parameter.getMoveFiles().stream().map(moveFilename -> new BasicNameValuePair(CONST.PATH_NAME, moveFilename)).collect(Collectors.toList()));
 		}
-		datas.add(new BasicNameValuePair(CONST.NEWPATH_NAME, parameter.getNewPath()));
-		request.setEntity(new UrlEncodedFormEntity(datas, Consts.UTF_8));
+		data.add(new BasicNameValuePair(CONST.NEWPATH_NAME, parameter.getNewPath()));
+		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;
 	}
 

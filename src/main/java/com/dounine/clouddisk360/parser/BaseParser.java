@@ -36,12 +36,12 @@ import java.lang.reflect.Type;
 import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, C extends BaseConst, Parameter extends BaseParameter, RequestInterceptor extends BaseRequestInterceptor<C,Parser>, ResponseHandle, Parser extends BaseParser>
-        extends JSONBianary {
+        extends JSONBinary implements IBaseParser{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseParser.class);
 
@@ -59,7 +59,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
 
     protected CookieStoreUT cookieStoreUT = new CookieStoreUT();
     protected HttpClientContext httpClientContext = new HttpClientContext();
-    protected HttpClient httpClient = null;
+    protected HttpClient httpClient;
 
     public RequestInterceptor requestInterceptor;
     public C CONST;
@@ -71,25 +71,26 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     /**
      * 依赖返回值
      */
-    protected Map<Class, M> dependencys = new HashMap<>(0);
-    protected CloudDiskException cloudDiskException = null;
+    protected Map<Class, M> dependencys = new ConcurrentHashMap(0);
+    protected CloudDiskException cloudDiskException;
     protected LocalDateTime createDateTime = LocalDateTime.now();
 
-    public BaseParser dependsCustomInit(Parser parser, BaseParser baseParser) {
+    public BaseParser dependsCustomInit(final Parser parser, final BaseParser baseParser) {
         return baseParser;
     }
 
-    public <TT> TT getDependResult(Class<TT> depend) {
-        Object baseDes = this.dependencys.get(depend);
+    public <TT> TT getDependResult(final Class<TT> depend) {
+        TT tt = null;
+        final Object baseDes = this.dependencys.get(depend);
         if (null != baseDes) {
-            return (TT) baseDes;
+            tt = (TT) baseDes;
         }
-        return null;
+        return tt;
     }
 
-    public <TT> TT getDependAccountResult(Class<TT> depend) {
-        DifferPressParser differPressParser = DifferPressParser.DIFFER_PRESS_PARSERS.get(loginUserToken.getAccount());
-        Object baseDes = differPressParser.dependencys.get(depend);
+    public <TT> TT getDependAccountResult(final Class<TT> depend) {
+        final DifferPressParser differPressParser = DifferPressParser.DIFFER_PRESS_PARSERS.get(loginUserToken.getAccount());
+        final Object baseDes = differPressParser.dependencys.get(depend);
         if (null != baseDes) {
             return (TT) baseDes;
         }
@@ -98,13 +99,13 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
 
     @SuppressWarnings("unchecked")
     private void inits() {
-        Type genType = getClass().getGenericSuperclass();
-        Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
+        final Type genType = getClass().getGenericSuperclass();
+        final Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         mClazz = (Class<M>) params[1];//首先初始化M返回结果类,execClouddiskException()方法要用到
-        Dependency dependency = this.getClass().getAnnotation(Dependency.class);
+        final Dependency dependency = this.getClass().getAnnotation(Dependency.class);
         if (null != dependency) {
             final Class<BaseParser>[] dClass = (Class<BaseParser>[]) dependency.depends();
-            for (Class<BaseParser> cc : dClass) {
+            for (final Class<BaseParser> cc : dClass) {
                 try {
                     final DependResult dependResult = cc.getAnnotation(DependResult.class);
                     BaseParser baseParser = cc.getConstructor(LoginUserToken.class).newInstance(loginUserToken);
@@ -137,18 +138,17 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
-                } finally {
-                    if (this.hasException()) {//有异常程序返回
-                        return;
-                    }
+                }
+                if (this.hasException()) {//有异常程序返回
+                    return;
                 }
             }
         }
 
-        Class<RequestInterceptor> requestInterceptorClazz = (Class<RequestInterceptor>) params[4];
-        Class<ResponseHandler<M>> responseHandlerClazz = (Class<ResponseHandler<M>>) params[5];
-        Class<HttpRequest> requestMethodClazz = (Class<HttpRequest>) params[0];
-        Class<BaseConst> baseconstMethodClazz = (Class<BaseConst>) params[2];
+        final Class<RequestInterceptor> requestInterceptorClazz = (Class<RequestInterceptor>) params[4];
+        final Class<ResponseHandler<M>> responseHandlerClazz = (Class<ResponseHandler<M>>) params[5];
+        final Class<HttpRequest> requestMethodClazz = (Class<HttpRequest>) params[0];
+        final Class<BaseConst> baseconstMethodClazz = (Class<BaseConst>) params[2];
         try {
             this.responseHandler = (ResponseHandler<M>) responseHandlerClazz.getConstructors()[0].newInstance(this);
             this.requestInterceptor = (RequestInterceptor) requestInterceptorClazz.getConstructors()[0].newInstance(this);
@@ -185,7 +185,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     /**
      * 把parse数据平滑过来
      */
-    public <Parser extends BaseParser> void dataSmooth(Parser parse) {
+    public <Parser extends BaseParser> void dataSmooth(final Parser parse) {
         if (null != parse) {
             if (null == parse.loginUserToken) {
                 throw new CloudDiskException("loginUserToken 不能为空");
@@ -210,13 +210,13 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         if (null == loginUserToken) {
             throw new CloudDiskException("至少给一个解析器初始化用户信息");
         }
-        Method request = initRequest(parameter);
-        M m = execute(request);
+        final Method request = initRequest(parameter);
+        final M m = execute(request);
         cookieStoreUT.setCookieStore(httpClientContext.getCookieStore());
         return m;
     }
 
-    public M parse(Parameter parameter) {
+    public M parse(final Parameter parameter) {
         if (hasException()) {
             return execClouddiskException();
         }
@@ -229,36 +229,40 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     }
 
     @SuppressWarnings("unchecked")
-    public Method initRequest(Parameter parameter) {
+    public Method initRequest(final Parameter parameter) {
+        Method method = null;
         uriPath = getUriPath();
         if (StringUtils.isNotBlank(uriPath)) {
-            String host = getRedSchmemHost();
+            final String host = getRedSchmemHost();
             if (requestMethod instanceof HttpGet) {
-                return (Method) new HttpGet(host + uriPath);
+                method = (Method) new HttpGet(host + uriPath);
+            }else{
+                method = (Method) new HttpPost(host + uriPath);
             }
-            return (Method) new HttpPost(host + uriPath);
+            return method;
+        }else{
+            throw new CloudDiskException("使用默认initRequest,uriPath不能为空");
         }
-        throw new CloudDiskException("使用默认initRequest,uriPath不能为空");
     }
 
     public M execClouddiskException() {
+        M m = null;
         try {
-            M m = mClazz.newInstance();
+            m = mClazz.newInstance();
             m.setCddmsg(cloudDiskException.getMessage());
-            return m;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return null;
+        return m;
     }
 
-    protected RequestConfig cookieRequestConfig(String cookieSpecs) {
+    protected RequestConfig cookieRequestConfig(final String cookieSpecs) {
         return RequestConfig.custom().setCookieSpec(cookieSpecs).build();
     }
 
-    public M execute(Method request) {
+    public M execute(final Method request) {
         if (hasException()) {
             return execClouddiskException();
         }
@@ -266,10 +270,10 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
                 .addInterceptorLast(requestInterceptor).setDefaultRequestConfig(COOKIE_REQUEST_CONFIG).build();
         try {
             if (request instanceof HttpGet) {
-                HttpGet get = (HttpGet) request;
+                final HttpGet get = (HttpGet) request;
                 return httpClient.execute(get, responseHandler, this.httpClientContext);
             }
-            HttpPost post = (HttpPost) request;
+            final HttpPost post = (HttpPost) request;
             return httpClient.execute(post, responseHandler, this.httpClientContext);
         } catch (IOException e) {
             executeException(e,request);
@@ -277,9 +281,9 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         return null;
     }
 
-    public void executeException(Exception e,Method request){
+    public void executeException(final Exception e,final Method request){
         if(e instanceof SocketTimeoutException){
-            String errMsg = request.getRequestLine()+" Socket连接超时";
+            final String errMsg = request.getRequestLine()+" Socket连接超时";
             this.cloudDiskException = new CloudDiskException(errMsg);
             LOGGER.warn(errMsg);
         }else if(e instanceof CloudDiskException){
@@ -288,14 +292,14 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         }
     }
 
-    public String readCookieStoreValue(String name) {
+    public String readCookieStoreValue(final String name) {
         if (StringUtils.isBlank(name)) {
             throw new CloudDiskException("cookie名称不能为空");
         }
-        CookieStore cookieStore = httpClientContext.getCookieStore();
-        List<Cookie> cookies = cookieStore.getCookies();
+        final CookieStore cookieStore = httpClientContext.getCookieStore();
+        final List<Cookie> cookies = cookieStore.getCookies();
         Cookie cookie = null;
-        for (Cookie coo : cookies) {
+        for (final Cookie coo : cookies) {
             if (coo.getName().equals(name)) {
                 cookie = coo;
                 break;
@@ -309,7 +313,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
 
     public String getRedHost() {
         try {
-            URIBuilder uriBuilder =new URIBuilder(getRedSchmemHost());
+            final URIBuilder uriBuilder =new URIBuilder(getRedSchmemHost());
             return uriBuilder.getHost();
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -318,11 +322,11 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     }
 
     public String getRedSchmemHost() {
-        DifferPress differPress = getDependAccountResult(DifferPress.class);
+        final DifferPress differPress = getDependAccountResult(DifferPress.class);
         if (null == differPress) {
             throw new CloudDiskException(MsgConst.HOST_VALUE_NOT_NULL);
         } else {
-            URIBuilder uri = differPress.getRedirectUrl();
+            final URIBuilder uri = differPress.getRedirectUrl();
             return new StringBuilder(uri.getScheme()).append("://").append(uri.getHost()).toString();
         }
     }
@@ -337,20 +341,20 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     }
 
     public Login getLoginInfo() {
-        Login login = httpClientContext.getUserToken(Login.class);
+        final Login login = httpClientContext.getUserToken(Login.class);
         if (null == login) {
             return null;
         }
         return login;
     }
-    public void setLoginInfo(Login login){
+    public void setLoginInfo(final Login login){
         if(null!=login){
             httpClientContext.setUserToken(login);
         }
     }
 
     public String readAuthTokenValue() {
-        AuthToken authToken = (AuthToken) dependencys.get(AuthToken.class);
+        final AuthToken authToken = (AuthToken) dependencys.get(AuthToken.class);
         if (null == authToken) {
             throw new CloudDiskException("tokenValue授权令牌为空");
         }
@@ -362,7 +366,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         return httpClientContext.getCookieStore();
     }
 
-    public CookieStore readCookieStoreDisk(String[] filterCookie) {
+    public CookieStore readCookieStoreDisk(final String[] filterCookie) {
         httpClientContext.setCookieStore(cookieStoreUT.readCookieStoreForDisk(filterCookie));
         return httpClientContext.getCookieStore();
     }
@@ -371,7 +375,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         return httpClientContext;
     }
 
-    public void setHttpClientContext(HttpClientContext httpContext) {
+    public void setHttpClientContext(final HttpClientContext httpContext) {
         this.httpClientContext = httpContext;
     }
 

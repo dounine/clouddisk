@@ -28,22 +28,22 @@ public class LoginParser extends
 		deleteCookieStoreDir();
 	}
 
-	public LoginParser(LoginUserToken loginUser) {
+	public LoginParser(final LoginUserToken loginUser) {
 		super(loginUser);
 		deleteCookieStoreDir();
 	}
 
 	public void deleteCookieStoreDir(){
-		File file = new File(BasePathCommon.BASE_PATH + loginUserToken.getAccount()+ CookieStoreUT.COOKIE_STORE_PATH);
+		final File file = new File(BasePathCommon.BASE_PATH + loginUserToken.getAccount()+ CookieStoreUT.COOKIE_STORE_PATH);
 		if(file.exists()){
 			file.delete();
 		}
 	}
 
 	@Override
-	public HttpPost initRequest(LoginParameter parameter) {
-		HttpPost request = new HttpPost(CONST.URI_PATH);
-		List<NameValuePair> data = new ArrayList<>();
+	public HttpPost initRequest(final LoginParameter parameter) {
+		final HttpPost request = new HttpPost(CONST.URI_PATH);
+		final List<NameValuePair> data = new ArrayList<>();
 		data.add(new BasicNameValuePair(CONST.SRC_KEY, CONST.SRC_VAL));
 		data.add(new BasicNameValuePair(CONST.FROM_KEY, CONST.FROM_VAL));
 		data.add(new BasicNameValuePair(CONST.CHARSET_KEY, CONST.SRC_VAL));

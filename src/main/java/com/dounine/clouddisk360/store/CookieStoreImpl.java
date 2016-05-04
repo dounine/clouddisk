@@ -29,7 +29,7 @@ public class CookieStoreImpl implements CookieStore{
     @Override
     public void addCookie(Cookie cookie) {
         if(removeRepeat){
-            Iterator<Cookie> ci = cookies.iterator();
+            final Iterator<Cookie> ci = cookies.iterator();
             while(ci.hasNext()){
                 if(ci.next().getName().equals(cookie.getName())){
                     ci.remove();
@@ -46,9 +46,9 @@ public class CookieStoreImpl implements CookieStore{
 
     @Override
     public boolean clearExpired(Date date) {
-        Iterator<Cookie> ci = cookies.iterator();
+        final Iterator<Cookie> ci = cookies.iterator();
         while(ci.hasNext()){
-            Cookie cookie = ci.next();
+            final Cookie cookie = ci.next();
             if(date.equals(cookie.getExpiryDate())){
                 ci.remove();
                 return true;

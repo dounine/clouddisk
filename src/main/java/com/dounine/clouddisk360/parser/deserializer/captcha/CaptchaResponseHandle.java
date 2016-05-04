@@ -7,7 +7,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 
 public class CaptchaResponseHandle extends BaseResponseHandle<Captcha, CaptchaParser> implements ResponseHandler<Captcha> {
 
-	public CaptchaResponseHandle(CaptchaParser parse) {
+	public CaptchaResponseHandle(final CaptchaParser parse) {
 		super(parse);
 	}
 }

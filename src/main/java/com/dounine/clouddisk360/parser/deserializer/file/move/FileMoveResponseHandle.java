@@ -8,7 +8,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
 public class FileMoveResponseHandle extends BaseResponseHandle<FileMove, FileMoveParser>
 		implements ResponseHandler<FileMove> {
 
-	public FileMoveResponseHandle(FileMoveParser parse) {
+	public FileMoveResponseHandle(final FileMoveParser parse) {
 		super(parse);
 	}
 

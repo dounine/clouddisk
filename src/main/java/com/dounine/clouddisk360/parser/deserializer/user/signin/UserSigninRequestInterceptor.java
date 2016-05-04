@@ -12,12 +12,12 @@ import java.io.IOException;
 public class UserSigninRequestInterceptor extends BaseRequestInterceptor<UserSigninConst,UserSigninParser>
 		implements HttpRequestInterceptor {
 
-	public UserSigninRequestInterceptor(UserSigninParser parser) {
+	public UserSigninRequestInterceptor(final UserSigninParser parser) {
 		super(parser);
 	}
 
 	@Override
-	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
 		super.process(request, context, true);
 	}
 

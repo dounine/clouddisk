@@ -7,7 +7,7 @@ import org.apache.http.client.ResponseHandler;
 public class UserInfoResponseHandle extends BaseResponseHandle<UserInfo, UserInfoParser>
 		implements ResponseHandler<UserInfo> {
 
-	public UserInfoResponseHandle(UserInfoParser parse) {
+	public UserInfoResponseHandle(final UserInfoParser parse) {
 		super(parse);
 	}
 }

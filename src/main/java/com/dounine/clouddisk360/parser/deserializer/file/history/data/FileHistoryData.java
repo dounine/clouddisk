@@ -17,11 +17,11 @@ public class FileHistoryData {
 		this.current = current;
 	}
 
-	public List<FileHistoryList> getFhistory_list() {
+	public List<FileHistoryList> getFhistoryList() {
 		return fhistory_list;
 	}
 
-	public void setFhistory_list(List<FileHistoryList> fhistory_list) {
+	public void setFhistoryList(List<FileHistoryList> fhistory_list) {
 		this.fhistory_list = fhistory_list;
 	}
 

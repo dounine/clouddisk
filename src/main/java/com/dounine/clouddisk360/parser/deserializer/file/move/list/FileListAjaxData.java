@@ -6,11 +6,11 @@ public class FileListAjaxData {
 	private String nid;
 	private String file_name;
 
-	public String getFile_path() {
+	public String getFilePath() {
 		return file_path;
 	}
 
-	public void setFile_path(String file_path) {
+	public void setFilePath(String file_path) {
 		this.file_path = file_path;
 	}
 
@@ -22,11 +22,11 @@ public class FileListAjaxData {
 		this.nid = nid;
 	}
 
-	public String getFile_name() {
+	public String getFileName() {
 		return file_name;
 	}
 
-	public void setFile_name(String file_name) {
+	public void setFileName(String file_name) {
 		this.file_name = file_name;
 	}
 

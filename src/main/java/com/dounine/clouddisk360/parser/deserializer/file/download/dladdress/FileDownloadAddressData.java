@@ -6,11 +6,11 @@ public class FileDownloadAddressData {
 
 	private String download_url;
 
-	public String getDownload_url() {
+	public String getDownloadUrl() {
 		return download_url;
 	}
 
-	public void setDownload_url(String download_url) {
+	public void setDownloadUrl(String download_url) {
 		this.download_url = download_url;
 	}
 

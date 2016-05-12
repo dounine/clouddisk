@@ -38,7 +38,7 @@ public class FileDownloadFileParserTest extends TestCase {
 		final FileDownloadFileParser fileDownloadFileParser = new FileDownloadFileParser();
 		fileDownloadFileParser.dataSmooth(fileDownloadAddressParser);
 		final FileDownloadFileParameter fileDownloadFileParameter = new FileDownloadFileParameter();
-		fileDownloadFileParameter.setDownloadPath(fileDownloadAddress.getData().getDownload_url());
+		fileDownloadFileParameter.setDownloadPath(fileDownloadAddress.getData().getDownloadUrl());
 		fileDownloadFileParameter.setFileName(fileDownloadAddressParameter.getFname());
 		final FileDownloadFile fileDownloadFile = fileDownloadFileParser.parse(fileDownloadFileParameter);
 

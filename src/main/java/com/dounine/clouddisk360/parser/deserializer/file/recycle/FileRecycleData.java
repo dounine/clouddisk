@@ -6,11 +6,11 @@ public class FileRecycleData {
 
 	private String task_id;
 
-	public String getTask_id() {
+	public String getTaskId() {
 		return task_id;
 	}
 
-	public void setTask_id(String task_id) {
+	public void setTaskId(String task_id) {
 		this.task_id = task_id;
 	}
 

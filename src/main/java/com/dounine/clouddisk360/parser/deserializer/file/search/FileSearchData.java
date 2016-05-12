@@ -11,11 +11,11 @@ public class FileSearchData {
 	private Long retnum;
 	private Long total;
 
-	public List<FileSearchList> getNode_list() {
+	public List<FileSearchList> getNodeList() {
 		return node_list;
 	}
 
-	public void setNode_list(List<FileSearchList> node_list) {
+	public void setNodeList(List<FileSearchList> node_list) {
 		this.node_list = node_list;
 	}
 

@@ -36,8 +36,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @DependResult(customInit = false, result = DifferPress.class)
 public class DifferPressParser extends
 		BaseParser<HttpGet, DifferPress, DifferPressConst, DifferPressParameter, DifferPressRequestInterceptor, DifferPressResponseHandle, DifferPressParser> {
-
-	public static Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();
+	
+	public static final Logger LOGGER = LoggerFactory.getLogger(DifferPressParser.class);
+	public static Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();	
 	private Captcha captcha;
 	private CaptchaParser captchaParser;
 
@@ -49,7 +50,7 @@ public class DifferPressParser extends
 		super(loginUser);
 	}
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(DifferPressParser.class);
+	
 
 	@Override
 	public HttpGet initRequest(final DifferPressParameter parameter) {

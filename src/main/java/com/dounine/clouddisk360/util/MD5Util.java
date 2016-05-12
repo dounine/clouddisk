@@ -4,8 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MD5Util {
+public final class MD5Util {
 
+	private MD5Util(){}
+	
     public final static String MD5(final String s) {
         byte[] btInput = null;
         try {

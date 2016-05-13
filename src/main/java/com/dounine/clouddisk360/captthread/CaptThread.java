@@ -22,7 +22,7 @@ public class CaptThread implements Runnable{
 	private static final Logger LOGGER = LoggerFactory.getLogger(CaptThread.class);
 
 	private static Map<String,PassportParser> PASSPORT_PARSER_MAP = new ConcurrentHashMap();
-	private final int timeOutSeconds = CaptchaThreadValidator.timeoutMin;
+	private static final int timeOutSeconds = CaptchaThreadValidator.timeoutMin;
 	private static final int seconds = 3,sleepTimeSeconds = 1000*seconds;
 
 	private final DifferPressParser differPressParser;

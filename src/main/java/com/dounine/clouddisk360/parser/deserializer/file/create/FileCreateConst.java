@@ -4,7 +4,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 
 public final class FileCreateConst extends BaseConst {
 
-	public final String URI_PATH = "/file/mkdir";
+	public static final String URI_PATH = "/file/mkdir";
 
 	@Override
 	public String getUriPath() {
@@ -19,6 +19,6 @@ public final class FileCreateConst extends BaseConst {
 
 	public static final String USERNAME_NAME = "userName";
 
-	public final String PATH_NAME = "path";
+	public static final String PATH_NAME = "path";
 
 }

@@ -11,7 +11,7 @@ public final class FileDownloadAddressConst extends BaseConst {
 		return URI_PATH;
 	}
 
-	public final String NID_NAME = "nid";
-	public final String FNAME_NAME = "fname";
+	public static final String NID_NAME = "nid";
+	public static final String FNAME_NAME = "fname";
 
 }

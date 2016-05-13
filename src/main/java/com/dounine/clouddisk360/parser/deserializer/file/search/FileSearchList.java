@@ -27,24 +27,24 @@ public class FileSearchList {
 		return file_path;
 	}
 
-	public void setFile_path(String file_path) {
-		this.file_path = file_path;
+	public void setFile_path(String filePath) {
+		this.file_path = filePath;
 	}
 
 	public String getFile_size() {
 		return file_size;
 	}
 
-	public void setFile_size(String file_size) {
-		this.file_size = file_size;
+	public void setFile_size(String fileSize) {
+		this.file_size = fileSize;
 	}
 
 	public Boolean getIs_dir() {
 		return is_dir;
 	}
 
-	public void setIs_dir(Boolean is_dir) {
-		this.is_dir = is_dir;
+	public void setIs_dir(Boolean isDir) {
+		this.is_dir = isDir;
 	}
 
 	public String getFhash() {
@@ -59,16 +59,16 @@ public class FileSearchList {
 		return create_time;
 	}
 
-	public void setCreate_time(String create_time) {
-		this.create_time = create_time;
+	public void setCreate_time(String createTime) {
+		this.create_time = createTime;
 	}
 
 	public String getModify_time() {
 		return modify_time;
 	}
 
-	public void setModify_time(String modify_time) {
-		this.modify_time = modify_time;
+	public void setModify_time(String modifyTime) {
+		this.modify_time = modifyTime;
 	}
 
 	public String getNid() {
@@ -83,8 +83,8 @@ public class FileSearchList {
 		return server_time;
 	}
 
-	public void setServer_time(String server_time) {
-		this.server_time = server_time;
+	public void setServer_time(String serverTime) {
+		this.server_time = serverTime;
 	}
 
 	public String getMtime() {
@@ -107,24 +107,24 @@ public class FileSearchList {
 		return file_location;
 	}
 
-	public void setFile_location(String file_location) {
-		this.file_location = file_location;
+	public void setFile_location(String fileLocation) {
+		this.file_location = fileLocation;
 	}
 
 	public Boolean getIs_link() {
 		return is_link;
 	}
 
-	public void setIs_link(Boolean is_link) {
-		this.is_link = is_link;
+	public void setIs_link(Boolean isLink) {
+		this.is_link = isLink;
 	}
 
 	public String getLink_url() {
 		return link_url;
 	}
 
-	public void setLink_url(String link_url) {
-		this.link_url = link_url;
+	public void setLink_url(String linkUrl) {
+		this.link_url = linkUrl;
 	}
 
 	public String getScid() {
@@ -171,16 +171,16 @@ public class FileSearchList {
 		return count_size;
 	}
 
-	public void setCount_size(String count_size) {
-		this.count_size = count_size;
+	public void setCount_size(String countSize) {
+		this.count_size = countSize;
 	}
 
 	public String getFile_name() {
 		return file_name;
 	}
 
-	public void setFile_name(String file_name) {
-		this.file_name = file_name;
+	public void setFile_name(String fileName) {
+		this.file_name = fileName;
 	}
 
 }

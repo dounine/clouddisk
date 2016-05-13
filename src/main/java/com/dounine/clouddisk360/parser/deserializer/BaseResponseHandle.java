@@ -48,11 +48,11 @@ public class BaseResponseHandle<M extends BaseDes, P> implements ResponseHandler
 	public M desializer(final String result) {
 		final Parse parseAnnotation = parse.getClass().getAnnotation(Parse.class);
 		if (StringUtils.isNotBlank(result)) {
-			final String _result = disassemblyResult(result);
+			final String resultNew = disassemblyResult(result);
 			if(null!=parseAnnotation){
 				LOGGER.info(parseAnnotation.value()+"(解析器) -> 响应结果:" + URLUtil.decode(result));
 			}
-			return JSON.parseObject(_result, entityClass);
+			return JSON.parseObject(resultNew, entityClass);
 		}
 		if(null!=parseAnnotation){
 			LOGGER.info(parseAnnotation.value()+"(解析器) -> 响应结果为空(NULL)");

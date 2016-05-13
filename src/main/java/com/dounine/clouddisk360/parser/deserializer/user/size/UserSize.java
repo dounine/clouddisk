@@ -12,16 +12,16 @@ public class UserSize extends BaseDes {
 		return total_size;
 	}
 
-	public void setTotal_size(Long total_size) {
-		this.total_size = total_size;
+	public void setTotal_size(Long totalSize) {
+		this.total_size = totalSize;
 	}
 
 	public Long getUsed_size() {
 		return used_size;
 	}
 
-	public void setUsed_size(Long used_size) {
-		this.used_size = used_size;
+	public void setUsed_size(Long usedSize) {
+		this.used_size = usedSize;
 	}
 
 	@Override

@@ -22,8 +22,8 @@ public class FileHistoryParameter extends BaseParameter {
 		return his_nid;
 	}
 
-	public void setHis_nid(String his_nid) {
-		this.his_nid = his_nid;
+	public void setHis_nid(String hisNid) {
+		this.his_nid = hisNid;
 	}
 
 	public String getStart() {

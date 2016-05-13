@@ -28,8 +28,8 @@ public class FileSearchParameter extends BaseParameter{
 		return page_size;
 	}
 
-	public void setPage_size(Integer page_size) {
-		this.page_size = page_size;
+	public void setPage_size(Integer pageSize) {
+		this.page_size = pageSize;
 	}
 
 }

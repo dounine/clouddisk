@@ -10,8 +10,8 @@ public class FileListAjaxData {
 		return file_path;
 	}
 
-	public void setFile_path(String file_path) {
-		this.file_path = file_path;
+	public void setFile_path(String filePath) {
+		this.file_path = filePath;
 	}
 
 	public String getNid() {
@@ -26,8 +26,8 @@ public class FileListAjaxData {
 		return file_name;
 	}
 
-	public void setFile_name(String file_name) {
-		this.file_name = file_name;
+	public void setFile_name(String fileName) {
+		this.file_name = fileName;
 	}
 
 }

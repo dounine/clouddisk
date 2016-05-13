@@ -15,8 +15,8 @@ public class FileSearchData {
 		return node_list;
 	}
 
-	public void setNode_list(List<FileSearchList> node_list) {
-		this.node_list = node_list;
+	public void setNode_list(List<FileSearchList> nodeList) {
+		this.node_list = nodeList;
 	}
 
 	public Long getRetnum() {

@@ -76,15 +76,15 @@ public class CookieStoreUT {
 			reader.endArray();
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		} finally {
 			if(null!=fileReader){
 				try {
 					fileReader.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error",e);
 				}
 			}
 			if(null!=reader){
@@ -186,22 +186,22 @@ public class CookieStoreUT {
 				cookieStore.getCookies().clear();
 				cookieStore.getCookies().addAll(writeDiskCookies);
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} finally {
 				if(null!=fileWriter){
 					try {
 						fileWriter.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						LOGGER.error("Error",e);
 					}
 				}
 				if(null!=writer){
 					try {
 						writer.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						LOGGER.error("Error",e);
 					}
 				}
 			}

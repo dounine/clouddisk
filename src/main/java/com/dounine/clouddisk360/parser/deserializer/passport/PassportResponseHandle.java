@@ -2,6 +2,7 @@ package com.dounine.clouddisk360.parser.deserializer.passport;
 
 import com.dounine.clouddisk360.parser.PassportParser;
 import com.dounine.clouddisk360.parser.deserializer.BaseResponseHandle;
+import com.dounine.clouddisk360.parser.deserializer.differpre.DifferPressResponseHandle;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginConst;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginUserToken;
 import com.dounine.clouddisk360.store.BasePathCommon;
@@ -10,12 +11,14 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 
 public class PassportResponseHandle extends BaseResponseHandle<Passport, PassportParser>
 		implements ResponseHandler<Passport> {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(PassportResponseHandle.class);
 	public PassportResponseHandle(final PassportParser parse) {
 		super(parse);
 	}
@@ -42,7 +45,7 @@ public class PassportResponseHandle extends BaseResponseHandle<Passport, Passpor
 		try {
 			is = entity.getContent();
 		} catch (UnsupportedOperationException | IOException e2) {
-			e2.printStackTrace();
+			LOGGER.error("Error",e2);
 		}
 		try {
 			final LoginUserToken loginUser = parse.getLoginUserToken();
@@ -53,9 +56,9 @@ public class PassportResponseHandle extends BaseResponseHandle<Passport, Passpor
 			}
 			FileUtils.copyInputStreamToFile(is,file);
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+			LOGGER.error("Error",e1);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 	}
 

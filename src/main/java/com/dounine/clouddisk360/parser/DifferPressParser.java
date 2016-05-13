@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @DependResult(customInit = false, result = DifferPress.class)
 public class DifferPressParser extends
 		BaseParser<HttpGet, DifferPress, DifferPressConst, DifferPressParameter, DifferPressRequestInterceptor, DifferPressResponseHandle, DifferPressParser> {
-
+	
 	public static Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();
 	private Captcha captcha;
 	private CaptchaParser captchaParser;
@@ -61,7 +61,7 @@ public class DifferPressParser extends
 			uri.setParameter(CONST.KEEPALIVE_KEY, CONST.KEEPALIVE_VAL);
 			request = new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 		return request;
 	}
@@ -146,7 +146,7 @@ public class DifferPressParser extends
 		try {
 			return httpClient.execute(request, responseHandler, httpClientContext);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 		final DifferPress differPress = new DifferPress();
 		differPress.setCddmsg(userCheckLogin.getCddmsg());

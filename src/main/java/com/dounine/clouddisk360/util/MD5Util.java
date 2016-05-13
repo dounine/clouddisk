@@ -4,14 +4,19 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MD5Util {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.dounine.clouddisk360.store.UserStoreUT;
+
+public class MD5Util {
+	private static final Logger LOGGER = LoggerFactory.getLogger(MD5Util.class);
     public final static String MD5(final String s) {
         byte[] btInput = null;
         try {
             btInput = s.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        	LOGGER.error("Error",e);
         }
         return MD5(btInput);
     }
@@ -22,7 +27,7 @@ public class MD5Util {
             md5 = MessageDigest.getInstance("MD5");
         } catch (Exception e) {
             System.out.println(e.toString());
-            e.printStackTrace();
+            LOGGER.error("Error",e);
             return "";
         }
         final char[] charArray = inStr.toCharArray();
@@ -51,7 +56,7 @@ public class MD5Util {
             messageDigest.reset();
             messageDigest.update(data);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        	LOGGER.error("Error",e);
         }
         final byte[] byteArray = messageDigest.digest();
         final StringBuffer md5StrBuff = new StringBuffer();

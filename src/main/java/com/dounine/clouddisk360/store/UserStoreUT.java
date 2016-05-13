@@ -28,9 +28,9 @@ public class UserStoreUT {
 			writer.close();
 			LOGGER.info(String.format("360云盘用户登录信息保存路径 [ %s ] ", cookiesFile.getAbsolutePath()));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 	}
 }

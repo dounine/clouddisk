@@ -5,13 +5,15 @@ import com.dounine.clouddisk360.parser.deserializer.login.LoginUserToken;
 import com.dounine.clouddisk360.parser.deserializer.user.token.*;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URISyntaxException;
 
 @Parse("登录令牌")
 public class UserTokenParser extends
 		BaseParser<HttpGet, UserToken, UserTokenConst, UserTokenParameter, UserTokenRequestInterceptor, UserTokenResponseHandle,UserTokenParser> {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserTokenParser.class);
 	public UserTokenParser(){
 		super();
 	}
@@ -32,7 +34,7 @@ public class UserTokenParser extends
 			uri.setParameter(CONST.USERNAME_NAME, loginUserToken.getAccount());
 			request = new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 		return request;
 	}

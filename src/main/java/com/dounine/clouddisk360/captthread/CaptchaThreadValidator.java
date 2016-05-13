@@ -148,7 +148,7 @@ public class CaptchaThreadValidator implements Runnable {
                 }
 
             } catch (InterruptedException e) {
-                e.printStackTrace();
+               LOGGER.error("Exception",e);
             }
         }
     }

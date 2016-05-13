@@ -61,11 +61,11 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     protected HttpClientContext httpClientContext = new HttpClientContext();
     protected HttpClient httpClient;
 
-    public RequestInterceptor requestInterceptor;
-    public C CONST;
-    public HttpRequest requestMethod;
-    public ResponseHandler<M> responseHandler;
-    public Parameter parameter;
+    protected RequestInterceptor requestInterceptor;
+    protected C CONST;
+    protected HttpRequest requestMethod;
+    protected ResponseHandler<M> responseHandler;
+    protected Parameter parameter;
     protected String uriPath;
     protected Class<M> mClazz;
     /**

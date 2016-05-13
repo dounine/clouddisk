@@ -7,7 +7,7 @@ public class UserInfo extends BaseDes {
 
 	private Long timestamp;
 	private String qid;
-	private String username;
+	private String username1;
 	private String nickname;
 	private String login_email;
 	private String userName;
@@ -36,12 +36,12 @@ public class UserInfo extends BaseDes {
 		this.qid = qid;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUsername1() {
+		return username1;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername1(String username1) {
+		this.username1 = username1;
 	}
 
 	public String getNickname() {

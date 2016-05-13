@@ -25,7 +25,7 @@ import java.security.cert.X509Certificate;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class PoolingHttpClientConnection {
+public final class PoolingHttpClientConnection {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PoolingHttpClientConnection.class);
 
@@ -34,7 +34,9 @@ public class PoolingHttpClientConnection {
 	static{
 		initHttpClientConnectionManager();
 	}
-
+	
+	private PoolingHttpClientConnection(){}
+	
 	public static void initHttpClientConnectionManager() {
 		if(null!=CM){
 			return;

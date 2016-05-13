@@ -26,7 +26,7 @@ public class AuthTokenParser extends
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthTokenParser.class);
 
-	public static Map<String, AuthTokenParser> authTokenParsers = new ConcurrentHashMap();
+	public static final Map<String, AuthTokenParser> authTokenParsers = new ConcurrentHashMap();
 
 	public AuthTokenParser() {
 		super();

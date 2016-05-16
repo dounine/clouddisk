@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, C extends BaseConst, Parameter extends BaseParameter, RequestInterceptor extends BaseRequestInterceptor<C,Parser>, ResponseHandle, Parser extends BaseParser>
+public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C extends BaseConst, Parameter extends BaseParameter, RequestInterceptor extends BaseRequestInterceptor<C,Parser>, ResponseHandle, Parser extends BaseParser>
         extends JSONBinary implements IBaseParser{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseParser.class);
@@ -79,20 +79,20 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         return baseParser;
     }
 
-    public <TT> TT getDependResult(final Class<TT> depend) {
-        TT tt = null;
+    public <T> T getDependResult(final Class<T> depend) {
+        T tt = null;
         final Object baseDes = this.dependencys.get(depend);
         if (null != baseDes) {
-            tt = (TT) baseDes;
+            tt = (T) baseDes;
         }
         return tt;
     }
 
-    public <TT> TT getDependAccountResult(final Class<TT> depend) {
+    public <T> T getDependAccountResult(final Class<T> depend) {
         final DifferPressParser differPressParser = DifferPressParser.DIFFER_PRESS_PARSERS.get(loginUserToken.getAccount());
         final Object baseDes = differPressParser.dependencys.get(depend);
         if (null != baseDes) {
-            return (TT) baseDes;
+            return (T) baseDes;
         }
         return null;
     }
@@ -210,7 +210,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         if (null == loginUserToken) {
             throw new CloudDiskException("至少给一个解析器初始化用户信息");
         }
-        final Method request = initRequest(parameter);
+        final M1 request = initRequest(parameter);
         final M m = execute(request);
         cookieStoreUT.setCookieStore(httpClientContext.getCookieStore());
         return m;
@@ -229,15 +229,15 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     }
 
     @SuppressWarnings("unchecked")
-    public Method initRequest(final Parameter parameter) {
-        Method method = null;
+    public M1 initRequest(final Parameter parameter) {
+        M1 method = null;
         uriPath = getUriPath();
         if (StringUtils.isNotBlank(uriPath)) {
             final String host = getRedSchmemHost();
             if (requestMethod instanceof HttpGet) {
-                method = (Method) new HttpGet(host + uriPath);
+                method = (M1) new HttpGet(host + uriPath);
             }else{
-                method = (Method) new HttpPost(host + uriPath);
+                method = (M1) new HttpPost(host + uriPath);
             }
             return method;
         }else{
@@ -262,7 +262,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         return RequestConfig.custom().setCookieSpec(cookieSpecs).build();
     }
 
-    public M execute(final Method request) {
+    public M execute(final M1 request) {
         if (hasException()) {
             return execClouddiskException();
         }
@@ -281,7 +281,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         return null;
     }
 
-    public void executeException(final Exception e,final Method request){
+    public void executeException(final Exception e,final M1 request){
         if(e instanceof SocketTimeoutException){
             final String errMsg = request.getRequestLine()+" Socket连接超时";
             this.cloudDiskException = new CloudDiskException(errMsg);

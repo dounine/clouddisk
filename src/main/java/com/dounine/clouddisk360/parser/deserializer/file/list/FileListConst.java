@@ -4,7 +4,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 
 public final class FileListConst extends BaseConst {
 
-	public final String URI_PATH = "/file/list";
+	public static final String URI_PATH = "/file/list";
 
 	@Override
 	public String getUriPath() {
@@ -18,12 +18,12 @@ public final class FileListConst extends BaseConst {
 	public static final String M_VAL = "getToken";
 
 	public static final String USERNAME_NAME = "userName";
-	public final String TYPE_NAME = "type";
-	public final String PATH_NAME = "path";
-	public final String ORDER_NAME = "order";
-	public final String FIELD_KEY = "field";
+	public static final String TYPE_NAME = "type";
+	public static final String PATH_NAME = "path";
+	public static final String ORDER_NAME = "order";
+	public static final String FIELD_KEY = "field";
 	public static final String FIELD_VAL = "file_name";
 	public static final String PAGE_NAME = "page";
-	public final String PAGE_SIZE_NAME = "page_size";
+	public static final String PAGE_SIZE_NAME = "page_size";
 
 }

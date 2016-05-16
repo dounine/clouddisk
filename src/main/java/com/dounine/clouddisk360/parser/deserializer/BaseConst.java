@@ -4,21 +4,21 @@ import com.dounine.clouddisk360.parser.deserializer.user.IBaseConst;
 
 public class BaseConst implements IBaseConst{
 
-	public final String QID_NAME = "qid";
-	public final String SRC_KEY = "src";
-	public final String SRC_VAL = "pcw_cloud";
+	public static final String QID_NAME = "qid";
+	public static final String SRC_KEY = "src";
+	public static final String SRC_VAL = "pcw_cloud";
 
-	public final String FROM_KEY = "from";
-	public final String FROM_VAL = "pcw_cloud";
+	public static final String FROM_KEY = "from";
+	public static final String FROM_VAL = "pcw_cloud";
 
-	public final String CHARSET_KEY = "charset";
-	public final String CHARSET_VAL = "UTF-8";
+	public static final String CHARSET_KEY = "charset";
+	public static final String CHARSET_VAL = "UTF-8";
 
-	public final String REQUESTSCEMA_KEY = "requestScema";
-	public final String REQUESTSCEMA_VAL = "http";
+	public static final String REQUESTSCEMA_KEY = "requestScema";
+	public static final String REQUESTSCEMA_VAL = "http";
 
-	public final String O_KEY = "o";
-	public final String O_VAL = "sso";
+	public static final String O_KEY = "o";
+	public static final String O_VAL = "sso";
 
 	public static final String CONNECTION_KEY = "Connection";
 	public static final String CONNECTION_VAL = "keep-alive";
@@ -30,8 +30,8 @@ public class BaseConst implements IBaseConst{
 	public static final String REFERER_VAL = "http://yunpan.360.cn/";
 
 	public static final String ORIGIN_KEY = "Origin";
-	public final String AJAX_KEY = "ajax";
-	public final String AJAX_VAL = "1";
+	public static final String AJAX_KEY = "ajax";
+	public static final String AJAX_VAL = "1";
 
 	public static final String USER_AGENT_KEY = "User-Agent";
 	public static final String USER_AGENT_VAL = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.80 Safari/537.36";
@@ -55,8 +55,8 @@ public class BaseConst implements IBaseConst{
 	public static final String HOST_VAL = "login.360.cn";
 
 	public static final String COOKIES_PATH_NAME = "cookies.txt";
-	public final String PAGE_NAME = "page";
-	public final String PAGE_SIZE_NAME = "page_size";
+	public static final String PAGE_NAME = "page";
+	public static final String PAGE_SIZE_NAME = "page_size";
 
 	public static final String COOKIE_NAME = "cookie";
 	public static final String[] BASE_COOKIES_VALUES = { "Q", "T" };

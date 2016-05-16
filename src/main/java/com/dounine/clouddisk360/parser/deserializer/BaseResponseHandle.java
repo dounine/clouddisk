@@ -24,8 +24,8 @@ public class BaseResponseHandle<M extends BaseDes, P> implements ResponseHandler
 	public static final Pattern VAL_PAT = Pattern.compile("[{].*[}]");
 	public static final Pattern ERR_VAL_PAT = Pattern.compile("errno=\\d{2,}&errmsg=.{2,}[&]");//查找错误信息
 
-	public P parse;
-	public Class<M> entityClass;
+	protected P parse;
+	protected Class<M> entityClass;
 
 	@SuppressWarnings("unchecked")
 	public BaseResponseHandle(final P parse) {

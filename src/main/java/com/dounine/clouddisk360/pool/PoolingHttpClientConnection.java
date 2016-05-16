@@ -85,13 +85,9 @@ public final class PoolingHttpClientConnection {
 				}
 			} catch (ConnectTimeoutException e) {
 				LOGGER.error("连接超时");
-			} catch (InterruptedException e) {
+			} catch (InterruptedException|ExecutionException|IOException e) {
 				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			}  
 		}
 
 		new IdleConnectionMonitorThread(CM).start();// 连接回收策略

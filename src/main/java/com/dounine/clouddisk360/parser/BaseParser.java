@@ -128,17 +128,11 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
                     this.dataSmooth(baseParser);
                 } catch (CloudDiskException e) {
                     this.cloudDiskException = e;
-                } catch (InstantiationException | IllegalAccessException e) {
+                } catch (InstantiationException | 
+                		IllegalAccessException|NoSuchMethodException|
+                		SecurityException|IllegalArgumentException|InvocationTargetException e) {
                     e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                }  
                 if (this.hasException()) {//有异常程序返回
                     return;
                 }
@@ -250,11 +244,9 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         try {
             m = mClazz.newInstance();
             m.setCddmsg(cloudDiskException.getMessage());
-        } catch (InstantiationException e) {
+        } catch (InstantiationException|IllegalAccessException e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        }  
         return m;
     }
 

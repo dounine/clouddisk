@@ -37,7 +37,7 @@ public final class MD5Util {
             byteArray[i] = (byte) charArray[i];
         }
         final byte[] md5Bytes = md5.digest(byteArray);
-        final StringBuffer hexValue = new StringBuffer();
+        final StringBuilder hexValue = new StringBuilder();
         for (int i = 0; i < md5Bytes.length; i++) {
             final int val = ((int) md5Bytes[i]) & 0xff;
             if (val < 16) {
@@ -59,7 +59,7 @@ public final class MD5Util {
             LOGGER.error("Error",e);
         }
         final byte[] byteArray = messageDigest.digest();
-        final StringBuffer md5StrBuff = new StringBuffer();
+        final StringBuilder md5StrBuff = new StringBuilder();
         for (int i = 0; i < byteArray.length; i++) {
             if (Integer.toHexString(0xFF & byteArray[i]).length() == 1) {
                 md5StrBuff.append('0').append(Integer.toHexString(0xFF & byteArray[i]));

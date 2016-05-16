@@ -149,6 +149,7 @@ public class CaptchaThreadValidator implements Runnable {
 
             } catch (InterruptedException e) {
                 LOGGER.error("Error",e);
+                Thread.currentThread().interrupt();
             }
         }
     }

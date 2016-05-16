@@ -33,12 +33,8 @@ public class JSONBinary {
 			final File file = new File(getBianaryFilenamePath());
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
-			}
-			JSONWriter jsonWriter = null;
-			FileWriter fileWriter = null;
-			try {
-				fileWriter = new FileWriter(file);
-				jsonWriter = new JSONWriter(fileWriter);
+			}	 
+			try (JSONWriter jsonWriter=new JSONWriter(new FileWriter(file))){
 				jsonWriter.startObject();
 				jsonWriter.writeObject(obj);
 				jsonWriter.endObject();
@@ -46,17 +42,6 @@ public class JSONBinary {
 				LOGGER.info("文件 { " + file.getName() + " } 写入位置" + file.getAbsolutePath());
 			} catch (IOException e) {
 				LOGGER.error("Error",e);
-			} finally {
-				try {
-					if(null!=fileWriter){
-						fileWriter.close();
-					}
-					if(null!=jsonWriter){
-						jsonWriter.close();
-					}
-				} catch (IOException e) {
-					LOGGER.error("Error",e);
-				}
 			}
 		}
 	}
@@ -75,24 +60,13 @@ public class JSONBinary {
 			}else{
 				try {
 					if(FileUtils.readFileToString(file).length()>2){//判断文件里面是否包含有数据
-						JSONReader jsonReader = null;
-						FileReader fileReader = null;
 						T t = null;
-						try {
-							fileReader = new FileReader(file);
-							jsonReader = new JSONReader(fileReader);
+						try (JSONReader jsonReader=new JSONReader(new FileReader(file))){
 							jsonReader.startObject();
 							t = jsonReader.readObject(clazz);
 							jsonReader.endObject();
 						} catch (IOException e) {
 							LOGGER.error("Error",e);
-						} finally {
-							if(null!=fileReader){
-								fileReader.close();
-							}
-							if(null!=jsonReader){
-								jsonReader.close();
-							}
 						}
 						return t;
 					}
@@ -111,28 +85,13 @@ public class JSONBinary {
 			if (!file.exists()) {
 				file.getParentFile().mkdirs();
 			}
-			JSONWriter jsonWriter = null;
-			FileWriter fileWriter = null;
-			try {
-				fileWriter = new FileWriter(file);
-				jsonWriter = new JSONWriter(fileWriter);
+			try (JSONWriter jsonWriter=new JSONWriter(new FileWriter(file))){
 				jsonWriter.startArray();
 				lists.forEach(jsonWriter::writeObject);
 				jsonWriter.endArray();
 				jsonWriter.flush();
 			} catch (IOException e) {
 				LOGGER.error("Error",e);
-			} finally {
-				try {
-					if(null!=fileWriter){
-						fileWriter.close();
-					}
-					if(null!=jsonWriter){
-						jsonWriter.close();
-					}
-				} catch (IOException e) {
-					LOGGER.error("Error",e);
-				}
 			}
 		}
 	}
@@ -144,11 +103,7 @@ public class JSONBinary {
 			if (!file.exists()) {
 				throw new CloudDiskException("读取的文件:[ " + file.getAbsolutePath() + " ]不存在");
 			}
-			JSONReader jsonReader = null;
-			FileReader fileReader = null;
-			try {
-				fileReader = new FileReader(file);
-				jsonReader = new JSONReader(fileReader);
+			try (JSONReader jsonReader=new JSONReader(new FileReader(file))){
 				jsonReader.startArray();
 				while (jsonReader.hasNext()) {
 					lists.add(jsonReader.readObject(clazz));
@@ -156,17 +111,6 @@ public class JSONBinary {
 				jsonReader.endArray();
 			} catch (IOException e) {
 				LOGGER.error("Error",e);
-			} finally {
-				if(null!=fileReader){
-					try {
-						fileReader.close();
-					} catch (IOException e) {
-						LOGGER.error("Error",e);
-					}
-				}
-				if(null!=jsonReader){
-					jsonReader.close();
-				}
 			}
 			return lists;
 		}

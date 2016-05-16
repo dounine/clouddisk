@@ -10,7 +10,7 @@ CloudDisk 360云盘存储SDK
 <dependency>
 	<groupId>com.dounine</groupId>
 	<artifactId>clouddisk</artifactId>
-	<version>x.x.x</version>
+	<version>1.1.3</version>
 </dependency>
  ```
   * 从`github`中下载并编译

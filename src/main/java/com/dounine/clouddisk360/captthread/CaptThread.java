@@ -78,6 +78,7 @@ public class CaptThread implements Runnable{
 			}while (returnExist);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			Thread.currentThread().interrupt();
 		}
 
 		if (null == cValidator) {

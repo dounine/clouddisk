@@ -29,6 +29,7 @@ public class IdleConnectionMonitorThread extends Thread{
             }  
         } catch (InterruptedException ex) {  
             // terminate  
+        	Thread.currentThread().interrupt();
         }  
     }  
       

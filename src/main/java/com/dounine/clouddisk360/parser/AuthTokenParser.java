@@ -46,7 +46,7 @@ public class AuthTokenParser extends
 			try {
 				httpGet = new HttpGet(differPress.getRedirectUrl().build());
 			} catch (URISyntaxException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			}
 		}
 		return httpGet;

@@ -1,11 +1,15 @@
 package com.dounine.clouddisk360.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public final class MD5Util {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MD5Util.class);
 	private MD5Util(){}
 	
     public final static String MD5(final String s) {
@@ -13,7 +17,7 @@ public final class MD5Util {
         try {
             btInput = s.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         }
         return MD5(btInput);
     }
@@ -23,8 +27,7 @@ public final class MD5Util {
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (Exception e) {
-            System.out.println(e.toString());
-            e.printStackTrace();
+            LOGGER.error("Error",e);
             return "";
         }
         final char[] charArray = inStr.toCharArray();
@@ -53,7 +56,7 @@ public final class MD5Util {
             messageDigest.reset();
             messageDigest.update(data);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         }
         final byte[] byteArray = messageDigest.digest();
         final StringBuffer md5StrBuff = new StringBuffer();

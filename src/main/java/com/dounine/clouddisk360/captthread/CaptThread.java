@@ -21,8 +21,8 @@ public class CaptThread implements Runnable{
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CaptThread.class);
 
-	private static Map<String,PassportParser> PASSPORT_PARSER_MAP = new ConcurrentHashMap();
-	private final int timeOutSeconds = CaptchaThreadValidator.timeoutMin;
+	private static final Map<String,PassportParser> PASSPORT_PARSER_MAP = new ConcurrentHashMap();
+	private static final int timeOutSeconds = CaptchaThreadValidator.timeoutMin;
 	private static final int seconds = 3,sleepTimeSeconds = 1000*seconds;
 
 	private final DifferPressParser differPressParser;
@@ -77,7 +77,7 @@ public class CaptThread implements Runnable{
 				}
 			}while (returnExist);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 
 		if (null == cValidator) {

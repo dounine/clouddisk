@@ -13,6 +13,8 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.HttpClients;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -20,7 +22,7 @@ import java.io.IOException;
 @Dependency(depends = { FileUploadAddressParser.class })
 public class FileUploadParser extends
 		BaseParser<HttpPost, FileUpload, FileUploadConst, FileUploadParameter, FileUploadRequestInterceptor, FileUploadResponseHandle, FileUploadParser> {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(FileUploadParser.class);
 	public FileUploadParser(final LoginUserToken loginUser) {
 		super(loginUser);
 	}
@@ -61,7 +63,7 @@ public class FileUploadParser extends
 		try {
 			return httpClient.execute(request, responseHandler, this.httpClientContext);
 		} catch (IOException e) {
-			executeException(e,request);
+			LOGGER.error("Error",e);
 		}
 		return null;
 	}

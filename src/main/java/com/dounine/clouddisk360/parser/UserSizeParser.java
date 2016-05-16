@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 @Dependency(depends={AuthTokenParser.class})
 public class UserSizeParser extends
 		BaseParser<HttpGet, UserSize, UserSizeConst, UserSizeParameter, UserSizeRequestInterceptor, UserSizeResponseHandle,UserSizeParser> {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserSizeParser.class);
 	public UserSizeParser(){
 		super();
 	}
@@ -39,7 +39,7 @@ public class UserSizeParser extends
 			uri.setParameter("t", TimeUtil.getTimeLenth(10));
 			return new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 		return null;
 	}

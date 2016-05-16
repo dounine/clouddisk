@@ -61,7 +61,7 @@ public final class PoolingHttpClientConnection {
 					.register("https", sslsf).register("http", new PlainConnectionSocketFactory()).build();
 			CM = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 
 		CM.setMaxTotal(200);// 设置最大连接数
@@ -86,11 +86,11 @@ public final class PoolingHttpClientConnection {
 			} catch (ConnectTimeoutException e) {
 				LOGGER.error("连接超时");
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} catch (ExecutionException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			}
 		}
 

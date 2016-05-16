@@ -13,6 +13,8 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,7 +24,7 @@ import java.net.URISyntaxException;
 @DependResult(customInit = false, result = UserInfo.class)
 public class UserInfoParser extends
 		BaseParser<HttpGet, UserInfo, UserInfoConst, UserInfoParameter, UserInfoRequestInterceptor, UserInfoResponseHandle,UserInfoParser> {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoParser.class);
 	public UserInfoParser(){
 		super();
 	}
@@ -51,7 +53,7 @@ public class UserInfoParser extends
 			request.setConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.NETSCAPE).build());
 			return request;
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			LOGGER.error("Error",e);
 		}
 		return null;
 	}
@@ -66,6 +68,7 @@ public class UserInfoParser extends
 		try {
 			return httpClient.execute(request, responseHandler, this.httpClientContext);
 		} catch (IOException e) {
+			LOGGER.error("Error",e);
 			executeException(e,request);
 		}
 		return null;

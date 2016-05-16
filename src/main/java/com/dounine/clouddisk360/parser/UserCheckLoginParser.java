@@ -15,6 +15,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.List;
 public class UserCheckLoginParser extends
 		BaseParser<HttpPost, UserCheckLogin, UserCheckLoginConst, UserCheckLoginParameter, UserCheckLoginRequestInterceptor, UserCheckLoginResponseHandle,UserCheckLoginParser> {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserCheckLoginParser.class);
 	public UserCheckLoginParser(){
 		super();
 	}
@@ -59,6 +62,7 @@ public class UserCheckLoginParser extends
 		try {
 			return httpClient.execute(request, responseHandler, this.httpClientContext);
 		} catch (IOException e) {
+			LOGGER.error("Error",e);
 			executeException(e,request);
 		}
 		return null;

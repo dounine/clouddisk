@@ -1,11 +1,14 @@
 package com.dounine.clouddisk360.pool;
 
 import org.apache.http.conn.HttpClientConnectionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
 public class IdleConnectionMonitorThread extends Thread{
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(IdleConnectionMonitorThread.class);
 	private final HttpClientConnectionManager poolingHttpClientConnectionManager;  
     private boolean shutdown;
       
@@ -27,7 +30,8 @@ public class IdleConnectionMonitorThread extends Thread{
                     poolingHttpClientConnectionManager.closeIdleConnections(30, TimeUnit.SECONDS);  
                 }  
             }  
-        } catch (InterruptedException ex) {  
+        } catch (InterruptedException ex) {
+            LOGGER.error("Error",ex);
             // terminate  
         }  
     }  

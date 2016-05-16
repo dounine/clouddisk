@@ -45,7 +45,7 @@ public class JSONBinary {
 				jsonWriter.flush();
 				LOGGER.info("文件 { " + file.getName() + " } 写入位置" + file.getAbsolutePath());
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} finally {
 				try {
 					if(null!=fileWriter){
@@ -55,7 +55,7 @@ public class JSONBinary {
 						jsonWriter.close();
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error",e);
 				}
 			}
 		}
@@ -70,7 +70,7 @@ public class JSONBinary {
 				try {
 					file.createNewFile();
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error",e);
 				}
 			}else{
 				try {
@@ -85,7 +85,7 @@ public class JSONBinary {
 							t = jsonReader.readObject(clazz);
 							jsonReader.endObject();
 						} catch (IOException e) {
-							e.printStackTrace();
+							LOGGER.error("Error",e);
 						} finally {
 							if(null!=fileReader){
 								fileReader.close();
@@ -97,7 +97,7 @@ public class JSONBinary {
 						return t;
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error",e);
 				}
 			}
 			return null;
@@ -121,7 +121,7 @@ public class JSONBinary {
 				jsonWriter.endArray();
 				jsonWriter.flush();
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} finally {
 				try {
 					if(null!=fileWriter){
@@ -131,7 +131,7 @@ public class JSONBinary {
 						jsonWriter.close();
 					}
 				} catch (IOException e) {
-					e.printStackTrace();
+					LOGGER.error("Error",e);
 				}
 			}
 		}
@@ -155,13 +155,13 @@ public class JSONBinary {
 				}
 				jsonReader.endArray();
 			} catch (IOException e) {
-				e.printStackTrace();
+				LOGGER.error("Error",e);
 			} finally {
 				if(null!=fileReader){
 					try {
 						fileReader.close();
 					} catch (IOException e) {
-						e.printStackTrace();
+						LOGGER.error("Error",e);
 					}
 				}
 				if(null!=jsonReader){

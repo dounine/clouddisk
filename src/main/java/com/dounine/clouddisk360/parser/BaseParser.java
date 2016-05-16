@@ -129,15 +129,15 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
                 } catch (CloudDiskException e) {
                     this.cloudDiskException = e;
                 } catch (InstantiationException | IllegalAccessException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Error",e);
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Error",e);
                 } catch (SecurityException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Error",e);
                 } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Error",e);
                 } catch (InvocationTargetException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Error",e);
                 }
                 if (this.hasException()) {//有异常程序返回
                     return;
@@ -155,11 +155,11 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
             this.requestMethod = (HttpRequest) requestMethodClazz.newInstance();
             CONST = (C) baseconstMethodClazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         }
     }
 
@@ -251,10 +251,11 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
             m = mClazz.newInstance();
             m.setCddmsg(cloudDiskException.getMessage());
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         }
+
         return m;
     }
 
@@ -276,6 +277,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
             final HttpPost post = (HttpPost) request;
             return httpClient.execute(post, responseHandler, this.httpClientContext);
         } catch (IOException e) {
+            LOGGER.error("Error",e);
             executeException(e,request);
         }
         return null;
@@ -316,7 +318,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
             final URIBuilder uriBuilder =new URIBuilder(getRedSchmemHost());
             return uriBuilder.getHost();
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            LOGGER.error("Error",e);
         }
         return null;
     }

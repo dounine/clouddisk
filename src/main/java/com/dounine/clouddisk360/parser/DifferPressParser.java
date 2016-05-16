@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DifferPressParser extends
 		BaseParser<HttpGet, DifferPress, DifferPressConst, DifferPressParameter, DifferPressRequestInterceptor, DifferPressResponseHandle, DifferPressParser> {
 
-	public static Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();
+	public static final Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();
 	private Captcha captcha;
 	private CaptchaParser captchaParser;
 

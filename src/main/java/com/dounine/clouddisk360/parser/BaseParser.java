@@ -75,6 +75,25 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
     protected CloudDiskException cloudDiskException;
     protected LocalDateTime createDateTime = LocalDateTime.now();
 
+    public BaseParser() {
+        inits();
+    }
+
+    public BaseParser(final LoginUserToken loginUser) {
+        if (null == loginUserToken) {
+            if (null == loginUser) {
+                throw new CloudDiskException("loginUserToken 不能为空");
+            }
+            if (StringUtils.isBlank(loginUser.getAccount()) || StringUtils.isBlank(loginUser.getPassword())) {
+                throw new CloudDiskException("loginUserToken (用户名/密码)不能为空");
+            }
+        }
+        this.cookieStoreUT.setLoginUserToken(loginUser);
+        //httpClientContext.setUserToken(loginUser);
+        this.loginUserToken = loginUser;
+        inits();
+    }
+    
     public BaseParser dependsCustomInit(final Parser parser, final BaseParser baseParser) {
         return baseParser;
     }
@@ -163,24 +182,7 @@ public abstract class BaseParser<Method extends HttpRequest, M extends BaseDes, 
         }
     }
 
-    public BaseParser() {
-        inits();
-    }
-
-    public BaseParser(final LoginUserToken loginUser) {
-        if (null == loginUserToken) {
-            if (null == loginUser) {
-                throw new CloudDiskException("loginUserToken 不能为空");
-            }
-            if (StringUtils.isBlank(loginUser.getAccount()) || StringUtils.isBlank(loginUser.getPassword())) {
-                throw new CloudDiskException("loginUserToken (用户名/密码)不能为空");
-            }
-        }
-        this.cookieStoreUT.setLoginUserToken(loginUser);
-        //httpClientContext.setUserToken(loginUser);
-        this.loginUserToken = loginUser;
-        inits();
-    }
+   
 
     /**
      * 把parse数据平滑过来

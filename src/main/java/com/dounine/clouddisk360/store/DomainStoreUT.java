@@ -6,11 +6,11 @@ import com.dounine.clouddisk360.exception.CloudDiskException;
 
 public class DomainStoreUT {
 
-	private DomainStoreUT() {}
-
 	private static final DomainStoreUT domainStoreUT = new DomainStoreUT();
 	private String domain;
 
+	private DomainStoreUT() {}
+	
 	public static DomainStoreUT getInstance() {
 		return domainStoreUT;
 	}

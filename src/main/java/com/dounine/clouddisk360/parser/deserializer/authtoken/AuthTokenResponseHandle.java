@@ -39,7 +39,7 @@ public class AuthTokenResponseHandle extends BaseResponseHandle<AuthToken, AuthT
 		if(null==parse.getHttpClientContext().getAttribute(AuthTokenConst.LOGIN_USER_INFO)){
 			parse.setBinaryFilename("user/userInfo.txt");
 			Login loginUser = parse.readObjForDisk(Login.class);
-			if(null==loginUser||null!=loginUser && StringUtils.isBlank(loginUser.getQid())){
+			if(null==loginUser&& StringUtils.isBlank(loginUser.getQid())){
 				final UserInfoParser userInfoParser = new UserInfoParser(parse.getLoginUserToken());//用户信息解析器
 				final UserInfo userInfo = userInfoParser.parse();
 				if(0==userInfo.getErrno()){

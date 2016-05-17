@@ -38,8 +38,8 @@ public class CookieStoreUT {
 	}
 
 	public String readCookieValueForDisk(final String filter) {
-		final CookieStore cookieStore = readCookieStoreForDisk(new String[] { filter });
-		final List<Cookie> cookies = cookieStore.getCookies();
+		final CookieStore cookieStoreLocal = readCookieStoreForDisk(new String[] { filter });
+		final List<Cookie> cookies = cookieStoreLocal.getCookies();
 		for (final Cookie cookie : cookies) {
 			if (cookie.getName().equals(filter)) {
 				return cookie.getValue();

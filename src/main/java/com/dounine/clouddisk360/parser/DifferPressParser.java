@@ -103,15 +103,15 @@ public class DifferPressParser extends
 		final UserCheckLogin userCheckLogin = userCheckLoginParser.parse();
 		if(userCheckLogin.getErrno()!=0){//检测用户是否已经正常使用
 
-			final CaptchaParser captchaParser = new CaptchaParser(loginUserToken);
-			final Captcha captcha = captchaParser.parse();
-			if(captchaParser.hasException()){
-				this.cloudDiskException = captchaParser.getCloudDiskException();
+			final CaptchaParser captchaParserLocal = new CaptchaParser(loginUserToken);
+			final Captcha captchaLocal = captchaParserLocal.parse();
+			if(captchaParserLocal.hasException()){
+				this.cloudDiskException = captchaParserLocal.getCloudDiskException();
 				return null;
 			}
 			if (captcha.getCaptchaFlag()) {//登录有验证码操作
-				this.captchaParser = captchaParser;
-				this.captcha = captcha;
+				this.captchaParser = captchaParserLocal;
+				this.captcha = captchaLocal;
 				new Thread(new CaptThread(this)).start();//启动线程进行侦听登录操作
 				this.setCloudDiskException(new CloudDiskException("请验证帐户验证码成功后再操作."));
 				final DifferPress differPress = new DifferPress();

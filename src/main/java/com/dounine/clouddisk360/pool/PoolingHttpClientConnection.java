@@ -30,15 +30,16 @@ public final class PoolingHttpClientConnection {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PoolingHttpClientConnection.class);
 
 	private static PoolingHttpClientConnectionManager CM;
-	
-	static{
+
+	static {
 		initHttpClientConnectionManager();
 	}
-	
-	private PoolingHttpClientConnection(){}
-	
+
+	private PoolingHttpClientConnection() {
+	}
+
 	public static void initHttpClientConnectionManager() {
-		if(null!=CM){
+		if (null != CM) {
 			return;
 		}
 		try {
@@ -51,50 +52,52 @@ public final class PoolingHttpClientConnection {
 				}
 			});
 
-			final SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build(), new HostnameVerifier() {
-				@Override
-				public boolean verify(String hostname, SSLSession session) {
-					return true;
-				}
-			});
-			final Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory> create()
-					.register("https", sslsf).register("http", new PlainConnectionSocketFactory()).build();
+			final SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(builder.build(),
+					new HostnameVerifier() {
+						@Override
+						public boolean verify(String hostname, SSLSession session) {
+							return true;
+						}
+					});
+			final Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
+					.<ConnectionSocketFactory> create().register("https", sslsf)
+					.register("http", new PlainConnectionSocketFactory()).build();
 			CM = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if (CM != null) {
+			CM.setMaxTotal(200);// 设置最大连接数
+			CM.setDefaultMaxPerRoute(20);// 设置每个路由默认连接数
 
-		CM.setMaxTotal(200);// 设置最大连接数
-		CM.setDefaultMaxPerRoute(20);// 设置每个路由默认连接数
-
-		final String[] routes = new String[] {"yunpan.360.cn","c38.yunpan.360.cn"};
-		final HttpClientContext context = HttpClientContext.create();
-		for (final String url : routes) {
-			final HttpRoute yunpanRoute = new HttpRoute(new HttpHost(url, 80));
-			// 获取新的连接. 这里可能耗费很多时间
-			ConnectionRequest connRequest = CM.requestConnection(yunpanRoute, null);
-			CM.setMaxPerRoute(yunpanRoute, 100);
-			// 10秒超时
-			try {
-				final HttpClientConnection conn = connRequest.get(3, TimeUnit.SECONDS);
-				if (!conn.isOpen()) {
-					LOGGER.info(url+" -> 路由连接中.");
-					CM.connect(conn, yunpanRoute, 100,context);// httpClientContext在些初始化有问题
-					LOGGER.info(url+" -> 路由已连接.");
-					CM.routeComplete(conn, yunpanRoute, context);  
+			final String[] routes = new String[] { "yunpan.360.cn", "c38.yunpan.360.cn" };
+			final HttpClientContext context = HttpClientContext.create();
+			for (final String url : routes) {
+				final HttpRoute yunpanRoute = new HttpRoute(new HttpHost(url, 80));
+				// 获取新的连接. 这里可能耗费很多时间
+				ConnectionRequest connRequest = CM.requestConnection(yunpanRoute, null);
+				CM.setMaxPerRoute(yunpanRoute, 100);
+				// 10秒超时
+				try {
+					final HttpClientConnection conn = connRequest.get(3, TimeUnit.SECONDS);
+					if (!conn.isOpen()) {
+						LOGGER.info(url + " -> 路由连接中.");
+						CM.connect(conn, yunpanRoute, 100, context);// httpClientContext在些初始化有问题
+						LOGGER.info(url + " -> 路由已连接.");
+						CM.routeComplete(conn, yunpanRoute, context);
+					}
+				} catch (ConnectTimeoutException e) {
+					LOGGER.error("连接超时");
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-			} catch (ConnectTimeoutException e) {
-				LOGGER.error("连接超时");
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+			new IdleConnectionMonitorThread(CM).start();// 连接回收策略
 		}
-
-		new IdleConnectionMonitorThread(CM).start();// 连接回收策略
 	}
 
 	public static PoolingHttpClientConnectionManager getInstalce() {

@@ -14,7 +14,8 @@ public class CaptchaThreadValidator implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaThreadValidator.class);
     public static final int timeoutMin = 10 * 60;
     private static final String ACCOUNT_NOT_NULL = "account not empty";
-
+    private static final String ERROR_MESSAGE_1="captchaValidator 属性(account/captchaPath)不能为空";
+    private static final String ERROR_MESSAGE_2="captchaValidator 不能为空";
     private CaptchaThreadValidator() {
     }
 
@@ -52,10 +53,10 @@ public class CaptchaThreadValidator implements Runnable {
 
     public static void validCaptchaValidator(final String account,final CaptchaValidator captchaValidator) {
         if (StringUtils.isBlank(account)) {
-            LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+            LOGGER.error(ERROR_MESSAGE_1);
         }
         if (null == captchaValidator) {
-            LOGGER.error("captchaValidator 不能为空");
+            LOGGER.error(ERROR_MESSAGE_2);
             return;
         }
         final CaptchaValidator cv = captchaValidators.get(account);
@@ -69,14 +70,14 @@ public class CaptchaThreadValidator implements Runnable {
 
     public static void addCaptchaValidator(final String account,final CaptchaValidator captchaValidator) {
         if (null == captchaValidator) {
-            LOGGER.error("captchaValidator 不能为空");
+            LOGGER.error(ERROR_MESSAGE_2);
             return;
         }
         synchronized (captchaValidators) {
             if (StringUtils.isNotBlank(account)) {
                 captchaValidators.put(account, captchaValidator);
             } else {
-                LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+                LOGGER.error(ERROR_MESSAGE_1);
             }
         }
     }
@@ -90,7 +91,7 @@ public class CaptchaThreadValidator implements Runnable {
             if (StringUtils.isNotBlank(account)) {
                 captchaValidators.remove(account);
             } else {
-                LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+                LOGGER.error(ERROR_MESSAGE_1);
             }
         }
     }

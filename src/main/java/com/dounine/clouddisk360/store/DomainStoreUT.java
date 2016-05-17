@@ -16,16 +16,15 @@ public class DomainStoreUT {
 	}
 	
 	public static String parserDomain(String uri){
-		uri = uri.substring(uri.indexOf("//")+2,uri.indexOf('.'));
-		return uri;
+		return  uri.substring(uri.indexOf("//")+2,uri.indexOf('.'));
 	}
 	
 	public void initDomain(String domain) {
 		if(StringUtils.isBlank(domain)){
 			throw new CloudDiskException("domain子域名不能为空");
 		}
-		domain = parserDomain(domain);//解释
-		domainStoreUT.setDomain(domain);
+		String domainLocal = parserDomain(domain);//解释
+		domainStoreUT.setDomain(domainLocal);
 	}
 
 	public String getDomain() {

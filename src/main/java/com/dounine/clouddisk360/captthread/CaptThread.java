@@ -64,7 +64,7 @@ public class CaptThread implements Runnable{
 				cValidator = CaptchaThreadValidator.getCaptchaValidator(account);
 				if (null == cValidator) {
 					returnExist = false;
-				}else if (null != cValidator && null != cValidator.getCaptchaValue()) {
+				}else if (null != cValidator.getCaptchaValue()) {
 					returnExist = false;
 				}
 				if (runTimeSeconds >= timeOutSeconds) {
@@ -101,7 +101,7 @@ public class CaptThread implements Runnable{
 				remove_passport(account);//移除验证码解析器
 				LOGGER.info("线程登录成功");
 			}else if(null==login||login.getErrno()!=0){
-				CaptchaThreadValidator.updateValidMsgAndTime(account,login.getErrmsg(),false);//更新验证时间
+				CaptchaThreadValidator.updateValidMsgAndTime(account,"Login Error",false);//更新验证时间
 				new Thread(new CaptThread(differPressParser)).start();//启动线程进行侦听登录操作
 				LOGGER.info(login.getErrmsg()+",云盘线程重新监听");
 			}else{

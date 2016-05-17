@@ -30,9 +30,9 @@ public class LoginResponseHandle extends BaseResponseHandle<Login, LoginParser> 
 
 	@Override
 	public String disassemblyResult(String result) {
-		result = URLUtil.decode(result);
-		final Matcher matcher = VAL_PAT.matcher(result);
-		final Matcher errMatcher = ERR_VAL_PAT.matcher(result);
+		String resultLocal = URLUtil.decode(result);
+		final Matcher matcher = VAL_PAT.matcher(resultLocal);
+		final Matcher errMatcher = ERR_VAL_PAT.matcher(resultLocal);
 		if(errMatcher.find()){
 			final String msg = errMatcher.group();
 			final String[] vs = msg.split("&");

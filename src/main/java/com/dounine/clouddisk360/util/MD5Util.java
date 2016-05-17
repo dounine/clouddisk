@@ -4,8 +4,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public final class MD5Util {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+public final class MD5Util {
+    private static final Logger LOGGER=LoggerFactory.getLogger(MD5Util.class);
 	private MD5Util(){}
 	
     public final static String MD5(final String s) {
@@ -23,7 +26,7 @@ public final class MD5Util {
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (Exception e) {
-            System.out.println(e.toString());
+            LOGGER.info(e.toString());
             e.printStackTrace();
             return "";
         }

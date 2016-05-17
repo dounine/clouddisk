@@ -49,8 +49,12 @@ public class CookieStoreUT {
 	}
 
 	public CookieStore readCookieStoreForDisk(String[] filterCookies) {
+		String[] filterCookiesLocal;
 		if (null == filterCookies){
-			filterCookies = new String[0];
+			filterCookiesLocal = new String[0];
+		}
+		else {
+			filterCookiesLocal=filterCookies;
 		}
 		final List<BasicCookieStore3> cookies = new ArrayList<>(0);
 		final String path = new StringBuilder(BasePathCommon.BASE_PATH).append(loginUserToken.getAccount()).append(COOKIE_STORE_PATH).append(BaseConst.COOKIES_PATH_NAME).toString();
@@ -106,10 +110,10 @@ public class CookieStoreUT {
 		final List<Cookie> filterCookieLists = new ArrayList<>(appacheCookies.size());
 		for (final Cookie cookie : appacheCookies) {
 			boolean isFilter = false;
-			if (filterCookies.length == 0) {
+			if (filterCookiesLocal.length == 0) {
 				isFilter = true;
 			} else {
-				for (final String cookieName : filterCookies) {
+				for (final String cookieName : filterCookiesLocal) {
 					if (cookie.getName().equals(cookieName)) {
 						isFilter = true;
 						break;
@@ -125,8 +129,12 @@ public class CookieStoreUT {
 	}
 
 	private void writeCookiesToDisk(final List<Cookie> responseCookies, String[] filterCookies, final boolean converCookieStore) {
+		String[] filterCookiesLocal;
 		if (null == filterCookies) {
-			filterCookies = new String[0];// 手动初始化,防止异常
+			filterCookiesLocal = new String[0];// 手动初始化,防止异常
+		}
+		else{
+			filterCookiesLocal=filterCookies;
 		}
 		if (null != responseCookies && responseCookies.size() > 0) {
 			List<Cookie> writeDiskCookies = new ArrayList<>(0);// 真正写入磁盘的cookies集合
@@ -135,10 +143,10 @@ public class CookieStoreUT {
 
 			if (converCookieStore) {
 				for (final Cookie responseCookie : responseCookies) {
-					if (filterCookies.length == 0) {
+					if (filterCookiesLocal.length == 0) {
 						writeDiskCookies.add(responseCookie);
 					} else {
-						for (final String cookieName : filterCookies) {
+						for (final String cookieName : filterCookiesLocal) {
 							if (responseCookie.getName().equals(cookieName)) {
 								writeDiskCookies.add(responseCookie);
 								break;
@@ -155,10 +163,10 @@ public class CookieStoreUT {
 				writeDiskCookies = new ArrayList<>(readDiskCookies);
 				for (final Cookie responseCookie : responseCookies) {
 					if (false == readDiskCookies.stream().anyMatch(c -> c.getName().equals(responseCookie.getName()))) {// 把新的cookie添加进去
-						if (filterCookies.length == 0) {
+						if (filterCookiesLocal.length == 0) {
 							writeDiskCookies.add(responseCookie);
 						} else {
-							for (final String cookieName : filterCookies) {
+							for (final String cookieName : filterCookiesLocal) {
 								if (responseCookie.getName().equals(cookieName)) {
 									writeDiskCookies.add(responseCookie);
 									break;

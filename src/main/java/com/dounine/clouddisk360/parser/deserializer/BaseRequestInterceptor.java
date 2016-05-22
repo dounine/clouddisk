@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class BaseRequestInterceptor<Const extends BaseConst,Parser extends BaseParser> implements HttpRequestInterceptor {
+public class BaseRequestInterceptor<C  extends BaseConst,Parser extends BaseParser> implements HttpRequestInterceptor {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(BaseRequestInterceptor.class);
 
@@ -25,12 +25,12 @@ public class BaseRequestInterceptor<Const extends BaseConst,Parser extends BaseP
 	}
 	
 	public void requestInit(final HttpRequest request, final HttpContext context)throws HttpException, IOException {
-		request.setHeader(Const.ACCEPT_KEY, Const.ACCEPT_VAL);
-		request.setHeader(Const.ACCEPT_ENCODING_KEY, Const.ACCEPT_ENCODING_VAL);
-		request.setHeader(Const.ACCEPT_LANGUAGE_KEY, Const.ACCEPT_LANGUAGE_VAL);
-		request.setHeader(Const.CONNECTION_KEY, Const.CONNECTION_VAL);
-		request.setHeader(Const.CONTENT_TYPE_KEY, Const.CONTENT_TYPE_VAL);
-		request.setHeader(Const.USER_AGENT_KEY, Const.USER_AGENT_VAL);
+		request.setHeader(C.ACCEPT_KEY, C.ACCEPT_VAL);
+		request.setHeader(C.ACCEPT_ENCODING_KEY, C.ACCEPT_ENCODING_VAL);
+		request.setHeader(C.ACCEPT_LANGUAGE_KEY, C.ACCEPT_LANGUAGE_VAL);
+		request.setHeader(C.CONNECTION_KEY, C.CONNECTION_VAL);
+		request.setHeader(C.CONTENT_TYPE_KEY, C.CONTENT_TYPE_VAL);
+		request.setHeader(C.USER_AGENT_KEY, C.USER_AGENT_VAL);
 	}
 	
 	public void process(final HttpRequest request, final HttpContext context,boolean useHost) throws HttpException, IOException {
@@ -38,13 +38,13 @@ public class BaseRequestInterceptor<Const extends BaseConst,Parser extends BaseP
 		final String hostName = parser.getRedHost();
 		final String host = parser.getRedSchmemHost();
 		if(StringUtils.isNotBlank(hostName)){
-			request.setHeader(Const.HOST_KEY,hostName);
+			request.setHeader(C.HOST_KEY,hostName);
 		}else{
-			request.setHeader(Const.HOST_KEY, Const.HOST_VAL);
+			request.setHeader(C.HOST_KEY, C.HOST_VAL);
 		}
 		if(StringUtils.isNotBlank(host)){
-			request.setHeader(Const.REFERER_KEY, host+"/my/index");
-			request.setHeader(Const.ORIGIN_KEY, host);
+			request.setHeader(C.REFERER_KEY, host+"/my/index");
+			request.setHeader(C.ORIGIN_KEY, host);
 		}else{
 			LOGGER.error("Referer 与 Origin 不能为空");
 		}

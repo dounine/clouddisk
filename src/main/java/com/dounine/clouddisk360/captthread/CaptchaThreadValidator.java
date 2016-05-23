@@ -14,11 +14,13 @@ public class CaptchaThreadValidator implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaThreadValidator.class);
     public static final int timeoutMin = 10 * 60;
     private static final String ACCOUNT_NOT_NULL = "account not empty";
-
+    private static Map<String, CaptchaValidator> captchaValidators = new ConcurrentHashMap(100);
+    private static final CaptchaThreadValidator captchaThreadValidator;
+    
     private CaptchaThreadValidator() {
     }
 
-    private static final CaptchaThreadValidator captchaThreadValidator;
+    
 
     static {
         captchaThreadValidator = new CaptchaThreadValidator();
@@ -29,7 +31,7 @@ public class CaptchaThreadValidator implements Runnable {
         return captchaThreadValidator;
     }
 
-    private static Map<String, CaptchaValidator> captchaValidators = new ConcurrentHashMap(100);
+    
 
     public static boolean isTimeout(final String account) {
         return isTimeout(account, false);

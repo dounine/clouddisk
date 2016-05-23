@@ -38,6 +38,7 @@ public class DifferPressParser extends
 		BaseParser<HttpGet, DifferPress, DifferPressConst, DifferPressParameter, DifferPressRequestInterceptor, DifferPressResponseHandle, DifferPressParser> {
 
 	public static final Map<String, DifferPressParser> DIFFER_PRESS_PARSERS = new ConcurrentHashMap();
+	private static final String DISK_EXCEPTION_MESSAGE = "请验证帐户验证码成功后再操作.";
 	private Captcha captcha;
 	private CaptchaParser captchaParser;
 
@@ -74,7 +75,7 @@ public class DifferPressParser extends
 		final String account = loginUserToken.getAccount();
 		final CaptchaValidator captchaValidator = CaptchaThreadValidator.getCaptchaValidator(account);
 		if(null!=captchaValidator&&!captchaValidator.isSuccess()){
-			this.setCloudDiskException(new CloudDiskException("请验证帐户验证码成功后再操作."));
+			this.setCloudDiskException(new CloudDiskException(DISK_EXCEPTION_MESSAGE));
 			return null;
 		}
 		final DifferPressParser differPressParser = DIFFER_PRESS_PARSERS.get(account);
@@ -113,10 +114,10 @@ public class DifferPressParser extends
 				this.captchaParser = captchaParser;
 				this.captcha = captcha;
 				new Thread(new CaptThread(this)).start();//启动线程进行侦听登录操作
-				this.setCloudDiskException(new CloudDiskException("请验证帐户验证码成功后再操作."));
+				this.setCloudDiskException(new CloudDiskException(DISK_EXCEPTION_MESSAGE));
 				final DifferPress differPress = new DifferPress();
 				differPress.setErrno(401);
-				differPress.setCddmsg("请验证帐户验证码成功后再操作.");
+				differPress.setCddmsg(DISK_EXCEPTION_MESSAGE);
 				return differPress;
 			}else{//无验证码,直接登录
 				final UserTokenParser userTokenParser = new UserTokenParser(loginUserToken);

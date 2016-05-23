@@ -10,6 +10,8 @@ import java.security.NoSuchAlgorithmException;
 public final class MD5Util {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MD5Util.class);
+    private static final String ERROR = "error";
+    
 	private MD5Util(){}
 	
     public final static String MD5(final String s) {
@@ -17,7 +19,7 @@ public final class MD5Util {
         try {
             btInput = s.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         }
         return MD5(btInput);
     }
@@ -27,7 +29,7 @@ public final class MD5Util {
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (Exception e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
             return "";
         }
         final char[] charArray = inStr.toCharArray();
@@ -56,7 +58,7 @@ public final class MD5Util {
             messageDigest.reset();
             messageDigest.update(data);
         } catch (NoSuchAlgorithmException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         }
         final byte[] byteArray = messageDigest.digest();
         final StringBuilder md5StrBuff = new StringBuilder();

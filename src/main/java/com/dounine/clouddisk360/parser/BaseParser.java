@@ -44,6 +44,7 @@ public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C ex
         extends JSONBinary implements IBaseParser{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseParser.class);
+    private static final String ERROR = "error";
 
     static {
         if (StringUtils.isBlank(BasePathCommon.BASE_PATH)) {
@@ -129,15 +130,15 @@ public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C ex
                 } catch (CloudDiskException e) {
                     this.cloudDiskException = e;
                 } catch (InstantiationException | IllegalAccessException e) {
-                    LOGGER.error("Error",e);
+                    LOGGER.error(ERROR,e);
                 } catch (NoSuchMethodException e) {
-                    LOGGER.error("Error",e);
+                    LOGGER.error(ERROR,e);
                 } catch (SecurityException e) {
-                    LOGGER.error("Error",e);
+                    LOGGER.error(ERROR,e);
                 } catch (IllegalArgumentException e) {
-                    LOGGER.error("Error",e);
+                    LOGGER.error(ERROR,e);
                 } catch (InvocationTargetException e) {
-                    LOGGER.error("Error",e);
+                    LOGGER.error(ERROR,e);
                 }
                 if (this.hasException()) {//有异常程序返回
                     return;
@@ -155,11 +156,11 @@ public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C ex
             this.requestMethod = (HttpRequest) requestMethodClazz.newInstance();
             CONST = (C) baseconstMethodClazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         } catch (InvocationTargetException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         }
     }
 
@@ -251,9 +252,9 @@ public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C ex
             m = mClazz.newInstance();
             m.setCddmsg(cloudDiskException.getMessage());
         } catch (InstantiationException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         } catch (IllegalAccessException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         }
 
         return m;
@@ -277,7 +278,7 @@ public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C ex
             final HttpPost post = (HttpPost) request;
             return httpClient.execute(post, responseHandler, this.httpClientContext);
         } catch (IOException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
             executeException(e,request);
         }
         return null;
@@ -318,7 +319,7 @@ public abstract class BaseParser<M1 extends HttpRequest, M extends BaseDes, C ex
             final URIBuilder uriBuilder =new URIBuilder(getRedSchmemHost());
             return uriBuilder.getHost();
         } catch (URISyntaxException e) {
-            LOGGER.error("Error",e);
+            LOGGER.error(ERROR,e);
         }
         return null;
     }

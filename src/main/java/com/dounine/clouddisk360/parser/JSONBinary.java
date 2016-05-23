@@ -20,7 +20,7 @@ import java.util.List;
 public class JSONBinary {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(JSONBinary.class);
-
+	private static final String ERROR = "error";
 	private String binaryFilename;
 	protected LoginUserToken loginUserToken;
 
@@ -41,7 +41,7 @@ public class JSONBinary {
 				jsonWriter.flush();
 				LOGGER.info("文件 { " + file.getName() + " } 写入位置" + file.getAbsolutePath());
 			} catch (IOException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			}
 		}
 	}
@@ -55,7 +55,7 @@ public class JSONBinary {
 				try {
 					file.createNewFile();
 				} catch (IOException e) {
-					LOGGER.error("Error",e);
+					LOGGER.error(ERROR,e);
 				}
 			}else{
 				try {
@@ -66,12 +66,12 @@ public class JSONBinary {
 							t = jsonReader.readObject(clazz);
 							jsonReader.endObject();
 						} catch (IOException e) {
-							LOGGER.error("Error",e);
+							LOGGER.error(ERROR,e);
 						}
 						return t;
 					}
 				} catch (IOException e) {
-					LOGGER.error("Error",e);
+					LOGGER.error(ERROR,e);
 				}
 			}
 			return null;
@@ -91,7 +91,7 @@ public class JSONBinary {
 				jsonWriter.endArray();
 				jsonWriter.flush();
 			} catch (IOException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			}
 		}
 	}
@@ -110,7 +110,7 @@ public class JSONBinary {
 				}
 				jsonReader.endArray();
 			} catch (IOException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			}
 			return lists;
 		}

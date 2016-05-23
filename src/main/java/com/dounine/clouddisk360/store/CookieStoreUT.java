@@ -19,7 +19,7 @@ import java.util.List;
 public class CookieStoreUT {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CookieStoreUT.class);
-
+	private static final String ERROR = "error";
 	public static final String COOKIE_STORE_PATH = File.separator+"cookieStore"+File.separator;
 
 	private CookieStore cookieStore;
@@ -76,9 +76,9 @@ public class CookieStoreUT {
 			reader.endArray();
 
 		} catch (FileNotFoundException e) {
-			LOGGER.error("Error",e);
+			LOGGER.error(ERROR,e);
 		} catch (IOException e) {
-			LOGGER.error("Error",e);
+			LOGGER.error(ERROR,e);
 		} finally {
 			if(null!=fileReader){
 				try {
@@ -186,22 +186,22 @@ public class CookieStoreUT {
 				cookieStore.getCookies().clear();
 				cookieStore.getCookies().addAll(writeDiskCookies);
 			} catch (FileNotFoundException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			} catch (IOException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			} finally {
 				if(null!=fileWriter){
 					try {
 						fileWriter.close();
 					} catch (IOException e) {
-						LOGGER.error("Error",e);
+						LOGGER.error(ERROR,e);
 					}
 				}
 				if(null!=writer){
 					try {
 						writer.close();
 					} catch (IOException e) {
-						LOGGER.error("Error",e);
+						LOGGER.error(ERROR,e);
 					}
 				}
 			}

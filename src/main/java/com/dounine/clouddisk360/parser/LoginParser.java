@@ -42,35 +42,35 @@ public class LoginParser extends
 
 	@Override
 	public HttpPost initRequest(final LoginParameter parameter) {
-		final HttpPost request = new HttpPost(CONST.URI_PATH);
+		final HttpPost request = new HttpPost(LoginConst.URI_PATH);
 		final List<NameValuePair> data = new ArrayList<>();
 		data.add(new BasicNameValuePair(CONST.SRC_KEY, CONST.SRC_VAL));
 		data.add(new BasicNameValuePair(CONST.FROM_KEY, CONST.FROM_VAL));
 		data.add(new BasicNameValuePair(CONST.CHARSET_KEY, CONST.SRC_VAL));
-		data.add(new BasicNameValuePair(CONST.REQUESTSCEMA_KEY, CONST.REQUESTSCEMA_VAL));
+		data.add(new BasicNameValuePair(LoginConst.REQUESTSCEMA_KEY, LoginConst.REQUESTSCEMA_VAL));
 		data.add(new BasicNameValuePair(CONST.O_KEY, CONST.O_VAL));
-		data.add(new BasicNameValuePair(CONST.M_KEY, CONST.M_VAL));
-		data.add(new BasicNameValuePair(CONST.LM_KEY, CONST.LM_VAL));
-		data.add(new BasicNameValuePair(CONST.CAPTFLAG_KEY, CONST.CAPTFLAG_VAL));
-		data.add(new BasicNameValuePair(CONST.RTYPE_KEY, CONST.RTYPE_VAL));
-		data.add(new BasicNameValuePair(CONST.VALIDATELM_KEY, CONST.VALIDATELM_VAL));
-		data.add(new BasicNameValuePair(CONST.ISKEEPALIVE_KEY, CONST.ISKEEPALIVE_VAL));
-		data.add(new BasicNameValuePair(CONST.CAPTCHAAPP_KEY, CONST.CAPTCHAAPP_VAL));
-		data.add(new BasicNameValuePair(CONST.USERNAME_NAME, loginUserToken.getAccount()));
-		data.add(new BasicNameValuePair(CONST.TYPE_KEY, LoginConst.TYPE_VAL));
-		data.add(new BasicNameValuePair(CONST.ACCOUNT_NAME, loginUserToken.getAccount()));
+		data.add(new BasicNameValuePair(LoginConst.M_KEY, LoginConst.M_VAL));
+		data.add(new BasicNameValuePair(LoginConst.LM_KEY, LoginConst.LM_VAL));
+		data.add(new BasicNameValuePair(LoginConst.CAPTFLAG_KEY, LoginConst.CAPTFLAG_VAL));
+		data.add(new BasicNameValuePair(LoginConst.RTYPE_KEY, LoginConst.RTYPE_VAL));
+		data.add(new BasicNameValuePair(LoginConst.VALIDATELM_KEY, LoginConst.VALIDATELM_VAL));
+		data.add(new BasicNameValuePair(LoginConst.ISKEEPALIVE_KEY, LoginConst.ISKEEPALIVE_VAL));
+		data.add(new BasicNameValuePair(LoginConst.CAPTCHAAPP_KEY, LoginConst.CAPTCHAAPP_VAL));
+		data.add(new BasicNameValuePair(LoginConst.USERNAME_NAME, loginUserToken.getAccount()));
+		data.add(new BasicNameValuePair(LoginConst.TYPE_KEY, LoginConst.TYPE_VAL));
+		data.add(new BasicNameValuePair(LoginConst.ACCOUNT_NAME, loginUserToken.getAccount()));
 		if (loginUserToken.isMd5()) {
-			data.add(new BasicNameValuePair(CONST.PASSWORD_NAME, loginUserToken.getPassword()));
+			data.add(new BasicNameValuePair(LoginConst.PASSWORD_NAME, loginUserToken.getPassword()));
 		} else {
-			data.add(new BasicNameValuePair(CONST.PASSWORD_NAME, MD5Util.MD5(loginUserToken.getPassword())));
+			data.add(new BasicNameValuePair(LoginConst.PASSWORD_NAME, MD5Util.MD5(loginUserToken.getPassword())));
 		}
 		if (StringUtils.isNotBlank(parameter.getCaptchaValue())) {
-			data.add(new BasicNameValuePair(CONST.CAPTCHA_KEY, parameter.getCaptchaValue()));
+			data.add(new BasicNameValuePair(LoginConst.CAPTCHA_KEY, parameter.getCaptchaValue()));
 		} else {
-			data.add(new BasicNameValuePair(CONST.CAPTCHA_KEY, StringUtils.EMPTY));
+			data.add(new BasicNameValuePair(LoginConst.CAPTCHA_KEY, StringUtils.EMPTY));
 		}
 		if (StringUtils.isNotBlank(parameter.getToken())) {
-			data.add(new BasicNameValuePair(CONST.TOKEN_NAME, parameter.getToken()));
+			data.add(new BasicNameValuePair(LoginConst.TOKEN_NAME, parameter.getToken()));
 		} else {
 			throw new CloudDiskException("登录所需token令牌不能为空.");
 		}

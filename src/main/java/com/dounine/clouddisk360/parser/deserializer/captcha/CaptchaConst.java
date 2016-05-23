@@ -6,12 +6,12 @@ public final class CaptchaConst extends BaseConst {
 
 	public final String URI_PATH = "http://login.360.cn/";
 	
-	public final String M_KEY = "m";
-	public final String M_VAL = "checkNeedCaptcha";
+	public static final String M_KEY = "m";
+	public static final String M_VAL = "checkNeedCaptcha";
 
-	public final String CAPTCHAAPP_KEY = "captchaApp";
-	public final String CAPTCHAAPP_VAL = "i360";
+	public static final String CAPTCHAAPP_KEY = "captchaApp";
+	public static final String CAPTCHAAPP_VAL = "i360";
 
-	public final String ACCOUNT_NAME = "account";
+	public static final String ACCOUNT_NAME = "account";
 
 }

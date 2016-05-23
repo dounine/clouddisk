@@ -5,12 +5,6 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 public final class FileListConst extends BaseConst {
 
 	public final String URI_PATH = "/file/list";
-
-	@Override
-	public String getUriPath() {
-		return URI_PATH;
-	}
-
 	public static final String REQUESTSCEMA_KEY = "requestScema";
 	public static final String REQUESTSCEMA_VAL = "https";
 
@@ -25,5 +19,10 @@ public final class FileListConst extends BaseConst {
 	public static final String FIELD_VAL = "file_name";
 	public static final String PAGE_NAME = "page";
 	public final String PAGE_SIZE_NAME = "page_size";
+	
+	@Override
+	public String getUriPath() {
+		return URI_PATH;
+	}
 
 }

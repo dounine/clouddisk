@@ -1,6 +1,7 @@
 package com.dounine.clouddisk360.parser;
 
 import com.dounine.clouddisk360.annotation.Parse;
+import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 import com.dounine.clouddisk360.parser.deserializer.login.Login;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginConst;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginUserToken;
@@ -43,8 +44,8 @@ public class UserCheckLoginParser extends
 		}
 		final HttpPost request = new HttpPost(CONST.URI_PATH);
 		final List<NameValuePair> data = new ArrayList<>();
-		data.add(new BasicNameValuePair(CONST.QID_NAME, login.getQid()));
-		data.add(new BasicNameValuePair(CONST.METHOD_KEY, CONST.METHOD_VAL));
+		data.add(new BasicNameValuePair(UserCheckLoginConst.QID_NAME, login.getQid()));
+		data.add(new BasicNameValuePair(UserCheckLoginConst.METHOD_KEY, UserCheckLoginConst.METHOD_VAL));
 		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
 		data.add(new BasicNameValuePair("t", TimeUtil.getTimeLenth(13)));
 		request.setConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.NETSCAPE).build());
@@ -57,7 +58,7 @@ public class UserCheckLoginParser extends
 		httpClient = HttpClients.custom()
 				.setConnectionManager(PoolingHttpClientConnection.getInstalce())
 				.addInterceptorLast(requestInterceptor)
-				.setDefaultCookieStore(cookieStoreUT.readCookieStoreForDisk(CONST.BASE_COOKIES_VALUES))
+				.setDefaultCookieStore(cookieStoreUT.readCookieStoreForDisk(BaseConst.BASE_COOKIES_VALUES))
 				.build();
 		try {
 			return httpClient.execute(request, responseHandler, this.httpClientContext);

@@ -24,30 +24,44 @@ public class BaseRequestInterceptor<C  extends BaseConst,Parser extends BasePars
 		requestInit(request,context);
 	}
 	
-	public void requestInit(final HttpRequest request, final HttpContext context)throws HttpException, IOException {
-		request.setHeader(C.ACCEPT_KEY, C.ACCEPT_VAL);
-		request.setHeader(C.ACCEPT_ENCODING_KEY, C.ACCEPT_ENCODING_VAL);
-		request.setHeader(C.ACCEPT_LANGUAGE_KEY, C.ACCEPT_LANGUAGE_VAL);
-		request.setHeader(C.CONNECTION_KEY, C.CONNECTION_VAL);
-		request.setHeader(C.CONTENT_TYPE_KEY, C.CONTENT_TYPE_VAL);
-		request.setHeader(C.USER_AGENT_KEY, C.USER_AGENT_VAL);
+	public void requestInit(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
+		try{
+			request.setHeader(C.ACCEPT_KEY, C.ACCEPT_VAL);
+			request.setHeader(C.ACCEPT_ENCODING_KEY, C.ACCEPT_ENCODING_VAL);
+			request.setHeader(C.ACCEPT_LANGUAGE_KEY, C.ACCEPT_LANGUAGE_VAL);
+			request.setHeader(C.CONNECTION_KEY, C.CONNECTION_VAL);
+			request.setHeader(C.CONTENT_TYPE_KEY, C.CONTENT_TYPE_VAL);
+			request.setHeader(C.USER_AGENT_KEY, C.USER_AGENT_VAL);
+		}
+		catch (Exception ex) { 
+			LOGGER.error("RequestContext",ex);
+		    throw ex;
+		}
+		
 	}
 	
 	public void process(final HttpRequest request, final HttpContext context,boolean useHost) throws HttpException, IOException {
-		requestInit(request,context);
-		final String hostName = parser.getRedHost();
-		final String host = parser.getRedSchmemHost();
-		if(StringUtils.isNotBlank(hostName)){
-			request.setHeader(C.HOST_KEY,hostName);
-		}else{
-			request.setHeader(C.HOST_KEY, C.HOST_VAL);
+		try{
+			requestInit(request,context);
+			final String hostName = parser.getRedHost();
+			final String host = parser.getRedSchmemHost();
+			if(StringUtils.isNotBlank(hostName)){
+				request.setHeader(C.HOST_KEY,hostName);
+			}else{
+				request.setHeader(C.HOST_KEY, C.HOST_VAL);
+			}
+			if(StringUtils.isNotBlank(host)){
+				request.setHeader(C.REFERER_KEY, host+"/my/index");
+				request.setHeader(C.ORIGIN_KEY, host);
+			}else{
+				LOGGER.error("Referer 与 Origin 不能为空");
+			}
 		}
-		if(StringUtils.isNotBlank(host)){
-			request.setHeader(C.REFERER_KEY, host+"/my/index");
-			request.setHeader(C.ORIGIN_KEY, host);
-		}else{
-			LOGGER.error("Referer 与 Origin 不能为空");
+		catch(Exception ex){
+			LOGGER.error("ProcessContext",ex);
+		    throw ex;
 		}
+		
 	}
 
 }

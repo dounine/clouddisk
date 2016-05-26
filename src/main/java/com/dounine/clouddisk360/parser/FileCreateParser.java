@@ -30,7 +30,7 @@ public class FileCreateParser extends
 	public HttpPost initRequest(final FileCreateParameter parameter) {
 		final HttpPost request = new HttpPost(getRequestUri());
 		final List<NameValuePair> data = new ArrayList<>(2);
-		data.add(new BasicNameValuePair(CONST.PATH_NAME, parameter.getPath()));
+		data.add(new BasicNameValuePair(FileCreateConst.PATH_NAME, parameter.getPath()));
 		data.add(new BasicNameValuePair(CONST.AJAX_KEY, CONST.AJAX_VAL));
 		request.setEntity(new UrlEncodedFormEntity(data, Consts.UTF_8));
 		return request;

@@ -56,10 +56,10 @@ public class DifferPressParser extends
 	public HttpGet initRequest(final DifferPressParameter parameter) {
 		HttpGet request = null;
 		try {
-			final URIBuilder uri = new URIBuilder(CONST.URI_PATH);
-			uri.setParameter(CONST.ST_KEY, TimeUtil.getTimeLenth(10));
-			uri.setParameter(CONST.SID_KEY, StringUtils.EMPTY);
-			uri.setParameter(CONST.KEEPALIVE_KEY, CONST.KEEPALIVE_VAL);
+			final URIBuilder uri = new URIBuilder(DifferPressConst.URI_PATH);
+			uri.setParameter(DifferPressConst.ST_KEY, TimeUtil.getTimeLenth(10));
+			uri.setParameter(DifferPressConst.SID_KEY, StringUtils.EMPTY);
+			uri.setParameter(DifferPressConst.KEEPALIVE_KEY, DifferPressConst.KEEPALIVE_VAL);
 			request = new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
 			LOGGER.error("Error",e);

@@ -2,6 +2,7 @@ package com.dounine.clouddisk360.parser.deserializer.login;
 
 import java.io.Serializable;
 
+ 
 public class LoginUserToken implements Serializable{
 
 	private String account;

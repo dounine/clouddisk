@@ -8,7 +8,7 @@ public final class UserCheckLoginConst extends BaseConst {
 
 	public static final String QID_NAME = "qid";
 
-	public static final String METHOD_KEY = "method";
+	public static final  String METHOD_KEY = "method";
 	public static final String METHOD_VAL = "check";
 
 }

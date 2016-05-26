@@ -34,9 +34,9 @@ public class CaptchaParser extends
 			uri.setParameter(CONST.CHARSET_KEY, CONST.CHARSET_VAL);
 			uri.setParameter(CONST.REQUESTSCEMA_KEY, CONST.REQUESTSCEMA_VAL);
 			uri.setParameter(CONST.O_KEY, CONST.O_VAL);
-			uri.setParameter(CONST.M_KEY, CONST.M_VAL);
-			uri.setParameter(CONST.ACCOUNT_NAME, loginUserToken.getAccount());
-			uri.setParameter(CONST.CAPTCHAAPP_KEY, CONST.CAPTCHAAPP_VAL);
+			uri.setParameter(CaptchaConst.M_KEY, CaptchaConst.M_VAL);
+			uri.setParameter(CaptchaConst.ACCOUNT_NAME, loginUserToken.getAccount());
+			uri.setParameter(CaptchaConst.CAPTCHAAPP_KEY, CaptchaConst.CAPTCHAAPP_VAL);
 			request = new HttpGet(uri.build());
 		} catch (URISyntaxException e) {
 			LOGGER.error("Error",e);

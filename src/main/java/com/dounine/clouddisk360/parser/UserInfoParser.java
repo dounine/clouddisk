@@ -3,6 +3,7 @@ package com.dounine.clouddisk360.parser;
 import com.dounine.clouddisk360.annotation.DependResult;
 import com.dounine.clouddisk360.annotation.Dependency;
 import com.dounine.clouddisk360.annotation.Parse;
+import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginUserToken;
 import com.dounine.clouddisk360.parser.deserializer.user.info.*;
 import com.dounine.clouddisk360.pool.PoolingHttpClientConnection;
@@ -43,11 +44,11 @@ public class UserInfoParser extends
 			uriBuilder.addParameter(CONST.SRC_KEY, CONST.SRC_VAL);
 			uriBuilder.addParameter(CONST.FROM_KEY, CONST.FROM_VAL);
 			uriBuilder.addParameter(CONST.CHARSET_KEY, CONST.CHARSET_VAL);
-			uriBuilder.addParameter(CONST.METHOD_KEY, CONST.METHOD_VAL);
+			uriBuilder.addParameter(UserInfoConst.METHOD_KEY, UserInfoConst.METHOD_VAL);
 			uriBuilder.addParameter(CONST.REQUESTSCEMA_KEY, CONST.REQUESTSCEMA_VAL);
 			uriBuilder.addParameter(CONST.O_KEY, CONST.O_VAL);
-			uriBuilder.addParameter(CONST.SHOW_NAME_FLAG_NAME, CONST.SHOW_NAME_FLAG_VALUE);
-			uriBuilder.addParameter(CONST.HEAD_TYPE_NAME, CONST.HEAD_TYPE_VAL);
+			uriBuilder.addParameter(UserInfoConst.SHOW_NAME_FLAG_NAME, UserInfoConst.SHOW_NAME_FLAG_VALUE);
+			uriBuilder.addParameter(UserInfoConst.HEAD_TYPE_NAME, UserInfoConst.HEAD_TYPE_VAL);
 			uriBuilder.addParameter("-", TimeUtil.getTimeLenth(13));
 			final HttpGet request = new HttpGet(uriBuilder.build());
 			request.setConfig(RequestConfig.custom().setCookieSpec(CookieSpecs.NETSCAPE).build());
@@ -63,7 +64,7 @@ public class UserInfoParser extends
 		httpClient = HttpClients.custom()
 				.setConnectionManager(PoolingHttpClientConnection.getInstalce())
 				.addInterceptorLast(requestInterceptor)
-				.setDefaultCookieStore(cookieStoreUT.readCookieStoreForDisk(CONST.BASE_COOKIES_VALUES))
+				.setDefaultCookieStore(cookieStoreUT.readCookieStoreForDisk(BaseConst.BASE_COOKIES_VALUES))
 				.build();
 		try {
 			return httpClient.execute(request, responseHandler, this.httpClientContext);

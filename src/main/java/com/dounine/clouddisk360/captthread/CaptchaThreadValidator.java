@@ -14,7 +14,9 @@ public class CaptchaThreadValidator implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(CaptchaThreadValidator.class);
     public static final int timeoutMin = 10 * 60;
     private static final String ACCOUNT_NOT_NULL = "account not empty";
-
+    private static final String ERROR_MESSAGE_CAPTCHA = "captchaValidator 属性(account/captchaPath)不能为空";
+    private static final String ERROR_MESSAGE_ACCOUNT = "account 不能为空";
+    
     private CaptchaThreadValidator() {
     }
 
@@ -52,7 +54,7 @@ public class CaptchaThreadValidator implements Runnable {
 
     public static void validCaptchaValidator(final String account,final CaptchaValidator captchaValidator) {
         if (StringUtils.isBlank(account)) {
-            LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+            LOGGER.error(ERROR_MESSAGE_CAPTCHA);
         }
         if (null == captchaValidator) {
             LOGGER.error("captchaValidator 不能为空");
@@ -76,21 +78,21 @@ public class CaptchaThreadValidator implements Runnable {
             if (StringUtils.isNotBlank(account)) {
                 captchaValidators.put(account, captchaValidator);
             } else {
-                LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+                LOGGER.error(ERROR_MESSAGE_CAPTCHA);
             }
         }
     }
 
     public static void removeCaptchaValidator(final String account) {
         if (null == account) {
-            LOGGER.error("account 不能为空");
+            LOGGER.error(ERROR_MESSAGE_ACCOUNT);
             return;
         }
         synchronized (captchaValidators) {
             if (StringUtils.isNotBlank(account)) {
                 captchaValidators.remove(account);
             } else {
-                LOGGER.error("captchaValidator 属性(account/captchaPath)不能为空");
+                LOGGER.error(ERROR_MESSAGE_CAPTCHA);
             }
         }
     }
@@ -112,11 +114,11 @@ public class CaptchaThreadValidator implements Runnable {
     public static CaptchaValidator getCaptchaValidator(final String account,final boolean removePass) {
         CaptchaValidator cv = null;
         if (null == account) {
-            LOGGER.error("account 不能为空");
+            LOGGER.error(ERROR_MESSAGE_ACCOUNT);
         }else if (StringUtils.isNotBlank(account)) {
             cv = captchaValidators.get(account);
         } else {
-            LOGGER.error("account 不能为空");
+            LOGGER.error(ERROR_MESSAGE_ACCOUNT);
         }
         return cv;
     }

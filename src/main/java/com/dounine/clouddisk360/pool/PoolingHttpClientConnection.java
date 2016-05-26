@@ -28,7 +28,8 @@ import java.util.concurrent.TimeUnit;
 public final class PoolingHttpClientConnection {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PoolingHttpClientConnection.class);
-
+	private static final String ERROR = "error";
+	
 	private static PoolingHttpClientConnectionManager CM;
 	
 	static{
@@ -61,7 +62,7 @@ public final class PoolingHttpClientConnection {
 					.register("https", sslsf).register("http", new PlainConnectionSocketFactory()).build();
 			CM = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
 		} catch (Exception e) {
-			LOGGER.error("Error",e);
+			LOGGER.error(ERROR,e);
 		}
 
 		CM.setMaxTotal(200);// 设置最大连接数
@@ -86,12 +87,12 @@ public final class PoolingHttpClientConnection {
 			} catch (ConnectTimeoutException e) {
 				LOGGER.error("连接超时");
 			} catch (InterruptedException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 				Thread.currentThread().interrupt();
 			} catch (ExecutionException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			} catch (IOException e) {
-				LOGGER.error("Error",e);
+				LOGGER.error(ERROR,e);
 			}
 		}
 

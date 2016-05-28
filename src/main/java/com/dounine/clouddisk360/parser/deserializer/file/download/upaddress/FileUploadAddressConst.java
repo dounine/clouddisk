@@ -4,7 +4,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 
 public final class FileUploadAddressConst extends BaseConst {
 
-	public final String URI_PATH = "/upload/getuploadaddress/";
+	public static final String URI_PATH = "/upload/getuploadaddress/";
 
 	@Override
 	public String getUriPath() {

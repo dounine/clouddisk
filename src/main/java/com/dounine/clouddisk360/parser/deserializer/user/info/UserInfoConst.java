@@ -4,7 +4,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 
 public final class UserInfoConst extends BaseConst {
 	
-	public final String URI_PATH = "http://login.360.cn/";
+	public static final String URI_PATH = "http://login.360.cn/";
 
 	public static final String QID_NAME = "qid";
 	public static final String METHOD_KEY = "m";

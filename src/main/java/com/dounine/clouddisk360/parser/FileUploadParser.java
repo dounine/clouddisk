@@ -64,7 +64,8 @@ public class FileUploadParser extends
 			return httpClient.execute(request, responseHandler, this.httpClientContext);
 		} catch (IOException e) {
 			LOGGER.error("Error",e);
-		}
+            executeException(e,request);
+        }
 		return null;
 	}
 

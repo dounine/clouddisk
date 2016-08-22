@@ -88,7 +88,6 @@ public final class PoolingHttpClientConnection {
 				LOGGER.error("连接超时");
 			} catch (InterruptedException e) {
 				LOGGER.error(ERROR,e);
-				Thread.currentThread().interrupt();
 			} catch (ExecutionException e) {
 				LOGGER.error(ERROR,e);
 			} catch (IOException e) {

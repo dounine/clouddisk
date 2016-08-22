@@ -1,14 +1,13 @@
 package com.dounine.clouddisk360.parser.deserializer.login;
 
+import com.dounine.clouddisk360.util.MD5Util;
+
 import java.io.Serializable;
 
 public class LoginUserToken implements Serializable{
 
 	private String account;
 	private String password;
-	private boolean md5 = true;
-
-	public LoginUserToken(){}
 
 	public LoginUserToken(String account, String password) {
 		this.account = account;
@@ -18,7 +17,9 @@ public class LoginUserToken implements Serializable{
 	public LoginUserToken(String account, String password,boolean md5Enc) {
 		this.account = account;
 		this.password = password;
-		this.md5 = md5Enc;
+        if(!md5Enc){
+            this.password = MD5Util.MD5(password);
+        }
 	}
 
 	public String getAccount() {
@@ -35,14 +36,6 @@ public class LoginUserToken implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public boolean isMd5() {
-		return md5;
-	}
-
-	public void setMd5(boolean md5) {
-		this.md5 = md5;
 	}
 
 }

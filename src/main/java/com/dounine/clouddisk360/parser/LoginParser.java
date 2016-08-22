@@ -6,7 +6,6 @@ import com.dounine.clouddisk360.exception.CloudDiskException;
 import com.dounine.clouddisk360.parser.deserializer.login.*;
 import com.dounine.clouddisk360.store.BasePathCommon;
 import com.dounine.clouddisk360.store.CookieStoreUT;
-import com.dounine.clouddisk360.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.NameValuePair;
@@ -59,11 +58,7 @@ public class LoginParser extends
 		data.add(new BasicNameValuePair(CONST.USERNAME_NAME, loginUserToken.getAccount()));
 		data.add(new BasicNameValuePair(CONST.TYPE_KEY, LoginConst.TYPE_VAL));
 		data.add(new BasicNameValuePair(CONST.ACCOUNT_NAME, loginUserToken.getAccount()));
-		if (loginUserToken.isMd5()) {
-			data.add(new BasicNameValuePair(CONST.PASSWORD_NAME, loginUserToken.getPassword()));
-		} else {
-			data.add(new BasicNameValuePair(CONST.PASSWORD_NAME, MD5Util.MD5(loginUserToken.getPassword())));
-		}
+        data.add(new BasicNameValuePair(CONST.PASSWORD_NAME, loginUserToken.getPassword()));
 		if (StringUtils.isNotBlank(parameter.getCaptchaValue())) {
 			data.add(new BasicNameValuePair(CONST.CAPTCHA_KEY, parameter.getCaptchaValue()));
 		} else {

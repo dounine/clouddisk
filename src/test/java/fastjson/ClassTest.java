@@ -4,9 +4,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.dounine.clouddisk360.parser.deserializer.login.LoginUserToken;
 import junit.framework.TestCase;
+import org.apache.http.Consts;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,5 +37,22 @@ public class ClassTest extends TestCase{
 
         final Map<String,LoginUserToken> uus = JSON.parseObject(JSON.toJSONString(loginUserTokenMap),new TypeReference<Map<String,LoginUserToken>>(){});
 
+    }
+
+    public static void main(String args[]){
+        HttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost("http://localhost:8080/sso-web/upload");
+        httpPost.addHeader("Range","bytes=10000-");
+        final MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+        multipartEntity.setCharset(Consts.UTF_8);
+        multipartEntity.setMode(HttpMultipartMode.STRICT);
+        multipartEntity.addBinaryBody("file", new File("/Users/huanghuanlai/Desktop/test.java"));
+        httpPost.setEntity(multipartEntity.build());
+        try {
+            HttpResponse response = httpClient.execute(httpPost);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

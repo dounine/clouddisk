@@ -10,7 +10,7 @@
 <dependency>
 	<groupId>com.dounine</groupId>
 	<artifactId>clouddisk</artifactId>
-	<version>1.1.3</version>
+	<version>1.1.4</version>
 </dependency>
  ```
   * 从 **github** 中下载并编译

@@ -71,9 +71,9 @@ public class CaptThread implements Runnable{
 					returnExist = false;
 					CaptchaThreadValidator.removeCaptchaValidator(account);
 				}
-				final PassportParser _passportParser = get_passport(account);//获取手动变动的验证码解析器
-				if(null!=_passportParser){
-					passportParser = _passportParser;
+				final PassportParser  passportParserNew = get_passport(account);//获取手动变动的验证码解析器
+				if(null!=passportParserNew){
+					passportParser = passportParserNew;
 				}
 			}while (returnExist);
 		} catch (InterruptedException e) {

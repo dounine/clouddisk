@@ -21,8 +21,8 @@ public class FileHistoryData {
 		return fhistory_list;
 	}
 
-	public void setFhistory_list(List<FileHistoryList> fhistory_list) {
-		this.fhistory_list = fhistory_list;
+	public void setFhistory_list(List<FileHistoryList> fhistoryList) {
+		this.fhistory_list = fhistoryList;
 	}
 
 	public String getEvent() {

@@ -56,8 +56,8 @@ public class UserInfo extends BaseDes {
 		return login_email;
 	}
 
-	public void setLogin_email(String login_email) {
-		this.login_email = login_email;
+	public void setLogin_email(String loginEmail) {
+		this.login_email = loginEmail;
 	}
 
 	public String getUserName() {
@@ -80,8 +80,8 @@ public class UserInfo extends BaseDes {
 		return img_url;
 	}
 
-	public void setImg_url(String img_url) {
-		this.img_url = img_url;
+	public void setImg_url(String imgUrl) {
+		this.img_url = imgUrl;
 	}
 
 	public String getType() {

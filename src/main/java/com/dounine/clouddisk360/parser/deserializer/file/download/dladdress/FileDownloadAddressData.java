@@ -10,8 +10,8 @@ public class FileDownloadAddressData {
 		return download_url;
 	}
 
-	public void setDownload_url(String download_url) {
-		this.download_url = download_url;
+	public void setDownload_url(String downloadUrl) {
+		this.download_url = downloadUrl;
 	}
 
 	@Override

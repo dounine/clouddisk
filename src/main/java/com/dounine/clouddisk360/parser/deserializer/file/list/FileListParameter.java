@@ -34,8 +34,8 @@ public class FileListParameter extends BaseParameter{
 		return file_name;
 	}
 
-	public void setFile_name(String file_name) {
-		this.file_name = file_name;
+	public void setFile_name(String fileName) {
+		this.file_name = fileName;
 	}
 
 	public String getPath() {
@@ -58,8 +58,8 @@ public class FileListParameter extends BaseParameter{
 		return page_size;
 	}
 
-	public void setPage_size(Integer page_size) {
-		this.page_size = page_size;
+	public void setPage_size(Integer pageSize) {
+		this.page_size = pageSize;
 	}
 
 }

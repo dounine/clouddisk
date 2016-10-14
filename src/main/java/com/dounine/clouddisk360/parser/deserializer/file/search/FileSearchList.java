@@ -23,27 +23,27 @@ public class FileSearchList {
 	private String count_size;
 	private String file_name;
 
-	public String getFile_path() {
+	public String getFilePath() {
 		return file_path;
 	}
 
-	public void setFile_path(String file_path) {
+	public void setFilePath(String file_path) {
 		this.file_path = file_path;
 	}
 
-	public String getFile_size() {
+	public String getFileSize() {
 		return file_size;
 	}
 
-	public void setFile_size(String file_size) {
+	public void setFileSize(String file_size) {
 		this.file_size = file_size;
 	}
 
-	public Boolean getIs_dir() {
+	public Boolean getIsDir() {
 		return is_dir;
 	}
 
-	public void setIs_dir(Boolean is_dir) {
+	public void setIsDir(Boolean is_dir) {
 		this.is_dir = is_dir;
 	}
 
@@ -55,19 +55,19 @@ public class FileSearchList {
 		this.fhash = fhash;
 	}
 
-	public String getCreate_time() {
+	public String getCreateTime() {
 		return create_time;
 	}
 
-	public void setCreate_time(String create_time) {
+	public void setCreateTime(String create_time) {
 		this.create_time = create_time;
 	}
 
-	public String getModify_time() {
+	public String getModifyTime() {
 		return modify_time;
 	}
 
-	public void setModify_time(String modify_time) {
+	public void setModifyTime(String modify_time) {
 		this.modify_time = modify_time;
 	}
 
@@ -79,11 +79,11 @@ public class FileSearchList {
 		this.nid = nid;
 	}
 
-	public String getServer_time() {
+	public String getServerTime() {
 		return server_time;
 	}
 
-	public void setServer_time(String server_time) {
+	public void setServerTime(String server_time) {
 		this.server_time = server_time;
 	}
 
@@ -103,27 +103,27 @@ public class FileSearchList {
 		this.favorite = favorite;
 	}
 
-	public String getFile_location() {
+	public String getFileLocation() {
 		return file_location;
 	}
 
-	public void setFile_location(String file_location) {
+	public void setFileLocation(String file_location) {
 		this.file_location = file_location;
 	}
 
-	public Boolean getIs_link() {
+	public Boolean getIsLink() {
 		return is_link;
 	}
 
-	public void setIs_link(Boolean is_link) {
+	public void setIsLink(Boolean is_link) {
 		this.is_link = is_link;
 	}
 
-	public String getLink_url() {
+	public String getLinkUrl() {
 		return link_url;
 	}
 
-	public void setLink_url(String link_url) {
+	public void setLinkUrl(String link_url) {
 		this.link_url = link_url;
 	}
 
@@ -171,15 +171,15 @@ public class FileSearchList {
 		return count_size;
 	}
 
-	public void setCount_size(String count_size) {
+	public void setCountSize(String count_size) {
 		this.count_size = count_size;
 	}
 
-	public String getFile_name() {
+	public String getFileName() {
 		return file_name;
 	}
 
-	public void setFile_name(String file_name) {
+	public void setFileName(String file_name) {
 		this.file_name = file_name;
 	}
 

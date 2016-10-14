@@ -37,7 +37,7 @@ public class PassportParser extends
 				parameter.setUri(captcha.getCaptchaUrl());
 				if(captcha.getCaptchaFlag()){//需要验码
 					final Passport passport = super.parse(parameter);
-					CaptThread.push_passport(loginUserToken.getAccount(),this);//手动更新验证码
+					CaptThread.pushPassport(loginUserToken.getAccount(),this);//手动更新验证码
 					return passport;
 				}
 			}

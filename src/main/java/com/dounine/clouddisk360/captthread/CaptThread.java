@@ -71,7 +71,7 @@ public class CaptThread implements Runnable{
 					returnExist = false;
 					CaptchaThreadValidator.removeCaptchaValidator(account);
 				}
-				final PassportParser _passportParser = get_passport(account);//获取手动变动的验证码解析器
+				final PassportParser _passportParser = getPassport(account);//获取手动变动的验证码解析器
 				if(null!=_passportParser){
 					passportParser = _passportParser;
 				}
@@ -82,7 +82,7 @@ public class CaptThread implements Runnable{
 
 		if (null == cValidator) {
 			CaptchaThreadValidator.removeCaptchaValidator(account);
-			remove_passport(account);//移除验证码解析器
+			removePassport(account);//移除验证码解析器
 			LOGGER.info("验证码超时未处理,线程监听验证结束");
 		}else{
 			final LoginParameter loginParameter = new LoginParameter();
@@ -98,7 +98,7 @@ public class CaptThread implements Runnable{
 			CaptchaThreadValidator.emptyCaptchaValue(account);//清空验证码
 			if (null != login&& StringUtils.isNotBlank(login.getQid())) {
 				CaptchaThreadValidator.updateValidMsgAndTime(account,"登录成功",true);//更新验证时间
-				remove_passport(account);//移除验证码解析器
+				removePassport(account);//移除验证码解析器
 				LOGGER.info("线程登录成功");
 			}else if(null==login||login.getErrno()!=0){
 				CaptchaThreadValidator.updateValidMsgAndTime(account,login.getErrmsg(),false);//更新验证时间
@@ -110,19 +110,19 @@ public class CaptThread implements Runnable{
 		}
 	}
 
-	public static void push_passport(final String account,final PassportParser passportParser){
+	public static void pushPassport(final String account,final PassportParser passportParser){
 		synchronized (PASSPORT_PARSER_MAP){
 			PASSPORT_PARSER_MAP.put(account,passportParser);
 		}
 	}
 
-	public PassportParser remove_passport(final String account){
+	public PassportParser removePassport(final String account){
 		synchronized (PASSPORT_PARSER_MAP){
 			return PASSPORT_PARSER_MAP.remove(account);
 		}
 	}
 
-	public PassportParser get_passport(final String account){
+	public PassportParser getPassport(final String account){
 		synchronized (PASSPORT_PARSER_MAP){
 			return PASSPORT_PARSER_MAP.get(account);
 		}

@@ -1,6 +1,7 @@
 [![yunpan]](http://yunpan.360.cn)
 [yunpan]:https://github.com/dounine/clouddisk/raw/master/logo.png "360云盘"
 #CloudDisk 360云盘存储SDK
+> 10/20 360官方发表将不支持个人网盘啦,资源还在网盘上怎么办,快使用`CloudDisk`把资源备份下来吧^_^
 
 ##快速向导
 

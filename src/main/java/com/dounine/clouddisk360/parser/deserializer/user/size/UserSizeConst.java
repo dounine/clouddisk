@@ -4,7 +4,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 
 public final class UserSizeConst extends BaseConst {
 	
-	public final String URI_PATH = "/user/getsize/?ajax=1";
+	public static final String URI_PATH = "/user/getsize/?ajax=1";
 
 	@Override
 	public String getUriPath() {

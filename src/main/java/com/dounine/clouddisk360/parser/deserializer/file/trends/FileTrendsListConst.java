@@ -4,7 +4,7 @@ import com.dounine.clouddisk360.parser.deserializer.BaseConst;
 
 public final class FileTrendsListConst extends BaseConst {
 
-	public final String URI_PATH = "/trends/getTrendsList";
+	public static final String URI_PATH = "/trends/getTrendsList";
 
 	@Override
 	public String getUriPath() {

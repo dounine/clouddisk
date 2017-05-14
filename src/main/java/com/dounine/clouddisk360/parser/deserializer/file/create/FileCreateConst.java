@@ -19,6 +19,6 @@ public final class FileCreateConst extends BaseConst {
 
 	public static final String USERNAME_NAME = "userName";
 
-	public final String PATH_NAME = "path";
+	public static final String PATH_NAME = "path";
 
 }

@@ -49,23 +49,7 @@ public class FileInfoParser extends
 					.filter(f -> f.getPath().equals(parameter.getFilePath())).collect(Collectors.toList());
 			if (null != fileIfs && fileIfs.size() == 1) {
 				final FileListData fileListData = fileIfs.get(0);
-				fileInfo.setDate(fileListData.getDate());
-				fileInfo.setFhash(fileListData.getFhash());
-				fileInfo.setFileType(fileListData.getFileType());
-				fileInfo.setHasThumb(fileListData.getHasThumb());
-				fileInfo.setIsDir(fileListData.getIsDir());
-				fileInfo.setIsFav(fileListData.getIsFav());
-				fileInfo.setFmtime(fileListData.getFmtime());
-				fileInfo.setMtime(fileListData.getMtime());
-				fileInfo.setNid(fileListData.getNid());
-				fileInfo.setOriName(fileListData.getOriName());
-				fileInfo.setOriSize(fileListData.getOriSize());
-				fileInfo.setPath(fileListData.getPath());
-				fileInfo.setPic(fileListData.getPic());
-				fileInfo.setPreview(fileListData.getPreview());
-				fileInfo.setScid(fileListData.getScid());
-				fileInfo.setSize(fileListData.getSize());
-				fileInfo.setThumb(fileListData.getThumb());
+				fileInfo.setFileListData(fileListData);
 				return fileInfo;
 			}
 		}

@@ -22,7 +22,7 @@ public class FileListParserTest extends TestCase {
 		fileListParameter.setOrder(Order.DESC);
 		fileListParameter.setPage(0);
 		fileListParameter.setPage_size(300);
-		fileListParameter.setPath(fileListParameter.ROOT_PATH);
+		fileListParameter.setPath(FileListParameter.ROOT_PATH);
 		final FileList fileList = fileListParser.parse(fileListParameter);
 		LOGGER.info(fileList.toString());
 	}
